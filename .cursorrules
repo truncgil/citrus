@@ -1,0 +1,138 @@
+# Citrus Platform - Cursor Rules
+
+## Proje Genel Kuralları
+
+### Dil ve Lokalizasyon
+- Tüm metinler Laravel Localization kullanmalı
+- Türkçe ve İngilizce dil desteği zorunlu
+- Dil dosyaları `lang/tr/` ve `lang/en/` klasörlerinde
+- Çeviri anahtarları kebab-case formatında: `module_name.key_name`
+- Blade template'lerde `{{ __('module.key') }}` kullan
+- Controller'larda `__('module.key')` kullan
+
+### Modül Yapısı
+- Her modül için aşağıdaki yapıyı takip et:
+```
+app/Filament/Admin/Resources/ModuleName/
+├── ModuleNameResource.php
+├── Pages/
+│   ├── ListModuleName.php
+│   ├── CreateModuleName.php
+│   └── EditModuleName.php
+├── Schemas/
+│   └── ModuleNameForm.php
+└── Tables/
+    └── ModuleNameTable.php
+```
+
+### Resource Sınıfı Kuralları
+- `getNavigationLabel()`, `getModelLabel()`, `getPluralModelLabel()` metodlarını implement et
+- Tüm metinler için localization kullan
+- Navigation icon için Heroicon kullan
+
+### Page Sınıfları Kuralları
+- `getTitle()` metodunu implement et ve localization kullan
+- Action butonları için `->label(__('module.action_name'))` kullan
+- Notification mesajları için localization kullan
+- `getRedirectUrl()` metodunu implement et
+
+### Form ve Table Kuralları
+- Form field'ları için label'ları localization'dan al
+- Table column'ları için header'ları localization'dan al
+- Validation mesajları için localization kullan
+
+### Dil Dosyası Yapısı
+```php
+<?php
+
+return [
+    'title' => 'Modül Başlığı',
+    'navigation_label' => 'Navigasyon Etiketi',
+    'model_label' => 'Tekil Model Etiketi',
+    'plural_model_label' => 'Çoğul Model Etiketi',
+    
+    // Actions
+    'create' => 'Oluştur',
+    'edit' => 'Düzenle',
+    'delete' => 'Sil',
+    'restore' => 'Geri Yükle',
+    'force_delete' => 'Kalıcı Olarak Sil',
+    
+    // Form fields
+    'field_name' => 'Alan Etiketi',
+    
+    // Messages
+    'created_successfully' => 'Başarıyla oluşturuldu.',
+    'updated_successfully' => 'Başarıyla güncellendi.',
+    'deleted_successfully' => 'Başarıyla silindi.',
+    
+    // Table columns
+    'table_column_name' => 'Sütun Başlığı',
+    
+    // Validation messages
+    'field_required' => 'Bu alan zorunludur.',
+    'field_unique' => 'Bu değer zaten kullanılıyor.',
+];
+```
+
+### Model Kuralları
+- `$fillable` array'ini tanımla
+- `$casts` array'ini kullan
+- Soft delete için `SoftDeletes` trait'ini kullan
+- `$dates` array'ini kullan
+
+### Migration Kuralları
+- Tablo adları çoğul olmalı
+- Column adları snake_case
+- Foreign key'ler için `_id` suffix'i kullan
+- Timestamps için `created_at` ve `updated_at` kullan
+- Soft delete için `deleted_at` kullan
+
+### Test Kuralları
+- Her modül için test dosyaları oluştur
+- Feature test'leri yaz
+- Unit test'leri yaz
+- Localization test'leri yaz
+
+### Kod Stili
+- PSR-12 standartlarına uy
+- Type hinting kullan
+- Return type'ları belirt
+- DocBlock'ları yaz
+- Kısa ve açıklayıcı metod isimleri kullan
+
+### Güvenlik
+- CSRF koruması aktif
+- Validation kuralları uygula
+- Authorization kontrolü yap
+- SQL injection koruması
+- XSS koruması
+
+### Performans
+- Eager loading kullan
+- Database index'leri ekle
+- Cache kullan
+- Query optimization yap
+
+## Pages Modülü Örnek Yapısı
+
+Pages modülü bu kuralların uygulandığı örnek modüldür. Yeni modül oluştururken bu yapıyı referans al.
+
+### Dosya Yapısı
+- `PageResource.php` - Ana resource sınıfı
+- `Pages/ListPages.php` - Liste sayfası
+- `Pages/CreatePage.php` - Oluşturma sayfası  
+- `Pages/EditPage.php` - Düzenleme sayfası
+- `Schemas/PageForm.php` - Form şeması
+- `Tables/PagesTable.php` - Tablo şeması
+- `lang/tr/pages.php` - Türkçe çeviriler
+- `lang/en/pages.php` - İngilizce çeviriler
+
+### Özellikler
+- ✅ Localization desteği
+- ✅ Soft delete
+- ✅ Form validation
+- ✅ Table filtering
+- ✅ Action buttons
+- ✅ Notifications
+- ✅ Redirect handling
