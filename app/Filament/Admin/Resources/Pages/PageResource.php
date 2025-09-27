@@ -22,6 +22,21 @@ class PageResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('pages.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('pages.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('pages.plural_model_label');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return PageForm::configure($schema);

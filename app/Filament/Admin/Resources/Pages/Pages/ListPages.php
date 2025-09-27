@@ -10,10 +10,16 @@ class ListPages extends ListRecords
 {
     protected static string $resource = PageResource::class;
 
+    public function getTitle(): string
+    {
+        return __('pages.title');
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label(__('pages.create')),
         ];
     }
 }

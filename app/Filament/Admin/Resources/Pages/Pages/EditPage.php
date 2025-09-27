@@ -12,12 +12,30 @@ class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
 
+    public function getTitle(): string
+    {
+        return __('pages.edit');
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
-            ForceDeleteAction::make(),
-            RestoreAction::make(),
+            DeleteAction::make()
+                ->label(__('pages.delete')),
+            ForceDeleteAction::make()
+                ->label(__('pages.force_delete')),
+            RestoreAction::make()
+                ->label(__('pages.restore')),
         ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function getSavedNotificationTitle(): ?string
+    {
+        return __('pages.updated_successfully');
     }
 }
