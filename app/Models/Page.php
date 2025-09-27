@@ -63,4 +63,13 @@ class Page extends Model
         
         return '/' . $this->slug;
     }
+
+    public function getFeaturedImageUrlAttribute()
+    {
+        if ($this->featured_image) {
+            return asset('storage/' . $this->featured_image);
+        }
+        
+        return null;
+    }
 }

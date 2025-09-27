@@ -21,7 +21,7 @@ class PagesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('featured_image')
+                ImageColumn::make('featured_image_url')
                     ->label('Görsel')
                     ->circular()
                     ->size(40)
