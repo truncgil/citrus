@@ -1,0 +1,26 @@
+/* Login sayfası logo boyutu */
+.fi-logo {
+    height: 6rem !important;
+    width: auto !important;
+}
+
+/* Login sayfası brand logo boyutu */
+.fi-brand-logo {
+    height: 6rem !important;
+    width: auto !important;
+}
+
+/* Login sayfası brand logo container */
+.fi-brand-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+/* Login sayfası brand logo img */
+.fi-brand-logo img {
+    height: 6rem !important;
+    width: auto !important;
+    max-width: none !important;
+}

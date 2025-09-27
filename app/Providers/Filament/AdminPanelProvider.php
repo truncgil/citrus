@@ -27,6 +27,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->default()
+            ->brandLogo(asset('logos/citrus-yatay.svg'))
+            ->darkModeBrandLogo(asset('logos/citrus-yatay-dark.svg'))
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -54,6 +56,9 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->login();
+            ->login()
+            ->assets([
+                \Filament\Support\Assets\Css::make('citrus', resource_path('css/citrus.css')),
+            ]);
     }
 }
