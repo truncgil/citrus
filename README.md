@@ -1,3 +1,5 @@
+<img width="1920" height="518" alt="citrus-yatay-dark" src="https://github.com/user-attachments/assets/e502ad1c-9051-47f7-ae00-869570a5cbea" />
+
 # Citrus Platform
 
 ## Genel Bakış
