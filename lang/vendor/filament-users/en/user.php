@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'group' => 'Settings',
+    'group' => '',
     'resource' => [
         'id' => 'ID',
         'single' => 'User',

@@ -25,6 +25,13 @@ return [
         ],
     ],
 
+    'user_resource' => [
+        'enabled' => true,
+        'slug' => 'shield/users',
+        'show_model_path' => true,
+        'cluster' => null,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Multi-Tenancy
