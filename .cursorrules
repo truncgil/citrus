@@ -25,6 +25,15 @@ app/Filament/Admin/Resources/ModuleName/
     └── ModuleNameTable.php
 ```
 
+### Filament Resource Oluşturma
+- Yeni modül oluştururken Filament'in kendi komutunu kullan:
+```bash
+php artisan make:filament-resource ModelName --generate --model --migration --factory
+```
+- Bu komut otomatik olarak tüm gerekli dosyaları oluşturur
+- Manuel dosya oluşturma yerine bu komutu tercih et
+- Komut çalıştırıldıktan sonra model ve migration'ları ihtiyaca göre düzenle
+
 ### Resource Sınıfı Kuralları
 - `getNavigationLabel()`, `getModelLabel()`, `getPluralModelLabel()` metodlarını implement et
 - Tüm metinler için localization kullan
@@ -87,6 +96,8 @@ return [
 - Foreign key'ler için `_id` suffix'i kullan
 - Timestamps için `created_at` ve `updated_at` kullan
 - Soft delete için `deleted_at` kullan
+- Mevcut tablolar için migration oluştururken `if (!Schema::hasTable())` kontrolü kullanma
+- Soft delete hatası alındığında `deleted_at` sütununu ekleyen ayrı migration oluştur
 
 ### Test Kuralları
 - Her modül için test dosyaları oluştur

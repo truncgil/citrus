@@ -22,29 +22,29 @@ class PagesTable
         return $table
             ->columns([
                 ImageColumn::make('featured_image_url')
-                    ->label('Görsel')
+                    ->label(__('pages.table_column_featured_image'))
                     ->circular()
                     ->size(40)
                     ->defaultImageUrl('/images/placeholder-page.png'),
                 
                 TextColumn::make('title')
-                    ->label('Başlık')
+                    ->label(__('pages.table_column_title'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
                     ->description(fn ($record) => $record->excerpt ? \Str::limit($record->excerpt, 50) : null),
                 
                 TextColumn::make('slug')
-                    ->label('URL')
+                    ->label(__('pages.table_column_slug'))
                     ->searchable()
                     ->sortable()
                     ->copyable()
-                    ->copyMessage('URL kopyalandı')
+                    ->copyMessage(__('pages.copy_url_message'))
                     ->url(fn ($record) => $record->url, shouldOpenInNewTab: true)
                     ->color('primary'),
                 
                 TextColumn::make('status')
-                    ->label('Durum')
+                    ->label(__('pages.table_column_status'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'published' => 'success',
@@ -52,70 +52,70 @@ class PagesTable
                         'archived' => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'published' => 'Yayında',
-                        'draft' => 'Taslak',
-                        'archived' => 'Arşivlendi',
+                        'published' => __('pages.status_published'),
+                        'draft' => __('pages.status_draft'),
+                        'archived' => __('pages.status_archived'),
                     }),
                 
                 TextColumn::make('author.name')
-                    ->label('Yazar')
+                    ->label(__('pages.table_column_author'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 
                 TextColumn::make('published_at')
-                    ->label('Yayın Tarihi')
+                    ->label(__('pages.table_column_published_at'))
                     ->dateTime('d.m.Y H:i')
                     ->sortable()
                     ->toggleable(),
                 
                 TextColumn::make('parent.title')
-                    ->label('Üst Sayfa')
+                    ->label(__('pages.table_column_parent'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 
                 TextColumn::make('template')
-                    ->label('Şablon')
+                    ->label(__('pages.table_column_template'))
                     ->badge()
                     ->color('info')
                     ->toggleable(isToggledHiddenByDefault: true),
                 
                 ToggleColumn::make('is_homepage')
-                    ->label('Ana Sayfa')
+                    ->label(__('pages.table_column_is_homepage'))
                     ->toggleable(isToggledHiddenByDefault: true),
                 
                 ToggleColumn::make('show_in_menu')
-                    ->label('Menüde Göster')
+                    ->label(__('pages.table_column_show_in_menu'))
                     ->toggleable(isToggledHiddenByDefault: true),
                 
                 TextColumn::make('sort_order')
-                    ->label('Sıra')
+                    ->label(__('pages.table_column_sort_order'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 
                 TextColumn::make('created_at')
-                    ->label('Oluşturulma')
+                    ->label(__('pages.table_column_created_at'))
                     ->dateTime('d.m.Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('status')
-                    ->label('Durum')
+                    ->label(__('pages.table_column_status'))
                     ->options([
-                        'published' => 'Yayında',
-                        'draft' => 'Taslak',
-                        'archived' => 'Arşivlendi',
+                        'published' => __('pages.status_published'),
+                        'draft' => __('pages.status_draft'),
+                        'archived' => __('pages.status_archived'),
                     ]),
                 
                 SelectFilter::make('template')
-                    ->label('Şablon')
+                    ->label(__('pages.table_column_template'))
                     ->options([
-                        'default' => 'Varsayılan',
-                        'landing' => 'Landing Page',
-                        'blog' => 'Blog',
-                        'contact' => 'İletişim',
+                        'default' => __('pages.template_default'),
+                        'landing' => __('pages.template_landing'),
+                        'blog' => __('pages.template_blog'),
+                        'contact' => __('pages.template_contact'),
                     ]),
                 
                 TrashedFilter::make(),

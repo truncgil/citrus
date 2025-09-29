@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Pages\Schemas;
+namespace App\Filament\Admin\Resources\Blogs\Schemas;
 
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class PageForm
+class BlogForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -21,10 +21,10 @@ class PageForm
             ->columns(3)
             ->schema([
                 // Sol kolon - Ana içerik (2 sütun genişliğinde)
-                Section::make(__('pages.form_section_content'))
+                Section::make(__('blog.content_section'))
                     ->schema([
                         TextInput::make('title')
-                            ->label(__('pages.title_field'))
+                            ->label(__('blog.title_field'))
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
@@ -36,39 +36,39 @@ class PageForm
                             }),
                         
                         TextInput::make('slug')
-                            ->label(__('pages.slug_field'))
+                            ->label(__('blog.slug_field'))
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true)
                             ->rules(['alpha_dash'])
-                            ->helperText(__('pages.slug_helper_text')),
+                            ->helperText(__('blog.slug_helper')),
                         
                         RichEditor::make('content')
-                            ->label(__('pages.content_field'))
+                            ->label(__('blog.content_field'))
                             ->required()
                             ->fileAttachmentsDisk('public')
-                            ->fileAttachmentsDirectory('pages')
+                            ->fileAttachmentsDirectory('blogs')
                             ->fileAttachmentsVisibility('public')
                             ->columnSpanFull(),
                         
                         Textarea::make('excerpt')
-                            ->label(__('pages.excerpt_field'))
+                            ->label(__('blog.excerpt_field'))
                             ->rows(3)
                             ->maxLength(500)
-                            ->helperText(__('pages.excerpt_helper_text'))
+                            ->helperText(__('blog.excerpt_helper'))
                             ->columnSpanFull(),
                     ])
                     ->columnSpan(2)
                     ->collapsible(false),
                 
                 // Sağ kolon - Metadata ve öne çıkan görsel (1 sütun genişliğinde)
-                Section::make(__('pages.form_section_page_settings'))
+                Section::make(__('blog.settings_section'))
                     ->schema([
                         FileUpload::make('featured_image')
-                            ->label(__('pages.featured_image_field'))
+                            ->label(__('blog.featured_image_field'))
                             ->image()
                             ->disk('public')
-                            ->directory('pages/featured')
+                            ->directory('blogs/featured')
                             ->visibility('public')
                             ->imageEditor()
                             ->imageEditorAspectRatios([
@@ -76,86 +76,73 @@ class PageForm
                                 '4:3',
                                 '1:1',
                             ])
-                            ->helperText(__('pages.featured_image_helper_text'))
+                            ->helperText(__('blog.featured_image_helper'))
                             ->columnSpanFull(),
                         
                         Select::make('author_id')
-                            ->label(__('pages.author_field'))
+                            ->label(__('blog.author_field'))
                             ->relationship('author', 'name')
                             ->default(auth()->id())
                             ->required()
                             ->columnSpanFull(),
                         
+                        Select::make('category_id')
+                            ->label(__('blog.category_field'))
+                            ->relationship('category', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->helperText(__('blog.category_helper'))
+                            ->columnSpanFull(),
+                        
+                        TagsInput::make('tags')
+                            ->label(__('blog.tags_field'))
+                            ->helperText(__('blog.tags_helper'))
+                            ->columnSpanFull(),
+                        
                         DateTimePicker::make('published_at')
-                            ->label(__('pages.published_at_field'))
+                            ->label(__('blog.published_at_field'))
                             ->displayFormat('d.m.Y H:i')
-                            ->helperText(__('pages.published_at_helper_text'))
+                            ->helperText(__('blog.published_at_helper'))
                             ->columnSpanFull(),
                         
                         Select::make('status')
-                            ->label(__('pages.status_field'))
+                            ->label(__('blog.status_field'))
                             ->options([
-                                'draft' => __('pages.status_draft'),
-                                'published' => __('pages.status_published'),
-                                'archived' => __('pages.status_archived'),
+                                'draft' => __('blog.status_draft'),
+                                'published' => __('blog.status_published'),
+                                'archived' => __('blog.status_archived'),
                             ])
                             ->default('draft')
                             ->required()
                             ->columnSpanFull(),
                         
-                        Select::make('parent_id')
-                            ->label(__('pages.parent_field'))
-                            ->relationship('parent', 'title')
-                            ->searchable()
-                            ->preload()
-                            ->helperText(__('pages.parent_helper_text'))
+                        Checkbox::make('is_featured')
+                            ->label(__('blog.is_featured_field'))
+                            ->helperText(__('blog.is_featured_helper'))
                             ->columnSpanFull(),
                         
-                        Select::make('template')
-                            ->label(__('pages.template_field'))
-                            ->options([
-                                'default' => __('pages.template_default'),
-                                'landing' => __('pages.template_landing'),
-                                'blog' => __('pages.template_blog'),
-                                'contact' => __('pages.template_contact'),
-                            ])
-                            ->default('default')
-                            ->columnSpanFull(),
-                        
-                        TextInput::make('sort_order')
-                            ->label(__('pages.sort_order_field'))
-                            ->numeric()
-                            ->default(0)
-                            ->helperText(__('pages.sort_order_helper_text'))
-                            ->columnSpanFull(),
-                        
-                        Checkbox::make('is_homepage')
-                            ->label(__('pages.is_homepage_field'))
-                            ->helperText(__('pages.is_homepage_helper_text'))
-                            ->columnSpanFull(),
-                        
-                        Checkbox::make('show_in_menu')
-                            ->label(__('pages.show_in_menu_field'))
+                        Checkbox::make('allow_comments')
+                            ->label(__('blog.allow_comments_field'))
                             ->default(true)
-                            ->helperText(__('pages.show_in_menu_helper_text'))
+                            ->helperText(__('blog.allow_comments_helper'))
                             ->columnSpanFull(),
                     ])
                     ->columnSpan(1)
                     ->collapsible(false),
                 
                 // Alt kısım - SEO ayarları (tam genişlik)
-                Section::make(__('pages.form_section_seo_settings'))
+                Section::make(__('blog.seo_section'))
                     ->schema([
                         TextInput::make('meta_title')
-                            ->label(__('pages.meta_title_field'))
+                            ->label(__('blog.meta_title_field'))
                             ->maxLength(60)
-                            ->helperText(__('pages.meta_title_helper_text')),
+                            ->helperText(__('blog.meta_title_helper')),
                         
                         Textarea::make('meta_description')
-                            ->label(__('pages.meta_description_field'))
+                            ->label(__('blog.meta_description_field'))
                             ->rows(3)
                             ->maxLength(160)
-                            ->helperText(__('pages.meta_description_helper_text'))
+                            ->helperText(__('blog.meta_description_helper'))
                             ->columnSpanFull(),
                     ])
                     ->columns(2)
