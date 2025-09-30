@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\Filament\Admin\Widgets')
+            ->plugin(\TomatoPHP\FilamentUsers\FilamentUsersPlugin::make())
             ->plugin(FilamentShieldPlugin::make())
             ->widgets([
                 AccountWidget::class,
@@ -58,7 +59,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(\TomatoPHP\FilamentUsers\FilamentUsersPlugin::make())
             ->login()
             ->assets([
                 \Filament\Support\Assets\Css::make('citrus', resource_path('css/citrus.css')),

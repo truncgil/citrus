@@ -3,7 +3,9 @@
     height: 6rem !important;
     width: auto !important;
 }
-
+.fi-topbar-start .fi-logo {
+    height: 2.5rem !important;
+}
 /* Login sayfası brand logo boyutu */
 .fi-brand-logo {
     height: 6rem !important;

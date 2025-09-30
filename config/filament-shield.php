@@ -179,7 +179,7 @@ return [
             ],
         ],
         'exclude' => [
-            //
+            // TomatoPHP Users resource'u exclude etmeyin, permission kontrolü yapması için
         ],
     ],
 
