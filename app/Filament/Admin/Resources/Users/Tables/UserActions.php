@@ -16,20 +16,23 @@ class UserActions
     {
         return [
             EditAction::make()
+                ->label('')
+                ->tooltip(__('users.edit'))
                 ->visible(fn () => Auth::user()?->can('Update:User')),
             
             Action::make('change_password')
-                ->label(__('filament-users::user.resource.change_password'))
+                ->label('')
+                ->tooltip(__('users.change_password'))
                 ->icon('heroicon-o-key')
                 ->color('warning')
                 ->form([
                     TextInput::make('password')
-                        ->label(__('filament-users::user.resource.password'))
+                        ->label(__('users.password'))
                         ->password()
                         ->required()
                         ->confirmed(),
                     TextInput::make('password_confirmation')
-                        ->label(__('filament-users::user.resource.password_confirmation'))
+                        ->label(__('users.password_confirmation'))
                         ->password()
                         ->required(),
                 ])
@@ -39,13 +42,15 @@ class UserActions
                     ]);
                     
                     Notification::make()
-                        ->title(__('filament-users::user.resource.change_password_success'))
+                        ->title(__('users.password_changed_successfully'))
                         ->success()
                         ->send();
                 })
                 ->visible(fn () => Auth::user()?->can('Update:User')),
             
             DeleteAction::make()
+                ->label('')
+                ->tooltip(__('users.delete'))
                 ->visible(fn () => Auth::user()?->can('Delete:User')),
         ];
     }

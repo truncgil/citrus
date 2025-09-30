@@ -12,6 +12,7 @@ return [
     'delete' => 'Kullanıcı Sil',
     'restore' => 'Kullanıcıyı Geri Yükle',
     'force_delete' => 'Kullanıcıyı Kalıcı Olarak Sil',
+    'change_password' => 'Şifre Değiştir',
     
     // Form fields
     'name' => 'Ad Soyad',

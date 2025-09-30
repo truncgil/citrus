@@ -12,6 +12,7 @@ return [
     'delete' => 'Delete User',
     'restore' => 'Restore User',
     'force_delete' => 'Force Delete User',
+    'change_password' => 'Change Password',
     
     // Form fields
     'name' => 'Full Name',
