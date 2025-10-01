@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\Blogs\Pages;
 
 use App\Filament\Admin\Resources\Blogs\BlogResource;
+use App\Filament\Admin\Resources\Components\TranslationTabs;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateBlog extends CreateRecord
@@ -22,5 +23,11 @@ class CreateBlog extends CreateRecord
     protected function getCreatedNotificationTitle(): ?string
     {
         return __('blog.created_successfully');
+    }
+
+    protected function afterCreate(): void
+    {
+        // Save translations
+        TranslationTabs::saveTranslations($this->record, $this->form->getState());
     }
 }

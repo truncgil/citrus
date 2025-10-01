@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\Blogs\Pages;
 
 use App\Filament\Admin\Resources\Blogs\BlogResource;
+use App\Filament\Admin\Resources\Components\TranslationTabs;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
@@ -37,5 +38,29 @@ class EditBlog extends EditRecord
     protected function getSavedNotificationTitle(): ?string
     {
         return __('blog.updated_successfully');
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        // Load existing translations
+        $translationData = TranslationTabs::fillFromRecord($this->record);
+        
+        \Log::info('Loading translations for edit', [
+            'blog_id' => $this->record->id,
+            'translations' => $translationData
+        ]);
+        
+        return array_merge($data, $translationData);
+    }
+
+    protected function afterSave(): void
+    {
+        \Log::info('Saving blog translations', [
+            'blog_id' => $this->record->id,
+            'form_state' => $this->form->getState()
+        ]);
+        
+        // Save translations
+        TranslationTabs::saveTranslations($this->record, $this->form->getState());
     }
 }

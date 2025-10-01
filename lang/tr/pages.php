@@ -26,6 +26,7 @@ return [
     'form_section_content' => 'İçerik',
     'form_section_page_settings' => 'Sayfa Ayarları',
     'form_section_seo_settings' => 'SEO Ayarları',
+    'translations_section' => 'Çeviriler',
     
     // Form fields
     'title_field' => 'Başlık',

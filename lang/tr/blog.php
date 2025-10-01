@@ -34,6 +34,7 @@ return [
     'content_section' => 'İçerik',
     'settings_section' => 'Blog Ayarları',
     'seo_section' => 'SEO Ayarları',
+    'translations_section' => 'Çeviriler',
     
     // Helper texts
     'slug_helper' => 'URL\'de görünecek kısım. Örnek: blog-yazisi',
