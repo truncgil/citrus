@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasTranslations;
 
     protected $fillable = [
         'title',
@@ -26,6 +27,17 @@ class Page extends Model
         'template',
         'is_homepage',
         'show_in_menu',
+    ];
+
+    /**
+     * Translatable fields
+     */
+    protected $translatable = [
+        'title',
+        'content',
+        'excerpt',
+        'meta_title',
+        'meta_description',
     ];
 
     protected $casts = [
