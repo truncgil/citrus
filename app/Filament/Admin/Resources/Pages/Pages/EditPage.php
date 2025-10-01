@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Pages\Pages;
 
+use App\Filament\Admin\Resources\Components\TranslationTabs;
 use App\Filament\Admin\Resources\Pages\PageResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
@@ -37,5 +38,19 @@ class EditPage extends EditRecord
     protected function getSavedNotificationTitle(): ?string
     {
         return __('pages.updated_successfully');
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        // Load existing translations
+        $translationData = TranslationTabs::fillFromRecord($this->record);
+        
+        return array_merge($data, $translationData);
+    }
+
+    protected function afterSave(): void
+    {
+        // Save translations
+        TranslationTabs::saveTranslations($this->record, $this->form->getState());
     }
 }

@@ -101,8 +101,12 @@ use Filament\Forms\Components\FileUpload;
 // Layout components (ÖNEMLİ: Schemas namespace!)
 use Filament\Schemas\Components\Section;   // ✅ Doğru
 use Filament\Schemas\Components\Grid;      // ✅ Doğru
-use Filament\Schemas\Components\Tabs;      // ✅ Doğru
 use Filament\Schemas\Components\Fieldset;  // ✅ Doğru
+
+// Tabs components (ÖNEMLİ: Forms namespace!)
+use Filament\Forms\Components\Tabs;        // ✅ Doğru
+// Tab kullanımı: Tabs\Tab::make() şeklinde kullan
+// Import gerekmez, Tabs namespace'i üzerinden erişilir
 ```
 
 #### **YANLIŞ KULLANIM (Eski Filament 3.x):**
@@ -127,7 +131,6 @@ $table
 - ✅ **Table Methods:** `->recordActions()` ve `->toolbarActions()`
 
 ### Dil Dosyası Yapısı
-```php
 <?php
 
 return [
@@ -158,7 +161,7 @@ return [
     'field_required' => 'Bu alan zorunludur.',
     'field_unique' => 'Bu değer zaten kullanılıyor.',
 ];
-```
+
 
 ### Model Kuralları
 - `$fillable` array'ini tanımla
