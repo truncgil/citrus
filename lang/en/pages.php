@@ -26,6 +26,7 @@ return [
     'form_section_content' => 'Content',
     'form_section_page_settings' => 'Page Settings',
     'form_section_seo_settings' => 'SEO Settings',
+    'translations_section' => 'Translations',
     
     // Form fields
     'title_field' => 'Title',

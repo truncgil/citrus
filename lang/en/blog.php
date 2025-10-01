@@ -34,6 +34,7 @@ return [
     'content_section' => 'Content',
     'settings_section' => 'Blog Settings',
     'seo_section' => 'SEO Settings',
+    'translations_section' => 'Translations',
     
     // Helper texts
     'slug_helper' => 'The part that will appear in the URL. Example: blog-post',

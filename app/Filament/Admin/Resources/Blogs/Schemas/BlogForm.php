@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Blogs\Schemas;
 
+use App\Filament\Admin\Resources\Components\TranslationTabs;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -149,6 +150,47 @@ class BlogForm
                     ->columnSpanFull()
                     ->collapsible(true)
                     ->collapsed(true),
+                
+                // Çeviri Sekmesi
+                Section::make('🌍 ' . __('blog.translations_section'))
+                    ->schema([
+                        TranslationTabs::make([
+                            'title' => [
+                                'type' => 'text',
+                                'label' => __('blog.title_field'),
+                                'required' => false,
+                                'maxLength' => 255,
+                            ],
+                            'content' => [
+                                'type' => 'richtext',
+                                'label' => __('blog.content_field'),
+                                'required' => false,
+                            ],
+                            'excerpt' => [
+                                'type' => 'textarea',
+                                'label' => __('blog.excerpt_field'),
+                                'required' => false,
+                                'maxLength' => 500,
+                                'rows' => 3,
+                            ],
+                            'meta_title' => [
+                                'type' => 'text',
+                                'label' => __('blog.meta_title_field'),
+                                'required' => false,
+                                'maxLength' => 60,
+                            ],
+                            'meta_description' => [
+                                'type' => 'textarea',
+                                'label' => __('blog.meta_description_field'),
+                                'required' => false,
+                                'maxLength' => 160,
+                                'rows' => 3,
+                            ],
+                        ]),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(true)
+                    ->collapsed(false),
             ]);
     }
 }

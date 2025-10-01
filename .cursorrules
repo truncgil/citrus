@@ -50,8 +50,87 @@ php artisan make:filament-resource ModelName --generate --model --migration --fa
 - Table column'ları için header'ları localization'dan al
 - Validation mesajları için localization kullan
 
-### Dil Dosyası Yapısı
+### Filament 4.x Import Kuralları (ÖNEMLİ!)
+
+#### **Table Actions (DOĞRU):**
 ```php
+// Table Actions için
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ForceDeleteAction;
+
+// Bulk Actions için
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreBulkAction;
+
+// Filters için
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Filters\SelectFilter;
+
+// Columns için
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+
+// Table metodları
+$table
+    ->recordActions([      // ✅ Doğru
+        EditAction::make(),
+    ])
+    ->toolbarActions([     // ✅ Doğru
+        BulkActionGroup::make([
+            DeleteBulkAction::make(),
+        ]),
+    ]);
+```
+
+#### **Form & Schema Components (DOĞRU):**
+```php
+// Form input components
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+
+// Layout components (ÖNEMLİ: Schemas namespace!)
+use Filament\Schemas\Components\Section;   // ✅ Doğru
+use Filament\Schemas\Components\Grid;      // ✅ Doğru
+use Filament\Schemas\Components\Fieldset;  // ✅ Doğru
+
+// Tabs components (ÖNEMLİ: Forms namespace!)
+use Filament\Forms\Components\Tabs;        // ✅ Doğru
+// Tab kullanımı: Tabs\Tab::make() şeklinde kullan
+// Import gerekmez, Tabs namespace'i üzerinden erişilir
+```
+
+#### **YANLIŞ KULLANIM (Eski Filament 3.x):**
+```php
+// ❌ YANLIŞ - Bu namespace'ler Filament 4'te YOK!
+use Filament\Tables\Actions\EditAction;      // ❌
+use Filament\Forms\Components\Section;       // ❌
+use Filament\Forms\Components\Grid;          // ❌
+
+// ❌ YANLIŞ - Eski metod adları
+$table
+    ->actions([...])      // ❌ Kullanma!
+    ->bulkActions([...])  // ❌ Kullanma!
+```
+
+#### **ÖZET:**
+- ✅ **Table Actions:** `Filament\Actions\` namespace
+- ✅ **Table Columns:** `Filament\Tables\Columns\` namespace
+- ✅ **Table Filters:** `Filament\Tables\Filters\` namespace
+- ✅ **Form Inputs:** `Filament\Forms\Components\` namespace
+- ✅ **Layout Components:** `Filament\Schemas\Components\` namespace (Section, Grid, Tabs)
+- ✅ **Table Methods:** `->recordActions()` ve `->toolbarActions()`
+
+### Dil Dosyası Yapısı
 <?php
 
 return [
@@ -82,7 +161,7 @@ return [
     'field_required' => 'Bu alan zorunludur.',
     'field_unique' => 'Bu değer zaten kullanılıyor.',
 ];
-```
+
 
 ### Model Kuralları
 - `$fillable` array'ini tanımla
@@ -147,3 +226,68 @@ Pages modülü bu kuralların uygulandığı örnek modüldür. Yeni modül olu�
 - ✅ Action buttons
 - ✅ Notifications
 - ✅ Redirect handling
+
+## Universal Translation System
+
+### Translation System Kullanımı
+Platform, dinamik ve evrensel bir çeviri sistemi içerir. Herhangi bir modele çeviri desteği eklemek için:
+
+```php
+use App\Traits\HasTranslations;
+
+class YourModel extends Model
+{
+    use HasTranslations;
+    
+    protected $translatable = [
+        'title',
+        'content',
+        'description',
+        'meta_title',
+        'meta_description',
+    ];
+}
+```
+
+### Translation Kuralları
+- ✅ Çevrilecek alanlar `$translatable` array'inde tanımlanmalı
+- ✅ `HasTranslations` trait'i kullanılmalı
+- ✅ Trait'te `$translatable` property tanımlama (conflict oluşur)
+- ✅ Her model kendi `$translatable` array'ini tanımlar
+- ✅ Slug, ID, FK gibi alanlar çevrilmemeli
+
+### Translation Metodları
+```php
+// Çeviri kaydet
+$model->setTranslation('field_name', 'en', 'Translation', 'published');
+
+// Çeviri oku
+$model->translate('field_name'); // Mevcut dilde
+$model->translate('field_name', 'en'); // Belirli dilde
+$model->translate('field_name', 'en', false); // Fallback olmadan
+
+// Çeviri kontrolü
+$model->hasTranslation('field_name', 'en');
+
+// İlerleme takibi
+$model->getTranslationProgress(); // ['tr' => 100, 'en' => 75]
+$model->getMissingTranslations('en'); // ['meta_description']
+```
+
+### Translation Workflow
+- `draft` → `review` → `approved` → `published`
+- Sadece `published` çeviriler son kullanıcıya görünür
+- User-language permissions ile kontrol edilir
+
+### Helper Functions
+```php
+current_language(); // Mevcut dil objesi
+available_languages(); // Aktif diller
+translate_model($model, 'field', 'en'); // Model çevirisi
+user_can_manage_language('en'); // Kullanıcı yetkisi
+switch_language('en'); // Dil değiştir
+```
+
+### Dokümantasyon
+- `docs/TRANSLATION_SYSTEM.md` - Tam sistem dokümantasyonu
+- `docs/TRANSLATION_QUICK_START.md` - Hızlı başlangıç rehberi
