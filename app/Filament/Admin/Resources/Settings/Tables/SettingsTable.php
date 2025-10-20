@@ -37,7 +37,16 @@ class SettingsTable
                     ->label(__('settings.table_value'))
                     ->searchable()
                     ->limit(50)
-                    ->wrap(),
+                    ->wrap()
+                    ->formatStateUsing(function ($state, $record) {
+                        // Boolean tipler için emoji göster
+                        if ($record->type === 'boolean') {
+                            return filter_var($state, FILTER_VALIDATE_BOOLEAN) 
+                                ? '✅' 
+                                : '❌';
+                        }
+                        return $state;
+                    }),
 
                 TextColumn::make('type')
                     ->label(__('settings.table_type'))
