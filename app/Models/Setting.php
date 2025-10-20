@@ -13,6 +13,8 @@ class Setting extends Model
     protected $fillable = [
         'key',
         'value',
+        'value_text',
+        'value_boolean',
         'type',
         'group',
         'label',
@@ -31,6 +33,22 @@ class Setting extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /**
+     * Set value from different field names
+     */
+    public function setValueTextAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from different field names
+     */
+    public function setValueBooleanAttribute($value)
+    {
+        $this->attributes['value'] = $value ? '1' : '0';
+    }
 
     /**
      * Get setting by key

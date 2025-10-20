@@ -74,19 +74,31 @@ class SettingForm
                             ])
                             ->default('general'),
 
-                        Textarea::make('value')
+                        Textarea::make('value_text')
                             ->label(__('settings.value'))
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => !in_array($get('type'), ['boolean']))
                             ->rows(fn (Get $get) => $get('type') === 'text' ? 5 : 3)
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type !== 'boolean') {
+                                    return $record->value;
+                                }
+                                return $state;
+                            })
                             ->columnSpanFull(),
 
-                        Toggle::make('value')
+                        Toggle::make('value_boolean')
                             ->label(__('settings.value'))
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'boolean')
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'boolean') {
+                                    return filter_var($record->value, FILTER_VALIDATE_BOOLEAN);
+                                }
+                                return false;
+                            })
                             ->columnSpanFull(),
 
                         Toggle::make('is_active')

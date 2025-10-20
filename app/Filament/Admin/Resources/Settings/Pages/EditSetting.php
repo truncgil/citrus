@@ -38,44 +38,4 @@ class EditSetting extends EditRecord
     {
         return __('settings.updated_successfully');
     }
-
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        // Boolean tipindeki değerleri cast et
-        if (isset($data['type']) && $data['type'] === 'boolean') {
-            $data['value'] = filter_var($data['value'], FILTER_VALIDATE_BOOLEAN);
-        }
-        
-        // Integer tipindeki değerleri cast et
-        if (isset($data['type']) && $data['type'] === 'integer') {
-            $data['value'] = (int) $data['value'];
-        }
-        
-        // Float tipindeki değerleri cast et
-        if (isset($data['type']) && $data['type'] === 'float') {
-            $data['value'] = (float) $data['value'];
-        }
-
-        return $data;
-    }
-
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        // Boolean değerleri string'e çevir
-        if (isset($data['type']) && $data['type'] === 'boolean') {
-            $data['value'] = $data['value'] ? '1' : '0';
-        }
-        
-        // Integer değerleri string'e çevir
-        if (isset($data['type']) && $data['type'] === 'integer') {
-            $data['value'] = (string) $data['value'];
-        }
-        
-        // Float değerleri string'e çevir
-        if (isset($data['type']) && $data['type'] === 'float') {
-            $data['value'] = (string) $data['value'];
-        }
-
-        return $data;
-    }
 }

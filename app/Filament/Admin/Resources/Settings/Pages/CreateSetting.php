@@ -23,24 +23,4 @@ class CreateSetting extends CreateRecord
     {
         return __('settings.created_successfully');
     }
-
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        // Boolean değerleri string'e çevir
-        if (isset($data['type']) && $data['type'] === 'boolean') {
-            $data['value'] = $data['value'] ? '1' : '0';
-        }
-        
-        // Integer değerleri string'e çevir
-        if (isset($data['type']) && $data['type'] === 'integer') {
-            $data['value'] = (string) $data['value'];
-        }
-        
-        // Float değerleri string'e çevir
-        if (isset($data['type']) && $data['type'] === 'float') {
-            $data['value'] = (string) $data['value'];
-        }
-
-        return $data;
-    }
 }
