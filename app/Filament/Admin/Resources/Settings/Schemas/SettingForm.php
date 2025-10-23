@@ -9,6 +9,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -84,10 +85,10 @@ class SettingForm
                             ->label(__('settings.value'))
                             ->helperText(__('settings.value_helper'))
                             ->required()
-                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean', 'file', 'date', 'datetime']))
+                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean', 'file', 'date', 'datetime', 'array']))
                             ->rows(fn (Get $get) => $get('type') === 'text' ? 5 : 3)
                             ->formatStateUsing(function ($state, $record) {
-                                if ($record && !in_array($record->type, ['boolean', 'file', 'date', 'datetime'])) {
+                                if ($record && !in_array($record->type, ['boolean', 'file', 'date', 'datetime', 'array'])) {
                                     return $record->value;
                                 }
                                 return $state;
@@ -152,6 +153,43 @@ class SettingForm
                                     return $record->value;
                                 }
                                 return $state;
+                            })
+                            ->columnSpanFull(),
+
+                        Repeater::make('value_array')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'array')
+                            ->schema([
+                                TextInput::make('key')
+                                    ->label(__('settings.array_key'))
+                                    ->required()
+                                    ->placeholder(__('settings.array_key_placeholder')),
+                                TextInput::make('value')
+                                    ->label(__('settings.array_value'))
+                                    ->required()
+                                    ->placeholder(__('settings.array_value_placeholder')),
+                                Textarea::make('description')
+                                    ->label(__('settings.array_description'))
+                                    ->placeholder(__('settings.array_description_placeholder'))
+                                    ->rows(2),
+                                Toggle::make('active')
+                                    ->label(__('settings.array_active'))
+                                    ->default(true),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(1)
+                            ->addActionLabel(__('settings.array_add_item'))
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['key'] ?? null)
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'array') {
+                                    $decoded = json_decode($record->value, true);
+                                    return is_array($decoded) ? $decoded : [];
+                                }
+                                return is_array($state) ? $state : [];
                             })
                             ->columnSpanFull(),
 

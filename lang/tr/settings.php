@@ -81,6 +81,16 @@ return [
     'type_required' => 'Tip alanı zorunludur.',
     'label_required' => 'Etiket alanı zorunludur.',
     
+    // Array type specific
+    'array_key' => 'Anahtar',
+    'array_key_placeholder' => 'Dizi anahtarı (örn: name, email)',
+    'array_value' => 'Değer',
+    'array_value_placeholder' => 'Dizi değeri',
+    'array_description' => 'Açıklama',
+    'array_description_placeholder' => 'Bu öğe için açıklama',
+    'array_active' => 'Aktif',
+    'array_add_item' => 'Öğe Ekle',
+    
     // Filters
     'filter_group' => 'Gruba Göre',
     'filter_type' => 'Tipe Göre',

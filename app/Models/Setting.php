@@ -18,6 +18,7 @@ class Setting extends Model
         'value_file',
         'value_date',
         'value_datetime',
+        'value_array',
         'type',
         'group',
         'label',
@@ -75,6 +76,14 @@ class Setting extends Model
     public function setValueDatetimeAttribute($value)
     {
         $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from different field names
+     */
+    public function setValueArrayAttribute($value)
+    {
+        $this->attributes['value'] = is_array($value) ? json_encode($value) : $value;
     }
 
     /**
