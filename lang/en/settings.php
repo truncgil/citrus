@@ -59,6 +59,7 @@ return [
     'type_float' => 'Float',
     'type_array' => 'Array',
     'type_json' => 'JSON',
+    'type_file' => 'File',
     
     // Groups
     'group_general' => 'General',

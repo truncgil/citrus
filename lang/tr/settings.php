@@ -59,6 +59,7 @@ return [
     'type_float' => 'Ondalıklı Sayı',
     'type_array' => 'Dizi',
     'type_json' => 'JSON',
+    'type_file' => 'Dosya',
     
     // Groups
     'group_general' => 'Genel',

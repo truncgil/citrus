@@ -6,6 +6,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -54,6 +55,7 @@ class SettingForm
                                 'float' => __('settings.type_float'),
                                 'array' => __('settings.type_array'),
                                 'json' => __('settings.type_json'),
+                                'file' => __('settings.type_file'),
                             ])
                             ->live()
                             ->afterStateUpdated(fn (Set $set) => $set('value', null)),
@@ -78,10 +80,10 @@ class SettingForm
                             ->label(__('settings.value'))
                             ->helperText(__('settings.value_helper'))
                             ->required()
-                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean']))
+                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean', 'file']))
                             ->rows(fn (Get $get) => $get('type') === 'text' ? 5 : 3)
                             ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type !== 'boolean') {
+                                if ($record && $record->type !== 'boolean' && $record->type !== 'file') {
                                     return $record->value;
                                 }
                                 return $state;
@@ -98,6 +100,23 @@ class SettingForm
                                     return filter_var($record->value, FILTER_VALIDATE_BOOLEAN);
                                 }
                                 return false;
+                            })
+                            ->columnSpanFull(),
+
+                        FileUpload::make('value_file')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'file')
+                            ->disk('public')
+                            ->directory('settings')
+                            ->acceptedFileTypes(['image/*', 'application/pdf', 'text/*'])
+                            ->maxSize(10240) // 10MB
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'file') {
+                                    return $record->value;
+                                }
+                                return $state;
                             })
                             ->columnSpanFull(),
 

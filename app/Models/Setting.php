@@ -15,6 +15,7 @@ class Setting extends Model
         'value',
         'value_text',
         'value_boolean',
+        'value_file',
         'type',
         'group',
         'label',
@@ -48,6 +49,14 @@ class Setting extends Model
     public function setValueBooleanAttribute($value)
     {
         $this->attributes['value'] = $value ? '1' : '0';
+    }
+
+    /**
+     * Set value from different field names
+     */
+    public function setValueFileAttribute($value)
+    {
+        $this->attributes['value'] = $value;
     }
 
     /**
@@ -91,6 +100,7 @@ class Setting extends Model
             'integer' => (int) $value,
             'float' => (float) $value,
             'array', 'json' => json_decode($value, true),
+            'file' => $value, // File path as string
             default => $value,
         };
     }
