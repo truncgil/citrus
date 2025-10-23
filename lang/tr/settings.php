@@ -60,6 +60,8 @@ return [
     'type_array' => 'Dizi',
     'type_json' => 'JSON',
     'type_file' => 'Dosya',
+    'type_date' => 'Tarih',
+    'type_datetime' => 'Tarih ve Saat',
     
     // Groups
     'group_general' => 'Genel',

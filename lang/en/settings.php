@@ -60,6 +60,8 @@ return [
     'type_array' => 'Array',
     'type_json' => 'JSON',
     'type_file' => 'File',
+    'type_date' => 'Date',
+    'type_datetime' => 'Date & Time',
     
     // Groups
     'group_general' => 'General',

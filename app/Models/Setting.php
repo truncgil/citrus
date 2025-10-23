@@ -16,6 +16,8 @@ class Setting extends Model
         'value_text',
         'value_boolean',
         'value_file',
+        'value_date',
+        'value_datetime',
         'type',
         'group',
         'label',
@@ -55,6 +57,22 @@ class Setting extends Model
      * Set value from different field names
      */
     public function setValueFileAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from different field names
+     */
+    public function setValueDateAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from different field names
+     */
+    public function setValueDatetimeAttribute($value)
     {
         $this->attributes['value'] = $value;
     }
@@ -101,6 +119,8 @@ class Setting extends Model
             'float' => (float) $value,
             'array', 'json' => json_decode($value, true),
             'file' => $value, // File path as string
+            'date' => $value, // Date as string (Y-m-d format)
+            'datetime' => $value, // DateTime as string (Y-m-d H:i:s format)
             default => $value,
         };
     }

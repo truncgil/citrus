@@ -7,6 +7,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -56,6 +58,8 @@ class SettingForm
                                 'array' => __('settings.type_array'),
                                 'json' => __('settings.type_json'),
                                 'file' => __('settings.type_file'),
+                                'date' => __('settings.type_date'),
+                                'datetime' => __('settings.type_datetime'),
                             ])
                             ->live()
                             ->afterStateUpdated(fn (Set $set) => $set('value', null)),
@@ -80,10 +84,10 @@ class SettingForm
                             ->label(__('settings.value'))
                             ->helperText(__('settings.value_helper'))
                             ->required()
-                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean', 'file']))
+                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean', 'file', 'date', 'datetime']))
                             ->rows(fn (Get $get) => $get('type') === 'text' ? 5 : 3)
                             ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type !== 'boolean' && $record->type !== 'file') {
+                                if ($record && !in_array($record->type, ['boolean', 'file', 'date', 'datetime'])) {
                                     return $record->value;
                                 }
                                 return $state;
@@ -114,6 +118,37 @@ class SettingForm
                             ->maxSize(10240) // 10MB
                             ->formatStateUsing(function ($state, $record) {
                                 if ($record && $record->type === 'file') {
+                                    return $record->value;
+                                }
+                                return $state;
+                            })
+                            ->columnSpanFull(),
+
+                        DatePicker::make('value_date')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'date')
+                            ->displayFormat('d/m/Y')
+                            ->format('Y-m-d')
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'date') {
+                                    return $record->value;
+                                }
+                                return $state;
+                            })
+                            ->columnSpanFull(),
+
+                        DateTimePicker::make('value_datetime')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'datetime')
+                            ->displayFormat('d/m/Y H:i')
+                            ->format('Y-m-d H:i:s')
+                            ->seconds(false)
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'datetime') {
                                     return $record->value;
                                 }
                                 return $state;
