@@ -59,6 +59,9 @@ return [
     'type_float' => 'Float',
     'type_array' => 'Array',
     'type_json' => 'JSON',
+    'type_file' => 'File',
+    'type_date' => 'Date',
+    'type_datetime' => 'Date & Time',
     
     // Groups
     'group_general' => 'General',
@@ -77,6 +80,16 @@ return [
     'value_required' => 'Value field is required.',
     'type_required' => 'Type field is required.',
     'label_required' => 'Label field is required.',
+    
+    // Array type specific
+    'array_key' => 'Key',
+    'array_key_placeholder' => 'Array key (e.g: name, email)',
+    'array_value' => 'Value',
+    'array_value_placeholder' => 'Array value',
+    'array_description' => 'Description',
+    'array_description_placeholder' => 'Description for this item',
+    'array_active' => 'Active',
+    'array_add_item' => 'Add Item',
     
     // Filters
     'filter_group' => 'By Group',

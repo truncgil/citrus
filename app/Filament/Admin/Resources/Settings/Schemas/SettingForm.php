@@ -6,6 +6,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -54,6 +58,9 @@ class SettingForm
                                 'float' => __('settings.type_float'),
                                 'array' => __('settings.type_array'),
                                 'json' => __('settings.type_json'),
+                                'file' => __('settings.type_file'),
+                                'date' => __('settings.type_date'),
+                                'datetime' => __('settings.type_datetime'),
                             ])
                             ->live()
                             ->afterStateUpdated(fn (Set $set) => $set('value', null)),
@@ -78,10 +85,10 @@ class SettingForm
                             ->label(__('settings.value'))
                             ->helperText(__('settings.value_helper'))
                             ->required()
-                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean']))
+                            ->visible(fn (Get $get) => !in_array($get('type'), ['boolean', 'file', 'date', 'datetime', 'array']))
                             ->rows(fn (Get $get) => $get('type') === 'text' ? 5 : 3)
                             ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type !== 'boolean') {
+                                if ($record && !in_array($record->type, ['boolean', 'file', 'date', 'datetime', 'array'])) {
                                     return $record->value;
                                 }
                                 return $state;
@@ -98,6 +105,91 @@ class SettingForm
                                     return filter_var($record->value, FILTER_VALIDATE_BOOLEAN);
                                 }
                                 return false;
+                            })
+                            ->columnSpanFull(),
+
+                        FileUpload::make('value_file')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'file')
+                            ->disk('public')
+                            ->directory('settings')
+                            ->acceptedFileTypes(['image/*', 'application/pdf', 'text/*'])
+                            ->maxSize(10240) // 10MB
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'file') {
+                                    return $record->value;
+                                }
+                                return $state;
+                            })
+                            ->columnSpanFull(),
+
+                        DatePicker::make('value_date')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'date')
+                            ->displayFormat('d/m/Y')
+                            ->format('Y-m-d')
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'date') {
+                                    return $record->value;
+                                }
+                                return $state;
+                            })
+                            ->columnSpanFull(),
+
+                        DateTimePicker::make('value_datetime')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'datetime')
+                            ->displayFormat('d/m/Y H:i')
+                            ->format('Y-m-d H:i:s')
+                            ->seconds(false)
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'datetime') {
+                                    return $record->value;
+                                }
+                                return $state;
+                            })
+                            ->columnSpanFull(),
+
+                        Repeater::make('value_array')
+                            ->label(__('settings.value'))
+                            ->helperText(__('settings.value_helper'))
+                            ->required()
+                            ->visible(fn (Get $get) => $get('type') === 'array')
+                            ->schema([
+                                TextInput::make('key')
+                                    ->label(__('settings.array_key'))
+                                    ->required()
+                                    ->placeholder(__('settings.array_key_placeholder')),
+                                TextInput::make('value')
+                                    ->label(__('settings.array_value'))
+                                    ->required()
+                                    ->placeholder(__('settings.array_value_placeholder')),
+                                Textarea::make('description')
+                                    ->label(__('settings.array_description'))
+                                    ->placeholder(__('settings.array_description_placeholder'))
+                                    ->rows(2),
+                                Toggle::make('active')
+                                    ->label(__('settings.array_active'))
+                                    ->default(true),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(1)
+                            ->addActionLabel(__('settings.array_add_item'))
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['key'] ?? null)
+                            ->formatStateUsing(function ($state, $record) {
+                                if ($record && $record->type === 'array') {
+                                    $decoded = json_decode($record->value, true);
+                                    return is_array($decoded) ? $decoded : [];
+                                }
+                                return is_array($state) ? $state : [];
                             })
                             ->columnSpanFull(),
 
