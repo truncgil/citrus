@@ -88,19 +88,6 @@ class SettingsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('group')
-                    ->label(__('settings.filter_group'))
-                    ->options([
-                        'general' => __('settings.group_general'),
-                        'email' => __('settings.group_email'),
-                        'seo' => __('settings.group_seo'),
-                        'social' => __('settings.group_social'),
-                        'security' => __('settings.group_security'),
-                        'payment' => __('settings.group_payment'),
-                        'notification' => __('settings.group_notification'),
-                        'other' => __('settings.group_other'),
-                    ]),
-
                 SelectFilter::make('type')
                     ->label(__('settings.filter_type'))
                     ->options([

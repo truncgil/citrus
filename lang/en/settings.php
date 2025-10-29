@@ -75,12 +75,20 @@ return [
     
     // Groups
     'group_general' => 'General',
+    'group_theme' => 'Theme',
+    'group_localization' => 'Localization',
     'group_email' => 'Email',
     'group_seo' => 'SEO',
     'group_social' => 'Social Media',
     'group_security' => 'Security',
+    'group_upload' => 'Upload',
     'group_payment' => 'Payment',
     'group_notification' => 'Notification',
+    'group_cache' => 'Cache',
+    'group_api' => 'API',
+    'group_logging' => 'Logging',
+    'group_performance' => 'Performance',
+    'group_integration' => 'Integration',
     'group_other' => 'Other',
     
     // Validation messages
@@ -121,5 +129,10 @@ return [
     'filter_type' => 'By Type',
     'filter_active' => 'Active',
     'filter_public' => 'Public',
+    
+    // Tabs
+    'tabs_title' => 'Setting Groups',
+    'settings_count' => 'settings',
+    'all_settings' => 'All Settings',
 ];
 
