@@ -5,8 +5,6 @@ namespace App\Filament\Admin\Resources\Settings\Pages;
 use App\Filament\Admin\Resources\Settings\SettingResource;
 use App\Models\Setting;
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Component;
-use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Enums\Width;
@@ -68,18 +66,6 @@ class ListSettings extends ListRecords
         }
 
         return $tabs;
-    }
-
-    public function getTabsContentComponent(): Component
-    {
-        $tabs = $this->getCachedTabs();
-
-        return Tabs::make()
-            ->livewireProperty('activeTab')
-            ->contained(false)
-            ->tabs($tabs)
-            ->vertical()
-            ->hidden(empty($tabs));
     }
 
     protected function getGroupIcon(?string $group): string
