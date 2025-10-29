@@ -3,26 +3,18 @@
 namespace App\Filament\Admin\Resources\Settings\Pages;
 
 use App\Filament\Admin\Resources\Settings\SettingResource;
-use App\Filament\Admin\Resources\Settings\Tables\SettingsTable;
+use App\Models\Setting;
 use Filament\Actions\CreateAction;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 
-class ListSettings extends ListRecords implements HasForms
+class ListSettings extends ListRecords
 {
-    use InteractsWithForms;
-
     protected static string $resource = SettingResource::class;
-
-    public ?string $activeGroup = null;
-
-    public function getView(): string
-    {
-        return 'filament.admin.resources.settings.pages.list-settings';
-    }
 
     public function getTitle(): string
     {
@@ -42,41 +34,34 @@ class ListSettings extends ListRecords implements HasForms
         ];
     }
 
-    public function mount(): void
+    public function getTabs(): array
     {
-        parent::mount();
-        
-        // Query string'den activeGroup' 별 al, yoksa tüm ayarları göster (null)
-        $this->activeGroup = request()->query('group', null);
-    }
+        $tabs = [];
 
-    public function getGroups(): \Illuminate\Support\Collection
-    {
-        return \App\Models\Setting::whereNull('deleted_at')
+        // "Tüm Ayarlar" tab'ı ekle
+        $allCount = Setting::query()->count();
+        $tabs['all'] = Tab::make(__('settings.all_settings'))
+            ->icon($this->getGroupIcon(null))
+            ->badge($allCount);
+
+        // Her grup için tab oluştur
+        $groups = Setting::query()
             ->select('group')
             ->distinct()
             ->orderBy('group')
-            ->pluck('group')
-            ->mapWithKeys(function ($group) {
-                return [$group => __("settings.group_{$group}")];
-            });
-    }
+            ->pluck('group');
 
-    public function setActiveGroup(?string $group): void
-    {
-        $this->activeGroup = $group;
-    }
-
-    protected function getTableQuery(): \Illuminate\Database\Eloquent\Builder
-    {
-        $query = parent::getTableQuery();
-        
-        // Eğer bir grup seçildiyse filtrele
-        if ($this->activeGroup) {
-            $query->where('group', $this->activeGroup);
+        foreach ($groups as $group) {
+            $count = Setting::where('group', $group)->count();
+            $label = __("settings.group_{$group}");
+            
+            $tabs[$group] = Tab::make($label)
+                ->icon($this->getGroupIcon($group))
+                ->badge($count)
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('group', $group));
         }
-        
-        return $query;
+
+        return $tabs;
     }
 
     protected function getGroupIcon(?string $group): string
@@ -103,16 +88,5 @@ class ListSettings extends ListRecords implements HasForms
             'integration' => 'heroicon-o-puzzle-piece',
             default => 'heroicon-o-squares-2x2',
         };
-    }
-
-    protected function getGroupCount(?string $group): int
-    {
-        if (!$group) {
-            return \App\Models\Setting::whereNull('deleted_at')->count();
-        }
-
-        return \App\Models\Setting::where('group', $group)
-            ->whereNull('deleted_at')
-            ->count();
     }
 }
