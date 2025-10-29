@@ -19,6 +19,16 @@ class Setting extends Model
         'value_date',
         'value_datetime',
         'value_array',
+        'value_color_picker',
+        'value_code_editor',
+        'value_rich_editor',
+        'value_markdown_editor',
+        'value_tags_input',
+        'value_checkbox_list',
+        'value_radio',
+        'value_toggle_buttons',
+        'value_slider',
+        'value_key_value',
         'type',
         'group',
         'label',
@@ -87,6 +97,86 @@ class Setting extends Model
     }
 
     /**
+     * Set value from color picker
+     */
+    public function setValueColorPickerAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from code editor
+     */
+    public function setValueCodeEditorAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from rich editor
+     */
+    public function setValueRichEditorAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from markdown editor
+     */
+    public function setValueMarkdownEditorAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from tags input
+     */
+    public function setValueTagsInputAttribute($value)
+    {
+        $this->attributes['value'] = is_array($value) ? json_encode($value) : $value;
+    }
+
+    /**
+     * Set value from checkbox list
+     */
+    public function setValueCheckboxListAttribute($value)
+    {
+        $this->attributes['value'] = is_array($value) ? json_encode($value) : $value;
+    }
+
+    /**
+     * Set value from radio
+     */
+    public function setValueRadioAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from toggle buttons
+     */
+    public function setValueToggleButtonsAttribute($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Set value from slider
+     */
+    public function setValueSliderAttribute($value)
+    {
+        $this->attributes['value'] = (string) $value;
+    }
+
+    /**
+     * Set value from key value
+     */
+    public function setValueKeyValueAttribute($value)
+    {
+        $this->attributes['value'] = is_array($value) ? json_encode($value) : $value;
+    }
+
+    /**
      * Get setting by key
      */
     public static function get(string $key, $default = null)
@@ -126,10 +216,17 @@ class Setting extends Model
             'boolean' => filter_var($value, FILTER_VALIDATE_BOOLEAN),
             'integer' => (int) $value,
             'float' => (float) $value,
-            'array', 'json' => json_decode($value, true),
+            'array', 'json', 'tags_input', 'checkbox_list', 'key_value' => json_decode($value, true),
             'file' => $value, // File path as string
             'date' => $value, // Date as string (Y-m-d format)
             'datetime' => $value, // DateTime as string (Y-m-d H:i:s format)
+            'color_picker' => $value, // Color as hex string
+            'code_editor' => $value, // Code as string
+            'rich_editor' => $value, // HTML as string
+            'markdown_editor' => $value, // Markdown as string
+            'radio' => $value, // Radio selection as string
+            'toggle_buttons' => $value, // Toggle selection as string
+            'slider' => (int) $value, // Slider value as integer
             default => $value,
         };
     }

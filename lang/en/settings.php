@@ -62,6 +62,16 @@ return [
     'type_file' => 'File',
     'type_date' => 'Date',
     'type_datetime' => 'Date & Time',
+    'type_color_picker' => 'Color Picker',
+    'type_code_editor' => 'Code Editor',
+    'type_rich_editor' => 'Rich Text Editor',
+    'type_markdown_editor' => 'Markdown Editor',
+    'type_tags_input' => 'Tags Input',
+    'type_checkbox_list' => 'Checkbox List',
+    'type_radio' => 'Radio Button',
+    'type_toggle_buttons' => 'Toggle Buttons',
+    'type_slider' => 'Slider',
+    'type_key_value' => 'Key-Value Pairs',
     
     // Groups
     'group_general' => 'General',
@@ -90,6 +100,21 @@ return [
     'array_description_placeholder' => 'Description for this item',
     'array_active' => 'Active',
     'array_add_item' => 'Add Item',
+    
+    // Checkbox options (placeholder, can be customized per setting)
+    'checkbox_option_1' => 'Option 1',
+    'checkbox_option_2' => 'Option 2',
+    'checkbox_option_3' => 'Option 3',
+    
+    // Radio options (placeholder, can be customized per setting)
+    'radio_option_1' => 'Option 1',
+    'radio_option_2' => 'Option 2',
+    'radio_option_3' => 'Option 3',
+    
+    // Toggle options (placeholder, can be customized per setting)
+    'toggle_option_1' => 'Option 1',
+    'toggle_option_2' => 'Option 2',
+    'toggle_option_3' => 'Option 3',
     
     // Filters
     'filter_group' => 'By Group',

@@ -62,6 +62,16 @@ return [
     'type_file' => 'Dosya',
     'type_date' => 'Tarih',
     'type_datetime' => 'Tarih ve Saat',
+    'type_color_picker' => 'Renk Seçici',
+    'type_code_editor' => 'Kod Editörü',
+    'type_rich_editor' => 'Zengin Metin Editörü',
+    'type_markdown_editor' => 'Markdown Editörü',
+    'type_tags_input' => 'Etiket Girişi',
+    'type_checkbox_list' => 'Çoklu Seçim',
+    'type_radio' => 'Radio Buton',
+    'type_toggle_buttons' => 'Toggle Butonları',
+    'type_slider' => 'Kaydırıcı',
+    'type_key_value' => 'Anahtar-Değer Çiftleri',
     
     // Groups
     'group_general' => 'Genel',
@@ -90,6 +100,21 @@ return [
     'array_description_placeholder' => 'Bu öğe için açıklama',
     'array_active' => 'Aktif',
     'array_add_item' => 'Öğe Ekle',
+    
+    // Checkbox options (placeholder, can be customized per setting)
+    'checkbox_option_1' => 'Seçenek 1',
+    'checkbox_option_2' => 'Seçenek 2',
+    'checkbox_option_3' => 'Seçenek 3',
+    
+    // Radio options (placeholder, can be customized per setting)
+    'radio_option_1' => 'Seçenek 1',
+    'radio_option_2' => 'Seçenek 2',
+    'radio_option_3' => 'Seçenek 3',
+    
+    // Toggle options (placeholder, can be customized per setting)
+    'toggle_option_1' => 'Seçenek 1',
+    'toggle_option_2' => 'Seçenek 2',
+    'toggle_option_3' => 'Seçenek 3',
     
     // Filters
     'filter_group' => 'Gruba Göre',
