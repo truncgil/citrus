@@ -75,12 +75,20 @@ return [
     
     // Groups
     'group_general' => 'Genel',
+    'group_theme' => 'Tema',
+    'group_localization' => 'Lokalizasyon',
     'group_email' => 'E-posta',
     'group_seo' => 'SEO',
     'group_social' => 'Sosyal Medya',
     'group_security' => 'Güvenlik',
+    'group_upload' => 'Dosya Yükleme',
     'group_payment' => 'Ödeme',
     'group_notification' => 'Bildirim',
+    'group_cache' => 'Cache',
+    'group_api' => 'API',
+    'group_logging' => 'Logging',
+    'group_performance' => 'Performans',
+    'group_integration' => 'Entegrasyon',
     'group_other' => 'Diğer',
     
     // Validation messages
@@ -121,5 +129,10 @@ return [
     'filter_type' => 'Tipe Göre',
     'filter_active' => 'Aktif',
     'filter_public' => 'Herkese Açık',
+    
+    // Tabs
+    'tabs_title' => 'Ayar Grupları',
+    'settings_count' => 'ayar',
+    'all_settings' => 'Tüm Ayarlar',
 ];
 
