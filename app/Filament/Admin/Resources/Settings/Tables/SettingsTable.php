@@ -58,13 +58,13 @@ class SettingsTable
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => __("settings.type_{$state}")),
-
+                /*    
                 TextColumn::make('group')
                     ->label(__('settings.table_group'))
                     ->badge()
                     ->color('primary')
                     ->formatStateUsing(fn (string $state): string => __("settings.group_{$state}")),
-
+                    */
                 IconColumn::make('is_active')
                     ->label(__('settings.table_active'))
                     ->boolean()
