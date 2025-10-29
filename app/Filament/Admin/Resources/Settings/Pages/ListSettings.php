@@ -9,6 +9,7 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\Width;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -32,6 +33,11 @@ class ListSettings extends ListRecords
             CreateAction::make()
                 ->label(__('settings.create')),
         ];
+    }
+
+    public function getMaxContentWidth(): Width | string | null
+    {
+        return Width::Full;
     }
 
     public function getTabs(): array
