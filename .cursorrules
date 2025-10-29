@@ -102,11 +102,85 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;   // ✅ Doğru
 use Filament\Schemas\Components\Grid;      // ✅ Doğru
 use Filament\Schemas\Components\Fieldset;  // ✅ Doğru
+use Filament\Schemas\Components\Flex;      // ✅ Doğru
 
-// Tabs components (ÖNEMLİ: Forms namespace!)
-use Filament\Forms\Components\Tabs;        // ✅ Doğru
-// Tab kullanımı: Tabs\Tab::make() şeklinde kullan
-// Import gerekmez, Tabs namespace'i üzerinden erişilir
+// Tabs components (ÖNEMLİ: Schemas namespace!)
+use Filament\Schemas\Components\Tabs;      // ✅ Doğru
+use Filament\Schemas\Components\Tabs\Tab;  // ✅ Doğru
+// FORM/INFOLIST içindeki tab'lar için yukarıdaki import'ları kullan
+
+// Wizard component (Schemas namespace!)
+use Filament\Schemas\Components\Wizard;
+use Filament\Schemas\Components\Wizard\Step;
+
+// Infolist entry components
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
+```
+
+#### **Filament 4.x TAB KULLANIM KURALLARI (KRİTİK!):**
+
+Filament 4.x'te **iki farklı Tab sistemi** vardır:
+
+**1. Resource List Pages Tabs (getTabs() metodu):**
+```php
+// ❌ YANLIŞ - Bu class Filament 4.x'te YOK!
+use Filament\Resources\Components\Tab;
+
+// ✅ DOĞRU - ListRecords page'lerinde getTabs() için
+use Filament\Schemas\Components\Tabs\Tab;
+
+// Örnek kullanım:
+class ListSettings extends ListRecords
+{
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('Tümü')
+                ->icon('heroicon-o-squares-2x2')
+                ->badge(100)
+                ->modifyQueryUsing(fn (Builder $query) => $query),
+            
+            'active' => Tab::make('Aktif')
+                ->icon('heroicon-o-check')
+                ->badge(50)
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('is_active', true)),
+        ];
+    }
+}
+```
+
+**2. Form/Schema Tabs (Form içinde kullanım):**
+```php
+// ✅ DOĞRU - Form/Schema içinde tabs için
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+
+// Örnek kullanım:
+public static function form(Schema $schema): Schema
+{
+    return $schema
+        ->components([
+            Tabs::make('Tabs')
+                ->tabs([
+                    Tab::make('Genel Bilgiler')
+                        ->icon('heroicon-o-information-circle')
+                        ->schema([
+                            TextInput::make('name'),
+                            // ...
+                        ]),
+                    Tab::make('SEO')
+                        ->icon('heroicon-o-magnifying-glass')
+                        ->schema([
+                            TextInput::make('meta_title'),
+                            // ...
+                        ]),
+                ])
+                ->columnSpanFull()
+                ->persistTabInQueryString(),
+        ]);
+}
 ```
 
 #### **YANLIŞ KULLANIM (Eski Filament 3.x):**
@@ -115,6 +189,8 @@ use Filament\Forms\Components\Tabs;        // ✅ Doğru
 use Filament\Tables\Actions\EditAction;      // ❌
 use Filament\Forms\Components\Section;       // ❌
 use Filament\Forms\Components\Grid;          // ❌
+use Filament\Forms\Components\Tabs;          // ❌ Forms namespace altında Tabs YOK
+use Filament\Resources\Components\Tab;       // ❌ Bu class hiç YOK
 
 // ❌ YANLIŞ - Eski metod adları
 $table
@@ -122,13 +198,17 @@ $table
     ->bulkActions([...])  // ❌ Kullanma!
 ```
 
-#### **ÖZET:**
+#### **ÖZET (Filament 4.x Import Referansı):**
 - ✅ **Table Actions:** `Filament\Actions\` namespace
 - ✅ **Table Columns:** `Filament\Tables\Columns\` namespace
 - ✅ **Table Filters:** `Filament\Tables\Filters\` namespace
 - ✅ **Form Inputs:** `Filament\Forms\Components\` namespace
-- ✅ **Layout Components:** `Filament\Schemas\Components\` namespace (Section, Grid, Tabs)
+- ✅ **Layout Components:** `Filament\Schemas\Components\` namespace
+- ✅ **Tabs (Tüm Kullanımlar):** `Filament\Schemas\Components\Tabs\Tab` (Her yerde bu!)
+- ✅ **Infolist Entries:** `Filament\Infolists\Components\` namespace
 - ✅ **Table Methods:** `->recordActions()` ve `->toolbarActions()`
+
+**Önemli Not:** Filament 4.x'te `Filament\Resources\Components\Tab` diye bir class **YOK**. Tüm tab kullanımları `Filament\Schemas\Components\Tabs\Tab` ile yapılır!
 
 ### Dil Dosyası Yapısı
 <?php
