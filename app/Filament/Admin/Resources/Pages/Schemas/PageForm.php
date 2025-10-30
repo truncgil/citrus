@@ -286,8 +286,6 @@ class PageForm
                                             ->label(__('pages.section_data_value'))
                                             ->visible(fn (Get $get) => $get('type') === 'html')
                                             ->language(Language::Html)
-                                          //  ->minHeight('300px')
-                                           // ->placeholder('<div>HTML kodu girin...</div>')
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
                                             ->afterStateHydrated(function ($component, $state, Get $get) {
@@ -308,8 +306,6 @@ class PageForm
                                             ->label(__('pages.section_data_value'))
                                             ->visible(fn (Get $get) => $get('type') === 'json')
                                             ->language(Language::Json)
-                                            //->minHeight('300px')
-                                      //      ->placeholder('{"key": "value"}')
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
                                             ->afterStateHydrated(function ($component, $state, Get $get) {
