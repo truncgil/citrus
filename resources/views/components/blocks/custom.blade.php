@@ -1,3 +1,9 @@
 @foreach($data as $item)
-    {!! $item['value'] !!}
+    @if(($item['type'] ?? null) === 'markdown')
+    <div class="container">
+        {!! \Illuminate\Support\Str::markdown($item['value']) !!}
+    </div>
+    @else
+        {!! $item['value'] !!}
+    @endif
 @endforeach

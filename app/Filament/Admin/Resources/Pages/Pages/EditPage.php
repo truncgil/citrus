@@ -9,19 +9,45 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\View\View;
 
 class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
+    
+    // Sticky header aktif
+    protected static bool $hasTopbar = true;
+    
+    public bool $autoSaveEnabled = false;
+    public ?string $lastAutoSaveTime = null;
 
     public function getTitle(): string
     {
         return __('pages.edit');
     }
+    
+    public function autoSave(): void
+    {
+        try {
+            $this->save();
+            $this->lastAutoSaveTime = now()->format('H:i:s');
+            
+            // Sessiz başarı bildirimi
+            \Filament\Notifications\Notification::make()
+                ->title('Otomatik Kaydedildi')
+                ->body('Son kayıt: ' . $this->lastAutoSaveTime)
+                ->success()
+                ->duration(2000)
+                ->send();
+        } catch (\Exception $e) {
+            // Hata olursa sessizce geç, kullanıcıyı rahatsız etme
+        }
+    }
 
     protected function getHeaderActions(): array
     {
         return [
+            
             Action::make('save')
                 ->label(__('pages.save'))
                 ->action('save')
@@ -124,5 +150,12 @@ class EditPage extends EditRecord
     {
         // Save translations
         TranslationTabs::saveTranslations($this->record, $this->form->getState());
+    }
+    
+    public function getFooter(): ?View
+    {
+        return view('filament.pages.edit-page-footer', [
+            'autoSaveEnabled' => $this->autoSaveEnabled,
+        ]);
     }
 }
