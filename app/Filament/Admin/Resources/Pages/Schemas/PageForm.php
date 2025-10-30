@@ -245,7 +245,16 @@ class PageForm
                                             ->placeholder('Değer girin...')
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                // Only hydrate if this field type is active
+                                                if (!in_array($get('type'), ['text', 'url', 'email', 'phone', 'number'])) {
+                                                    return;
+                                                }
+                                                $value = $get('value');
+                                                if ($value !== null) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -257,7 +266,16 @@ class PageForm
                                             ->placeholder(fn (Get $get) => $get('type') === 'html' ? '<div>HTML kodu girin...</div>' : 'Metin girin...')
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                // Only hydrate if this field type is active
+                                                if (!in_array($get('type'), ['textarea', 'json', 'html'])) {
+                                                    return;
+                                                }
+                                                $value = $get('value');
+                                                if ($value !== null) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -276,7 +294,33 @@ class PageForm
                                             ])
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                // Only hydrate if this field type is richtext
+                                                if ($get('type') !== 'richtext') {
+                                                    return;
+                                                }
+                                                
+                                                $value = $get('value');
+                                                
+                                                // Skip if null or empty
+                                                if ($value === null || $value === '' || $value === []) {
+                                                    return;
+                                                }
+                                                
+                                                // Only set if it's valid TipTap JSON format
+                                                if (is_array($value) && isset($value['type']) && $value['type'] === 'doc') {
+                                                    $component->state($value);
+                                                } elseif (is_string($value)) {
+                                                    try {
+                                                        $decoded = json_decode($value, true);
+                                                        if (is_array($decoded) && isset($decoded['type']) && $decoded['type'] === 'doc') {
+                                                            $component->state($decoded);
+                                                        }
+                                                    } catch (\Exception $e) {
+                                                        // Invalid JSON, skip
+                                                    }
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -286,7 +330,13 @@ class PageForm
                                             ->visible(fn (Get $get) => $get('type') === 'markdown')
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'markdown') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_string($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -300,7 +350,13 @@ class PageForm
                                             ->imageEditor()
                                             ->live()
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'image') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_string($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -312,7 +368,13 @@ class PageForm
                                             ->directory('pages/sections')
                                             ->live()
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'file') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_string($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -322,7 +384,13 @@ class PageForm
                                             ->visible(fn (Get $get) => $get('type') === 'boolean')
                                             ->live()
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'boolean') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_bool($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -332,7 +400,13 @@ class PageForm
                                             ->visible(fn (Get $get) => $get('type') === 'color')
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'color') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_string($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -343,7 +417,13 @@ class PageForm
                                             ->displayFormat('d/m/Y')
                                             ->live()
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'date') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_string($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -355,7 +435,13 @@ class PageForm
                                             ->seconds(false)
                                             ->live()
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'datetime') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_string($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                         
@@ -370,7 +456,13 @@ class PageForm
                                             )
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
-                                            ->afterStateHydrated(fn ($component, $state, Get $get) => $component->state($get('value')))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                if ($get('type') !== 'array') return;
+                                                $value = $get('value');
+                                                if ($value !== null && is_array($value)) {
+                                                    $component->state($value);
+                                                }
+                                            })
                                             ->dehydrated(false)
                                             ->columnSpanFull(),
                                     ])
