@@ -1,6 +1,13 @@
 <?php
 
 return [
+	// Navigation
+	'nav-home' => 'Home',
+	'nav-about' => 'About',
+	'nav-services' => 'Services',
+	'nav-contact' => 'Contact',
+
+	// Module labels
     'title' => 'Pages',
     'navigation_label' => 'Pages',
     'model_label' => 'Page',
@@ -12,15 +19,6 @@ return [
     'delete' => 'Delete Page',
     'restore' => 'Restore Page',
     'force_delete' => 'Force Delete',
-    
-    // Form fields
-    'title_field' => 'Title',
-    'slug_field' => 'URL Slug',
-    'content_field' => 'Content',
-    'meta_title_field' => 'Meta Title',
-    'meta_description_field' => 'Meta Description',
-    'status_field' => 'Status',
-    'published_at_field' => 'Published At',
     
     // Form sections
     'form_section_content' => 'Content',

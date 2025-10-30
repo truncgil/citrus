@@ -1,6 +1,13 @@
 <?php
 
 return [
+	// Navigation
+	'nav-home' => 'Anasayfa',
+	'nav-about' => 'Hakkımızda',
+	'nav-services' => 'Hizmetler',
+	'nav-contact' => 'İletişim',
+
+	// Module labels
     'title' => 'Sayfalar',
     'navigation_label' => 'Sayfalar',
     'model_label' => 'Sayfa',
@@ -13,15 +20,6 @@ return [
     'restore' => 'Sayfayı Geri Yükle',
     'force_delete' => 'Kalıcı Olarak Sil',
     
-    // Form fields
-    'title_field' => 'Başlık',
-    'slug_field' => 'URL Yolu',
-    'content_field' => 'İçerik',
-    'meta_title_field' => 'Meta Başlık',
-    'meta_description_field' => 'Meta Açıklama',
-    'status_field' => 'Durum',
-    'published_at_field' => 'Yayın Tarihi',
-    
     // Form sections
     'form_section_content' => 'İçerik',
     'form_section_page_settings' => 'Sayfa Ayarları',
@@ -30,7 +28,7 @@ return [
     
     // Form fields
     'title_field' => 'Başlık',
-    'slug_field' => 'URL Slug',
+    'slug_field' => 'URL Yolu',
     'content_field' => 'İçerik',
     'excerpt_field' => 'Özet',
     'featured_image_field' => 'Öne Çıkan Görsel',

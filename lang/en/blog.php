@@ -1,6 +1,13 @@
 <?php
 
 return [
+	// Navigation & list
+	'nav-blog' => 'Blog',
+	'meta-index-title' => 'Blog',
+	'meta-index-description' => 'Latest posts',
+	'empty' => 'No posts yet.',
+
+	// Module labels
     'title' => 'Blog Posts',
     'navigation_label' => 'Blog',
     'model_label' => 'Blog Post',

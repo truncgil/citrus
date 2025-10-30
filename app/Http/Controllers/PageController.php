@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -12,22 +13,63 @@ class PageController extends Controller
      */
     public function index()
     {
-        // Homepage'i bul
+        // 1) is_homepage işaretli ve published
         $page = Page::where('is_homepage', true)
             ->where('status', 'published')
             ->first();
 
+        // 2) yoksa 'home' slug'ı
         if (!$page) {
-            // Homepage yoksa, view'e boş geçelim
-            return view('home', [
+            $page = Page::where('slug', 'home')
+                ->where('status', 'published')
+                ->first();
+        }
+
+        // 3) yoksa ilk published sayfa (fallback)
+        if (!$page) {
+            $page = Page::where('status', 'published')->orderByDesc('published_at')->first();
+        }
+
+        $settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
+
+        // Hiç sayfa yoksa: direkt home template'inin statik fallback'i ile render et
+        if (!$page) {
+            return view('templates.home', [
                 'page' => null,
-                'menuItems' => $this->getMenuItems()
+                'settings' => $settings,
+                'meta' => [
+                    'title' => $settings->default_meta_title ?? config('app.name'),
+                    'description' => $settings->default_meta_description ?? null,
+                    'image' => $settings->default_meta_image ?? null,
+                ],
             ]);
         }
 
-        return view('home', [
+        $metaTitle = method_exists($page, 'translate')
+            ? ($page->translate('meta_title') ?: $page->translate('title'))
+            : ($page->meta_title ?? $page->title ?? null);
+
+        $metaDescription = method_exists($page, 'translate')
+            ? ($page->translate('meta_description') ?: ($page->excerpt ?? null))
+            : ($page->meta_description ?? $page->excerpt ?? null);
+
+        $sections = $page->sections ?? $page->data ?? [];
+        $template = ($page->slug === 'home' || ($page->is_homepage ?? false))
+            ? 'home'
+            : ($page->template ?? null);
+        $view = $template && view()->exists("templates.$template")
+            ? "templates.$template"
+            : (($page->slug === 'home' || ($page->is_homepage ?? false)) ? 'templates.home' : 'templates.generic');
+
+        return view($view, [
             'page' => $page,
-            'menuItems' => $this->getMenuItems()
+            'settings' => $settings,
+            'sections' => $sections,
+            'meta' => [
+                'title' => $metaTitle ?: ($settings->default_meta_title ?? config('app.name')),
+                'description' => $metaDescription ?: ($settings->default_meta_description ?? null),
+                'image' => $settings->default_meta_image ?? null,
+            ],
         ]);
     }
 
@@ -40,9 +82,31 @@ class PageController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
-        return view('page', [
+        $settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
+
+        $metaTitle = method_exists($page, 'translate')
+            ? ($page->translate('meta_title') ?: $page->translate('title'))
+            : ($page->meta_title ?? $page->title ?? null);
+
+        $metaDescription = method_exists($page, 'translate')
+            ? ($page->translate('meta_description') ?: ($page->excerpt ?? null))
+            : ($page->meta_description ?? $page->excerpt ?? null);
+
+        $sections = $page->sections ?? $page->data ?? [];
+        $template = ($slug === 'home' || ($page->is_homepage ?? false))
+            ? 'home'
+            : ($page->template ?? 'generic');
+        $view = view()->exists("templates.$template") ? "templates.$template" : (($slug === 'home') ? 'templates.home' : 'templates.generic');
+
+        return view($view, [
             'page' => $page,
-            'menuItems' => $this->getMenuItems()
+            'settings' => $settings,
+            'sections' => $sections,
+            'meta' => [
+                'title' => $metaTitle ?: ($settings->default_meta_title ?? config('app.name')),
+                'description' => $metaDescription ?: ($settings->default_meta_description ?? null),
+                'image' => $settings->default_meta_image ?? null,
+            ],
         ]);
     }
 

@@ -1,6 +1,13 @@
 <?php
 
 return [
+	// Navigation & list
+	'nav-blog' => 'Blog',
+	'meta-index-title' => 'Blog',
+	'meta-index-description' => 'Güncel paylaşımlarımız',
+	'empty' => 'Şu anda blog yazısı bulunmuyor.',
+
+	// Module labels
     'title' => 'Blog Yazıları',
     'navigation_label' => 'Blog',
     'model_label' => 'Blog Yazısı',
