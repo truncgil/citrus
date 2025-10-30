@@ -24,6 +24,7 @@ return [
     'form_section_content' => 'Content',
     'form_section_page_settings' => 'Page Settings',
     'form_section_seo_settings' => 'SEO Settings',
+    'form_section_sections' => 'Page Sections',
     'translations_section' => 'Translations',
     
     // Form fields
@@ -95,4 +96,53 @@ return [
     'slug_required' => 'The URL slug field is required.',
     'slug_unique' => 'This URL slug is already taken.',
     'content_required' => 'The content field is required.',
+    
+    // Section Builder
+    'sections_field' => 'Page Sections',
+    'sections_helper_text' => 'Add dynamic sections to your page',
+    'section_type' => 'Section Type',
+    'section_type_helper' => 'Select the type of section you want to add',
+    'section_data' => 'Section Data',
+    'section_data_helper' => 'Enter the required data for this section',
+    'section_add' => 'Add New Section',
+    
+    // Section Types
+    'section_type_hero' => 'Hero (Main Banner)',
+    'section_type_features' => 'Features',
+    'section_type_stats' => 'Statistics',
+    'section_type_cta' => 'Call to Action',
+    'section_type_content' => 'Content',
+    'section_type_gallery' => 'Gallery',
+    'section_type_testimonials' => 'Testimonials',
+    'section_type_team' => 'Team',
+    'section_type_pricing' => 'Pricing',
+    'section_type_faq' => 'FAQ',
+    'section_type_contact' => 'Contact',
+    'section_type_custom' => 'Custom',
+    
+    // Section Data Fields
+    'section_data_key' => 'Key',
+    'section_data_key_helper' => 'Data key (e.g: title, subtitle, image)',
+    'section_data_value_type' => 'Value Type',
+    'section_data_value' => 'Value',
+    'section_data_add_field' => 'Add New Field',
+    
+    // Value Types
+    'value_type_text' => 'Text',
+    'value_type_textarea' => 'Long Text',
+    'value_type_html' => 'HTML',
+    'value_type_markdown' => 'Markdown',
+    'value_type_richtext' => 'Rich Text',
+    'value_type_image' => 'Image',
+    'value_type_file' => 'File',
+    'value_type_url' => 'URL',
+    'value_type_email' => 'Email',
+    'value_type_phone' => 'Phone',
+    'value_type_number' => 'Number',
+    'value_type_boolean' => 'Yes/No',
+    'value_type_color' => 'Color',
+    'value_type_date' => 'Date',
+    'value_type_datetime' => 'Date & Time',
+    'value_type_array' => 'Array',
+    'value_type_json' => 'JSON',
 ];

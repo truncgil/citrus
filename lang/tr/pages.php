@@ -24,6 +24,7 @@ return [
     'form_section_content' => 'İçerik',
     'form_section_page_settings' => 'Sayfa Ayarları',
     'form_section_seo_settings' => 'SEO Ayarları',
+    'form_section_sections' => 'Sayfa Bölümleri',
     'translations_section' => 'Çeviriler',
     
     // Form fields
@@ -95,4 +96,53 @@ return [
     'slug_required' => 'URL yolu alanı zorunludur.',
     'slug_unique' => 'Bu URL yolu zaten kullanılıyor.',
     'content_required' => 'İçerik alanı zorunludur.',
+    
+    // Section Builder
+    'sections_field' => 'Sayfa Bölümleri',
+    'sections_helper_text' => 'Sayfanız için dinamik bölümler ekleyin',
+    'section_type' => 'Bölüm Tipi',
+    'section_type_helper' => 'Eklemek istediğiniz bölüm tipini seçin',
+    'section_data' => 'Bölüm Verileri',
+    'section_data_helper' => 'Bu bölüm için gerekli verileri girin',
+    'section_add' => 'Yeni Bölüm Ekle',
+    
+    // Section Types
+    'section_type_hero' => 'Hero (Ana Banner)',
+    'section_type_features' => 'Özellikler',
+    'section_type_stats' => 'İstatistikler',
+    'section_type_cta' => 'Harekete Geçirme',
+    'section_type_content' => 'İçerik',
+    'section_type_gallery' => 'Galeri',
+    'section_type_testimonials' => 'Referanslar',
+    'section_type_team' => 'Ekip',
+    'section_type_pricing' => 'Fiyatlandırma',
+    'section_type_faq' => 'SSS',
+    'section_type_contact' => 'İletişim',
+    'section_type_custom' => 'Özel',
+    
+    // Section Data Fields
+    'section_data_key' => 'Anahtar',
+    'section_data_key_helper' => 'Veri anahtarı (örn: title, subtitle, image)',
+    'section_data_value_type' => 'Değer Tipi',
+    'section_data_value' => 'Değer',
+    'section_data_add_field' => 'Yeni Alan Ekle',
+    
+    // Value Types
+    'value_type_text' => 'Metin',
+    'value_type_textarea' => 'Uzun Metin',
+    'value_type_html' => 'HTML',
+    'value_type_markdown' => 'Markdown',
+    'value_type_richtext' => 'Zengin Metin',
+    'value_type_image' => 'Görsel',
+    'value_type_file' => 'Dosya',
+    'value_type_url' => 'URL',
+    'value_type_email' => 'E-posta',
+    'value_type_phone' => 'Telefon',
+    'value_type_number' => 'Sayı',
+    'value_type_boolean' => 'Evet/Hayır',
+    'value_type_color' => 'Renk',
+    'value_type_date' => 'Tarih',
+    'value_type_datetime' => 'Tarih & Saat',
+    'value_type_array' => 'Dizi',
+    'value_type_json' => 'JSON',
 ];

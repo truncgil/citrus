@@ -88,4 +88,40 @@ class Page extends Model
         
         return null;
     }
+    
+    /**
+     * Get sections with parsed data as associative array
+     */
+    public function getParsedSectionsAttribute()
+    {
+        if (!$this->sections || !is_array($this->sections)) {
+            return [];
+        }
+        
+        return collect($this->sections)->map(function ($section) {
+            if (!isset($section['data']) || !is_array($section['data'])) {
+                return $section;
+            }
+            
+            // Convert key-value-type array to associative array
+            $parsedData = collect($section['data'])->pluck('value', 'key')->toArray();
+            
+            return [
+                'type' => $section['type'] ?? null,
+                'data' => $parsedData,
+            ];
+        })->toArray();
+    }
+    
+    /**
+     * Get a specific section's data by type
+     */
+    public function getSectionData(string $type, int $index = 0): ?array
+    {
+        $sections = $this->parsed_sections;
+        $matchingSections = array_filter($sections, fn($s) => ($s['type'] ?? null) === $type);
+        $matchingSections = array_values($matchingSections);
+        
+        return $matchingSections[$index] ?? null;
+    }
 }

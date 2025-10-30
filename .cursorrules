@@ -210,6 +210,121 @@ $table
 
 **Önemli Not:** Filament 4.x'te `Filament\Resources\Components\Tab` diye bir class **YOK**. Tüm tab kullanımları `Filament\Schemas\Components\Tabs\Tab` ile yapılır!
 
+#### **Filament 4.x REPEATER KULLANIM KURALLARI (KRİTİK!):**
+
+Repeater component'ı JSON array formatında tekrarlanan form component'leri oluşturmak için kullanılır.
+
+**Temel Kullanım:**
+```php
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+
+Repeater::make('members')
+    ->schema([
+        TextInput::make('name')->required(),
+        Select::make('role')
+            ->options([
+                'member' => 'Member',
+                'administrator' => 'Administrator',
+            ])
+            ->required(),
+    ])
+    ->defaultItems(0)
+    ->addActionLabel('Add Member')
+    ->reorderable()
+    ->collapsible()
+    ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+```
+
+**Simple Repeater (Tek Field için):**
+```php
+// ✅ DOĞRU - Filament 4.x'te simple() metodu parametre alır
+Repeater::make('tags')
+    ->simple(
+        TextInput::make('tag')
+            ->label('Tag')
+            ->required()
+    )
+
+// ❌ YANLIŞ - Bu kullanım HATA VERİR
+Repeater::make('tags')
+    ->schema([
+        TextInput::make('tag')->required(),
+    ])
+    ->simple()  // ❌ Parametre gerekli!
+```
+
+**Nested Repeater ile Dikkat Edilmesi Gerekenler:**
+
+1. **Aynı İsimli Field'lar Çakışır:**
+```php
+// ❌ YANLIŞ - Bu HATA VERİR (FileUpload array beklerken string alır)
+Repeater::make('data')
+    ->schema([
+        TextInput::make('value'),      // İlk value
+        FileUpload::make('value'),     // İkinci value - ÇAKIŞMA!
+        Textarea::make('value'),       // Üçüncü value - ÇAKIŞMA!
+    ])
+
+// ✅ DOĞRU - dehydrated() ile sadece görünür olan kaydedilir
+Repeater::make('data')
+    ->schema([
+        TextInput::make('value')
+            ->visible(fn ($get) => $get('type') === 'text')
+            ->dehydrated(fn ($get) => $get('type') === 'text'),
+        
+        FileUpload::make('value')
+            ->visible(fn ($get) => $get('type') === 'image')
+            ->dehydrated(fn ($get) => $get('type') === 'image'),
+        
+        Textarea::make('value')
+            ->visible(fn ($get) => $get('type') === 'textarea')
+            ->dehydrated(fn ($get) => $get('type') === 'textarea'),
+    ])
+```
+
+2. **Conditional Field'lar:**
+```php
+// Sadece görünür olan field dehydrate edilir
+Select::make('type')
+    ->options([...])
+    ->live(), // Değişikliği dinlemek için
+
+TextInput::make('value')
+    ->visible(fn (Get $get) => $get('type') === 'text')
+    ->dehydrated(fn (Get $get) => $get('type') === 'text'),
+```
+
+3. **Item Labels:**
+```php
+// Item'lara dinamik label ekle
+Repeater::make('sections')
+    ->schema([...])
+    ->itemLabel(fn (array $state): ?string => 
+        isset($state['type']) 
+            ? __('pages.section_type_' . $state['type']) 
+            : 'Item'
+    )
+```
+
+4. **Repeater Özellikleri:**
+```php
+Repeater::make('items')
+    ->schema([...])
+    ->defaultItems(0)           // Başlangıç item sayısı
+    ->addActionLabel('Add')     // Ekleme butonu label'ı
+    ->reorderable()             // Sürükle-bırak ile sıralama
+    ->collapsible()             // Açılıp kapanabilir
+    ->collapsed()               // Başlangıçta kapalı
+    ->cloneable()               // Kopyalama butonu
+    ->deletable()               // Silme butonu
+    ->minItems(1)               // Minimum item sayısı
+    ->maxItems(10)              // Maximum item sayısı
+```
+
+**Referans:** [Filament Repeater Docs](https://filamentphp.com/docs/4.x/forms/repeater)
+
 ### Dil Dosyası Yapısı
 <?php
 

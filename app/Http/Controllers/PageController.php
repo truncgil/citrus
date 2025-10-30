@@ -92,7 +92,8 @@ class PageController extends Controller
             ? ($page->translate('meta_description') ?: ($page->excerpt ?? null))
             : ($page->meta_description ?? $page->excerpt ?? null);
 
-        $sections = $page->sections ?? $page->data ?? [];
+        // Use parsed_sections for easier template usage (key-value format)
+        $sections = $page->parsed_sections ?? $page->sections ?? $page->data ?? [];
         $template = ($slug === 'home' || ($page->is_homepage ?? false))
             ? 'home'
             : ($page->template ?? 'generic');
