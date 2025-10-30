@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\Pages\Pages;
 
 use App\Filament\Admin\Resources\Components\TranslationTabs;
 use App\Filament\Admin\Resources\Pages\PageResource;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
@@ -21,13 +22,32 @@ class EditPage extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('save')
+                ->label(__('pages.save'))
+                ->action('save')
+                ->keyBindings(['mod+s'])
+                ->color('primary')
+                ->size('sm'),
+            Action::make('cancel')
+                ->label(__('pages.cancel'))
+                ->url($this->getResource()::getUrl('index'))
+                ->color('gray')
+                ->size('sm'),
             DeleteAction::make()
-                ->label(__('pages.delete')),
+                ->label(__('pages.delete'))
+                ->size('sm'),
             ForceDeleteAction::make()
-                ->label(__('pages.force_delete')),
+                ->label(__('pages.force_delete'))
+                ->size('sm'),
             RestoreAction::make()
-                ->label(__('pages.restore')),
+                ->label(__('pages.restore'))
+                ->size('sm'),
         ];
+    }
+    
+    protected function getFormActions(): array
+    {
+        return []; // Boş array döndürerek alt taraftaki form action'larını gizliyoruz
     }
 
     protected function getRedirectUrl(): string

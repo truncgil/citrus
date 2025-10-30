@@ -16,6 +16,8 @@ return [
     // Actions
     'create' => 'Yeni Blog Yazısı Oluştur',
     'edit' => 'Blog Yazısını Düzenle',
+    'save' => 'Kaydet',
+    'cancel' => 'İptal',
     'delete' => 'Blog Yazısını Sil',
     'restore' => 'Blog Yazısını Geri Yükle',
     'force_delete' => 'Kalıcı Olarak Sil',

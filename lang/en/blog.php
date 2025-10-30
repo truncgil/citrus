@@ -16,6 +16,8 @@ return [
     // Actions
     'create' => 'Create New Blog Post',
     'edit' => 'Edit Blog Post',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
     'delete' => 'Delete Blog Post',
     'restore' => 'Restore Blog Post',
     'force_delete' => 'Force Delete',

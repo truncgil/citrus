@@ -16,6 +16,8 @@ return [
     // Actions
     'create' => 'Create New Page',
     'edit' => 'Edit Page',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
     'delete' => 'Delete Page',
     'restore' => 'Restore Page',
     'force_delete' => 'Force Delete',

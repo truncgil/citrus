@@ -10,6 +10,8 @@ return [
     // Actions
     'create' => 'Create Language',
     'edit' => 'Edit Language',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
     'delete' => 'Delete Language',
     'restore' => 'Restore',
     'force_delete' => 'Force Delete',

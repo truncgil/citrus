@@ -10,6 +10,8 @@ return [
     // Actions
     'create' => 'Dil Oluştur',
     'edit' => 'Dil Düzenle',
+    'save' => 'Kaydet',
+    'cancel' => 'İptal',
     'delete' => 'Dil Sil',
     'restore' => 'Geri Yükle',
     'force_delete' => 'Kalıcı Olarak Sil',

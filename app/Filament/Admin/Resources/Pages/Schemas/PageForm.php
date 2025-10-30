@@ -4,6 +4,8 @@ namespace App\Filament\Admin\Resources\Pages\Schemas;
 
 use App\Filament\Admin\Resources\Components\TranslationTabs;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\CodeEditor;
+use Filament\Forms\Components\CodeEditor\Enums\Language;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -261,14 +263,58 @@ class PageForm
                                         // Textarea (displays and updates 'value' field)
                                         Textarea::make('_value_textarea')
                                             ->label(__('pages.section_data_value'))
-                                            ->visible(fn (Get $get) => in_array($get('type'), ['textarea', 'json', 'html']))
-                                            ->rows(fn (Get $get) => $get('type') === 'html' ? 6 : 4)
-                                            ->placeholder(fn (Get $get) => $get('type') === 'html' ? '<div>HTML kodu girin...</div>' : 'Metin girin...')
+                                            ->visible(fn (Get $get) => $get('type') === 'textarea')
+                                            ->rows(4)
+                                            ->placeholder('Metin girin...')
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
                                             ->afterStateHydrated(function ($component, $state, Get $get) {
                                                 // Only hydrate if this field type is active
-                                                if (!in_array($get('type'), ['textarea', 'json', 'html'])) {
+                                                if ($get('type') !== 'textarea') {
+                                                    return;
+                                                }
+                                                $value = $get('value');
+                                                if ($value !== null) {
+                                                    $component->state($value);
+                                                }
+                                            })
+                                            ->dehydrated(false)
+                                            ->columnSpanFull(),
+                                        
+                                        // HTML Code Editor (displays and updates 'value' field)
+                                        CodeEditor::make('_value_html')
+                                            ->label(__('pages.section_data_value'))
+                                            ->visible(fn (Get $get) => $get('type') === 'html')
+                                            ->language(Language::Html)
+                                          //  ->minHeight('300px')
+                                           // ->placeholder('<div>HTML kodu girin...</div>')
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                // Only hydrate if this field type is html
+                                                if ($get('type') !== 'html') {
+                                                    return;
+                                                }
+                                                $value = $get('value');
+                                                if ($value !== null) {
+                                                    $component->state($value);
+                                                }
+                                            })
+                                            ->dehydrated(false)
+                                            ->columnSpanFull(),
+                                        
+                                        // JSON Code Editor (displays and updates 'value' field)
+                                        CodeEditor::make('_value_json')
+                                            ->label(__('pages.section_data_value'))
+                                            ->visible(fn (Get $get) => $get('type') === 'json')
+                                            ->language(Language::Json)
+                                            //->minHeight('300px')
+                                      //      ->placeholder('{"key": "value"}')
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(fn ($state, callable $set) => $set('value', $state))
+                                            ->afterStateHydrated(function ($component, $state, Get $get) {
+                                                // Only hydrate if this field type is json
+                                                if ($get('type') !== 'json') {
                                                     return;
                                                 }
                                                 $value = $get('value');

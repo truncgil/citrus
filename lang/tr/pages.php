@@ -16,6 +16,8 @@ return [
     // Actions
     'create' => 'Yeni Sayfa Oluştur',
     'edit' => 'Sayfayı Düzenle',
+    'save' => 'Kaydet',
+    'cancel' => 'İptal',
     'delete' => 'Sayfayı Sil',
     'restore' => 'Sayfayı Geri Yükle',
     'force_delete' => 'Kalıcı Olarak Sil',
