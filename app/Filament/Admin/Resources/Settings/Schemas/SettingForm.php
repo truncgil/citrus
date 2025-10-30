@@ -92,12 +92,20 @@ class SettingForm
                             ->required()
                             ->options([
                                 'general' => __('settings.group_general'),
+                                'theme' => __('settings.group_theme'),
+                                'localization' => __('settings.group_localization'),
                                 'email' => __('settings.group_email'),
                                 'seo' => __('settings.group_seo'),
                                 'social' => __('settings.group_social'),
                                 'security' => __('settings.group_security'),
+                                'upload' => __('settings.group_upload'),
                                 'payment' => __('settings.group_payment'),
                                 'notification' => __('settings.group_notification'),
+                                'cache' => __('settings.group_cache'),
+                                'api' => __('settings.group_api'),
+                                'logging' => __('settings.group_logging'),
+                                'performance' => __('settings.group_performance'),
+                                'integration' => __('settings.group_integration'),
                                 'other' => __('settings.group_other'),
                             ])
                             ->default('general'),
