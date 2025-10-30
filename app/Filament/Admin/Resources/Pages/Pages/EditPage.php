@@ -50,9 +50,9 @@ class EditPage extends EditRecord
         return []; // Boş array döndürerek alt taraftaki form action'larını gizliyoruz
     }
 
-    protected function getRedirectUrl(): string
+    protected function getRedirectUrl(): ?string
     {
-        return $this->getResource()::getUrl('index');
+        return null; // Aynı sayfada kal
     }
 
     protected function getSavedNotificationTitle(): ?string
