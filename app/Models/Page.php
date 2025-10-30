@@ -27,6 +27,8 @@ class Page extends Model
         'template',
         'is_homepage',
         'show_in_menu',
+        'sections',
+        'data',
     ];
 
     /**
@@ -45,6 +47,8 @@ class Page extends Model
         'is_homepage' => 'boolean',
         'show_in_menu' => 'boolean',
         'sort_order' => 'integer',
+        'sections' => 'array',
+        'data' => 'array',
     ];
 
     public function author()
