@@ -8,6 +8,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\CodeEditor\Enums\Language;
+
 
 class FooterTemplateForm
 {
@@ -26,6 +28,7 @@ class FooterTemplateForm
                         CodeEditor::make('html_content')
                             ->label(__('footer-templates.field_html_content'))
                             ->required()
+                            ->language(Language::Html)
                             ->live(onBlur: false) // Real-time updates
                             ->columnSpanFull()
                             ->helperText(__('footer-templates.field_html_content_help'))
