@@ -33,8 +33,8 @@
 		@include('partials.footer')
 	@endif
 
-	{{-- İsteğe bağlı: tema JS dosyalarınız varsa buraya ekleyin --}}
-	{{-- <script src="{{ asset('assets/js/main.js') }}" defer></script> --}}
+	<script src="{{ asset('assets/js/plugins.js') }}"></script>
+	<script src="{{ asset('assets/js/theme.js') }}"></script>
 </body>
 </html>
 
