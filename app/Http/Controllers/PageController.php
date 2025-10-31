@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\Setting;
+use App\Services\TemplateService;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -13,22 +14,15 @@ class PageController extends Controller
      */
     public function index()
     {
-        // 1) is_homepage işaretli ve published
-        $page = Page::where('is_homepage', true)
+        // 1) is_homepage işaretli ve published (en son güncellenen)
+        $page = Page::with(['headerTemplate', 'footerTemplate'])
+            ->where('is_homepage', true)
             ->where('status', 'published')
+            ->latest('updated_at')
             ->first();
+  
 
-        // 2) yoksa 'home' slug'ı
-        if (!$page) {
-            $page = Page::where('slug', 'home')
-                ->where('status', 'published')
-                ->first();
-        }
-
-        // 3) yoksa ilk published sayfa (fallback)
-        if (!$page) {
-            $page = Page::where('status', 'published')->orderByDesc('published_at')->first();
-        }
+       
 
         $settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
 
@@ -53,18 +47,48 @@ class PageController extends Controller
             ? ($page->translate('meta_description') ?: ($page->excerpt ?? null))
             : ($page->meta_description ?? $page->excerpt ?? null);
 
+        // Section verisini al - Hem eski hem yeni sistemi destekle
         $sections = $page->sections ?? $page->data ?? [];
-        $template = ($page->slug === 'home' || ($page->is_homepage ?? false))
-            ? 'home'
-            : ($page->template ?? null);
-        $view = $template && view()->exists("templates.$template")
+        
+        // Yeni dinamik template sistemi için sections_data varsa onu da al
+        $templatedSections = $page->templated_sections ?? collect([]);
+        
+        // Template belirleme mantığı:
+        // 1. Kullanıcı template seçmişse, onu kullan
+        // 2. Template seçilmemişse ve homepage ise, 'home' kullan
+        // 3. Hiçbiri yoksa, 'generic' kullan
+        $template = $page->template 
+            ?? (($page->slug === 'home' || ($page->is_homepage ?? false)) ? 'home' : 'generic');
+        
+        $view = view()->exists("templates.$template")
             ? "templates.$template"
-            : (($page->slug === 'home' || ($page->is_homepage ?? false)) ? 'templates.home' : 'templates.generic');
+            : 'templates.generic';
+        
+        // Render Header Template
+        $renderedHeader = null;
+        if ($page->headerTemplate) {
+            $renderedHeader = TemplateService::replacePlaceholders(
+                $page->headerTemplate->html_content,
+                $page->header_data ?? []
+            );
+        }
+
+        // Render Footer Template
+        $renderedFooter = null;
+        if ($page->footerTemplate) {
+            $renderedFooter = TemplateService::replacePlaceholders(
+                $page->footerTemplate->html_content,
+                $page->footer_data ?? []
+            );
+        }
 
         return view($view, [
             'page' => $page,
             'settings' => $settings,
             'sections' => $sections,
+            'templatedSections' => $templatedSections,
+            'renderedHeader' => $renderedHeader,
+            'renderedFooter' => $renderedFooter,
             'meta' => [
                 'title' => $metaTitle ?: ($settings->default_meta_title ?? config('app.name')),
                 'description' => $metaDescription ?: ($settings->default_meta_description ?? null),
@@ -76,9 +100,10 @@ class PageController extends Controller
     /**
      * Display a specific page by slug
      */
-    public function show($slug)
+public function show($slug)
     {
-        $page = Page::where('slug', $slug)
+        $page = Page::with(['headerTemplate', 'footerTemplate'])
+            ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 
@@ -94,15 +119,46 @@ class PageController extends Controller
 
         // Use parsed_sections for easier template usage (key-value format)
         $sections = $page->parsed_sections ?? $page->sections ?? $page->data ?? [];
-        $template = ($slug === 'home' || ($page->is_homepage ?? false))
-            ? 'home'
-            : ($page->template ?? 'generic');
-        $view = view()->exists("templates.$template") ? "templates.$template" : (($slug === 'home') ? 'templates.home' : 'templates.generic');
+        
+        // Yeni dinamik template sistemi için sections_data varsa onu da al
+        $templatedSections = $page->templated_sections ?? collect([]);
+        
+        // Template belirleme mantığı:
+        // 1. Kullanıcı template seçmişse, onu kullan
+        // 2. Template seçilmemişse ve homepage ise, 'home' kullan
+        // 3. Hiçbiri yoksa, 'generic' kullan
+        $template = $page->template 
+            ?? (($slug === 'home' || ($page->is_homepage ?? false)) ? 'home' : 'generic');
+        
+        $view = view()->exists("templates.$template")
+            ? "templates.$template"
+            : 'templates.generic';
+
+        // Render Header Template
+        $renderedHeader = null;
+        if ($page->headerTemplate) {
+            $renderedHeader = TemplateService::replacePlaceholders(
+                $page->headerTemplate->html_content,
+                $page->header_data ?? []
+            );
+        }
+
+        // Render Footer Template
+        $renderedFooter = null;
+        if ($page->footerTemplate) {
+            $renderedFooter = TemplateService::replacePlaceholders(
+                $page->footerTemplate->html_content,
+                $page->footer_data ?? []
+            );
+        }
 
         return view($view, [
             'page' => $page,
             'settings' => $settings,
             'sections' => $sections,
+            'templatedSections' => $templatedSections,
+            'renderedHeader' => $renderedHeader,
+            'renderedFooter' => $renderedFooter,
             'meta' => [
                 'title' => $metaTitle ?: ($settings->default_meta_title ?? config('app.name')),
                 'description' => $metaDescription ?: ($settings->default_meta_description ?? null),

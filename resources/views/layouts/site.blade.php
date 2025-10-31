@@ -9,9 +9,22 @@
 	<link rel="stylesheet" href="{{ asset('html/style.css') }}">
 </head>
 <body>
-	@include('partials.navbar')
+	{{-- Dynamic Header Template or Static Navbar --}}
+	@if(isset($renderedHeader) && $renderedHeader)
+		{!! $renderedHeader !!}
+	@else
+		@include('partials.navbar')
+	@endif
+
+	{{-- Main Content --}}
 	@yield('content')
-	@include('partials.footer')
+
+	{{-- Dynamic Footer Template or Static Footer --}}
+	@if(isset($renderedFooter) && $renderedFooter)
+		{!! $renderedFooter !!}
+	@else
+		@include('partials.footer')
+	@endif
 
 	{{-- İsteğe bağlı: tema JS dosyalarınız varsa buraya ekleyin --}}
 	{{-- <script src="{{ asset('assets/js/main.js') }}" defer></script> --}}

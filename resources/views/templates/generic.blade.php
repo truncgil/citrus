@@ -1,8 +1,27 @@
 @extends('layouts.site')
 
 @section('content')
-	@php $blocks = $sections ?? []; @endphp
-	@if(is_array($blocks) && !empty($blocks))
+	@php
+		// Yeni dinamik template sistemi - Öncelik verilir
+		$hasTemplatedSections = isset($templatedSections) && $templatedSections->isNotEmpty();
+		
+		// Eski section builder sistemi
+		$blocks = $sections ?? [];
+		$hasBlocks = is_array($blocks) && !empty($blocks);
+	@endphp
+
+	@if($hasTemplatedSections)
+		{{-- Yeni dinamik template sisteminden gelen sections --}}
+		@foreach($templatedSections as $section)
+			@if($section['template'] ?? null)
+				{!! \App\Services\TemplateService::replacePlaceholders(
+					$section['template']->html_content,
+					$section['data'] ?? []
+				) !!}
+			@endif
+		@endforeach
+	@elseif($hasBlocks)
+		{{-- Eski blok bazlı dinamik render --}}
 		@foreach($blocks as $block)
 			@php $type = $block['type'] ?? null; @endphp
 			@if($type && view()->exists("components.blocks.$type"))

@@ -239,18 +239,58 @@ class TemplateService
 
     /**
      * Replace placeholders in HTML with actual data
+     * Supports both {text.title} and {{text.title}} formats
      */
     public static function replacePlaceholders(string $html, array $data): string
     {
-        foreach ($data as $placeholder => $value) {
+        // First, parse all placeholders in the format {type.field_name}
+        preg_match_all('/\{([a-z]+\.[a-z_]+)\}/i', $html, $matches);
+        $placeholders = array_unique($matches[1] ?? []);
+        
+        // Replace each placeholder
+        foreach ($placeholders as $placeholder) {
+            // Try to find the value in data with various key formats
+            $value = null;
+            
+            // 1. Try exact match (text.title)
+            if (isset($data[$placeholder])) {
+                $value = $data[$placeholder];
+            }
+            // 2. Try with section_data prefix (section_data.text.title)
+            elseif (isset($data["section_data.{$placeholder}"])) {
+                $value = $data["section_data.{$placeholder}"];
+            }
+            // 3. Try nested array access (data['section_data']['text.title'] or data['text']['title'])
+            else {
+                $parts = explode('.', $placeholder);
+                if (count($parts) === 2) {
+                    [$type, $field] = $parts;
+                    // Try nested: data['section_data'][$type][$field]
+                    if (isset($data['section_data'][$type][$field])) {
+                        $value = $data['section_data'][$type][$field];
+                    }
+                    // Try nested: data[$type][$field]
+                    elseif (isset($data[$type][$field])) {
+                        $value = $data[$type][$field];
+                    }
+                }
+            }
+            
             // Handle different value types
             if (is_array($value)) {
                 $value = implode(', ', $value);
             } elseif (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
+            } elseif ($value === null) {
+                $value = '';
             }
             
-            $html = str_replace("{{$placeholder}}", $value ?? '', $html);
+            // Replace both {text.title} and {{text.title}} formats
+            $html = str_replace(
+                ["{{$placeholder}}", "{{{$placeholder}}}"],
+                [$value, $value],
+                $html
+            );
         }
         
         return $html;

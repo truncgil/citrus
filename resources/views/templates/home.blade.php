@@ -2,13 +2,26 @@
 
 @section('content')
 	@php
-		// sections varsa blok bazlı render, yoksa index.html fallback
+		// Yeni dinamik template sistemi - Öncelik verilir
+		$hasTemplatedSections = isset($templatedSections) && $templatedSections->isNotEmpty();
+		
+		// Eski section builder sistemi
 		$blocks = $sections ?? [];
 		$hasBlocks = is_array($blocks) && count($blocks) > 0;
 	@endphp
 
-	@if($hasBlocks)
-		{{-- Blok bazlı dinamik render --}}
+	@if($hasTemplatedSections)
+		{{-- Yeni dinamik template sisteminden gelen sections --}}
+		@foreach($templatedSections as $section)
+			@if($section['template'] ?? null)
+				{!! \App\Services\TemplateService::replacePlaceholders(
+					$section['template']->html_content,
+					$section['data'] ?? []
+				) !!}
+			@endif
+		@endforeach
+	@elseif($hasBlocks)
+		{{-- Eski blok bazlı dinamik render --}}
 		@foreach($blocks as $block)
 			@php $type = $block['type'] ?? null; @endphp
 			@if($type && view()->exists("components.blocks.$type"))
