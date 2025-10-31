@@ -29,6 +29,12 @@ class Page extends Model
         'show_in_menu',
         'sections',
         'data',
+        // Template System
+        'header_template_id',
+        'header_data',
+        'footer_template_id',
+        'footer_data',
+        'sections_data',
     ];
 
     /**
@@ -49,6 +55,10 @@ class Page extends Model
         'sort_order' => 'integer',
         'sections' => 'array',
         'data' => 'array',
+        // Template System
+        'header_data' => 'array',
+        'footer_data' => 'array',
+        'sections_data' => 'array',
     ];
 
     public function author()
@@ -64,6 +74,22 @@ class Page extends Model
     public function children()
     {
         return $this->hasMany(Page::class, 'parent_id');
+    }
+
+    /**
+     * Get the header template for the page.
+     */
+    public function headerTemplate()
+    {
+        return $this->belongsTo(HeaderTemplate::class, 'header_template_id');
+    }
+
+    /**
+     * Get the footer template for the page.
+     */
+    public function footerTemplate()
+    {
+        return $this->belongsTo(FooterTemplate::class, 'footer_template_id');
     }
 
     public function getRouteKeyName()
@@ -123,5 +149,26 @@ class Page extends Model
         $matchingSections = array_values($matchingSections);
         
         return $matchingSections[$index] ?? null;
+    }
+
+    /**
+     * Get templated sections with their templates loaded.
+     * Used for new dynamic template system.
+     */
+    public function getTemplatedSectionsAttribute()
+    {
+        if (!$this->sections_data || !is_array($this->sections_data)) {
+            return collect([]);
+        }
+
+        return collect($this->sections_data)->map(function ($section) {
+            $templateId = $section['section_template_id'] ?? null;
+            $template = $templateId ? SectionTemplate::find($templateId) : null;
+
+            return [
+                'template' => $template,
+                'data' => $section['section_data'] ?? [],
+            ];
+        })->filter(fn($section) => $section['template'] !== null);
     }
 }

@@ -147,4 +147,20 @@ return [
     'value_type_datetime' => 'Date & Time',
     'value_type_array' => 'Array',
     'value_type_json' => 'JSON',
+    
+    // Dynamic Template System
+    'form_section_header_template' => 'Header Template',
+    'form_section_header_template_desc' => 'Select a dynamic header template for the top of the page',
+    'header_template_field' => 'Header Template',
+    
+    'form_section_template_sections' => 'Template Sections',
+    'form_section_template_sections_desc' => 'Add dynamic template sections for the page',
+    'template_sections_field' => 'Template Sections',
+    'section_template_field' => 'Section Template',
+    'add_template_section' => 'Add Section',
+    'template_section' => 'Template Section',
+    
+    'form_section_footer_template' => 'Footer Template',
+    'form_section_footer_template_desc' => 'Select a dynamic footer template for the bottom of the page',
+    'footer_template_field' => 'Footer Template',
 ];

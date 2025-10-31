@@ -147,4 +147,20 @@ return [
     'value_type_datetime' => 'Tarih & Saat',
     'value_type_array' => 'Dizi',
     'value_type_json' => 'JSON',
+    
+    // Dynamic Template System
+    'form_section_header_template' => 'Header Şablonu',
+    'form_section_header_template_desc' => 'Sayfanın üst kısmı için dinamik header şablonu seçin',
+    'header_template_field' => 'Header Şablonu',
+    
+    'form_section_template_sections' => 'Şablon Bölümleri',
+    'form_section_template_sections_desc' => 'Sayfa için dinamik şablon bölümleri ekleyin',
+    'template_sections_field' => 'Şablon Bölümleri',
+    'section_template_field' => 'Bölüm Şablonu',
+    'add_template_section' => 'Bölüm Ekle',
+    'template_section' => 'Şablon Bölümü',
+    
+    'form_section_footer_template' => 'Footer Şablonu',
+    'form_section_footer_template_desc' => 'Sayfanın alt kısmı için dinamik footer şablonu seçin',
+    'footer_template_field' => 'Footer Şablonu',
 ];

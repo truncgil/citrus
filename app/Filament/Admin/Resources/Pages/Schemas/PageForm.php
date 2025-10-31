@@ -3,6 +3,10 @@
 namespace App\Filament\Admin\Resources\Pages\Schemas;
 
 use App\Filament\Admin\Resources\Components\TranslationTabs;
+use App\Models\HeaderTemplate;
+use App\Models\SectionTemplate;
+use App\Models\FooterTemplate;
+use App\Services\TemplateService;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CodeEditor;
 use Filament\Forms\Components\CodeEditor\Enums\Language;
@@ -19,7 +23,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class PageForm
@@ -526,6 +532,88 @@ class PageForm
                     ->columnSpanFull()
                     ->collapsible(true)
                     ->collapsed(false),
+                
+                // Dynamic Template System
+                Section::make(__('pages.form_section_header_template'))
+                    ->description(__('pages.form_section_header_template_desc'))
+                    ->schema([
+                        Select::make('header_template_id')
+                            ->label(__('pages.header_template_field'))
+                            ->options(HeaderTemplate::where('is_active', true)->pluck('title', 'id'))
+                            ->searchable()
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set) => $set('header_data', []))
+                            ->columnSpanFull(),
+                        
+                        Group::make()
+                            ->schema(fn (Get $get): array => TemplateService::generateDynamicFields(
+                                HeaderTemplate::find($get('header_template_id')),
+                                'header_data'
+                            ))
+                            ->visible(fn (Get $get): bool => filled($get('header_template_id')))
+                            ->columnSpanFull(),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(true)
+                    ->collapsed(true),
+                
+                Section::make(__('pages.form_section_template_sections'))
+                    ->description(__('pages.form_section_template_sections_desc'))
+                    ->schema([
+                        Repeater::make('sections_data')
+                            ->label(__('pages.template_sections_field'))
+                            ->schema([
+                                Select::make('section_template_id')
+                                    ->label(__('pages.section_template_field'))
+                                    ->options(SectionTemplate::where('is_active', true)->pluck('title', 'id'))
+                                    ->searchable()
+                                    ->live()
+                                    ->required()
+                                    ->columnSpanFull(),
+                                
+                                Group::make()
+                                    ->schema(fn (Get $get): array => TemplateService::generateDynamicFields(
+                                        SectionTemplate::find($get('section_template_id')),
+                                        'section_data'
+                                    ))
+                                    ->visible(fn (Get $get): bool => filled($get('section_template_id')))
+                                    ->columnSpanFull(),
+                            ])
+                            ->defaultItems(0)
+                            ->addActionLabel(__('pages.add_template_section'))
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => 
+                                SectionTemplate::find($state['section_template_id'] ?? null)?->title ?? __('pages.template_section')
+                            )
+                            ->columnSpanFull(),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(true)
+                    ->collapsed(true),
+                
+                Section::make(__('pages.form_section_footer_template'))
+                    ->description(__('pages.form_section_footer_template_desc'))
+                    ->schema([
+                        Select::make('footer_template_id')
+                            ->label(__('pages.footer_template_field'))
+                            ->options(FooterTemplate::where('is_active', true)->pluck('title', 'id'))
+                            ->searchable()
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set) => $set('footer_data', []))
+                            ->columnSpanFull(),
+                        
+                        Group::make()
+                            ->schema(fn (Get $get): array => TemplateService::generateDynamicFields(
+                                FooterTemplate::find($get('footer_template_id')),
+                                'footer_data'
+                            ))
+                            ->visible(fn (Get $get): bool => filled($get('footer_template_id')))
+                            ->columnSpanFull(),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(true)
+                    ->collapsed(true),
                 
                 // Çeviri Sekmesi
                 Section::make('🌍 ' . __('pages.translations_section'))
