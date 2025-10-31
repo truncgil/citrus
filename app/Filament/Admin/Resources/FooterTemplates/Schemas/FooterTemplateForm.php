@@ -6,6 +6,7 @@ use Filament\Forms\Components\CodeEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 
 class FooterTemplateForm
@@ -22,19 +23,31 @@ class FooterTemplateForm
                             ->maxLength(255)
                             ->columnSpanFull(),
 
+                        // Preview Component
+                        View::make('components.template-preview')
+                            ->extraAttributes([
+                                'data-type' => 'footer',
+                                'data-field-name' => 'html_content',
+                            ])
+                            ->columnSpanFull(),
+
                         CodeEditor::make('html_content')
                             ->label(__('footer-templates.field_html_content'))
                             ->required()
-                            //->lineNumbers()
+                            ->live(onBlur: false) // Real-time updates
                             ->columnSpanFull()
-                            ->helperText(__('footer-templates.field_html_content_help')),
+                            ->helperText(__('footer-templates.field_html_content_help'))
+                            ->extraAttributes([
+                                'style' => 'min-height: 400px;',
+                                'data-field-name' => 'html_content',
+                            ]),
 
                         Toggle::make('is_active')
                             ->label(__('footer-templates.field_is_active'))
                             ->default(true)
                             ->inline(false),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
             ]);
     }
 }

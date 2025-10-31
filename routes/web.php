@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\TemplatePreviewController;
 use App\Models\Page;
 
 // Debug Route - Veritabanı kontrolü
@@ -59,6 +60,11 @@ Route::get('/', [PageController::class, 'index'])->name('homepage');
 // Blog
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+// Template Preview (admin panel için)
+Route::post('/admin/template-preview', [TemplatePreviewController::class, 'preview'])
+    ->middleware(['auth'])
+    ->name('template.preview');
 
 // Pages (en sonda olmalı - catch-all)
 Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');
