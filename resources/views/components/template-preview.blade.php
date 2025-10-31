@@ -15,7 +15,24 @@
         </label>
     </div>
     
-    <div class="mt-2 border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800" 
+    <div class="mt-2 flex items-center justify-end gap-2 mb-2">
+        <button
+            @click="updatePreview()"
+            :disabled="isLoading"
+            class="fi-btn fi-btn-color-primary fi-btn-size-sm inline-flex items-center gap-2 justify-center rounded-lg font-semibold outline-none transition duration-75 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-70 bg-primary-600 text-white hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400 px-3 py-2"
+            type="button">
+            <svg x-show="!isLoading" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <svg x-show="isLoading" class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            <span x-text="isLoading ? 'Yükleniyor...' : 'Run'"></span>
+        </button>
+    </div>
+    
+    <div class="border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800" 
          style="min-height: 400px; position: relative; width: 100%;">
         <!-- Loading indicator with modern preloader -->
         <div 
@@ -31,20 +48,11 @@
             x-transition:leave-end="opacity-0">
             <div class="text-center px-4">
                 <!-- Modern animated loader -->
-                <div class="relative inline-block mb-4">
+                <div class="relative inline-block mb-4" x-show="isLoading">
                     <div class="w-16 h-16 border-4 border-gray-200 dark:border-gray-700 rounded-full animate-pulse"></div>
                     <div class="absolute top-0 left-0 w-16 h-16 border-4 border-transparent border-t-primary-600 dark:border-t-primary-400 rounded-full animate-spin"></div>
                 </div>
-                <div class="space-y-2">
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 animate-pulse">
-                        <span x-show="isLoading">Yükleniyor...</span>
-                        <span x-show="!isLoading && !iframeSrc">Önizleme hazırlanıyor</span>
-                    </p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
-                        <span x-show="isLoading">İçerik işleniyor</span>
-                        <span x-show="!isLoading && !iframeSrc">Önizleme için HTML içeriği girin</span>
-                    </p>
-                </div>
+               
             </div>
         </div>
         
@@ -60,9 +68,7 @@
         </iframe>
     </div>
     
-    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-        {{ __('Önizleme gerçek zamanlı olarak güncellenir') }}
-    </p>
+  
 </div>
 
 @push('scripts')
@@ -75,8 +81,6 @@ function templatePreview(previewUrl, type, fieldName) {
         iframeSrc: '',
         isLoading: false,
         content: '',
-        debounceTimer: null,
-        intervalId: null,
         codeMirrorView: null,
         
         init() {
@@ -86,8 +90,6 @@ function templatePreview(previewUrl, type, fieldName) {
             this.$nextTick(() => {
                 setTimeout(() => {
                     this.findCodeMirror();
-                    this.setupWatchers();
-                    this.updatePreview();
                 }, 1500);
             });
         },
@@ -215,13 +217,18 @@ function templatePreview(previewUrl, type, fieldName) {
                 if (cmContent) {
                     console.log('[Preview] Found .cm-content element');
                     
-                    // Watch for changes
+                    // Get initial content (no watcher, only on demand)
+                    this.content = cmContent.textContent || '';
+                    console.log('[Preview] Initial content from .cm-content, length:', this.content.length);
+                    
+                    // Watch for content changes to update internal content variable
+                    // but don't trigger preview update automatically
                     const observer = new MutationObserver(() => {
                         const newContent = cmContent.textContent || '';
                         if (newContent !== this.content) {
                             this.content = newContent;
                             console.log('[Preview] Content changed, length:', this.content.length);
-                            this.debouncedUpdate();
+                            // Don't auto-update, wait for Run button
                         }
                     });
                     observer.observe(cmContent, {
@@ -229,10 +236,6 @@ function templatePreview(previewUrl, type, fieldName) {
                         subtree: true,
                         characterData: true,
                     });
-                    
-                    // Get initial content
-                    this.content = cmContent.textContent || '';
-                    console.log('[Preview] Initial content from .cm-content, length:', this.content.length);
                     
                     if (this.content) {
                         return; // Success!
@@ -247,12 +250,13 @@ function templatePreview(previewUrl, type, fieldName) {
                         console.log('[Preview] Found CodeMirror 6 View, content length:', this.content.length);
                         
                         if (view.dispatch) {
-                            // Watch for changes
+                            // Watch for changes to update internal content variable
+                            // but don't trigger preview update automatically
                             const originalDispatch = view.dispatch;
                             view.dispatch = (tr) => {
                                 originalDispatch.call(view, tr);
                                 this.content = view.state.doc.toString();
-                                this.debouncedUpdate();
+                                // Don't auto-update, wait for Run button
                             };
                         }
                         
@@ -270,7 +274,7 @@ function templatePreview(previewUrl, type, fieldName) {
                         this.content = cmInstance.getValue();
                         cmInstance.on('change', () => {
                             this.content = cmInstance.getValue();
-                            this.debouncedUpdate();
+                            // Don't auto-update, wait for Run button
                         });
                         console.log('[Preview] CodeMirror 5 content length:', this.content.length);
                         if (this.content) {
@@ -286,7 +290,7 @@ function templatePreview(previewUrl, type, fieldName) {
                     this.content = textarea.value || '';
                     textarea.addEventListener('input', () => {
                         this.content = textarea.value;
-                        this.debouncedUpdate();
+                        // Don't auto-update, wait for Run button
                     });
                     console.log('[Preview] Textarea content length:', this.content.length);
                 } else {
@@ -295,34 +299,12 @@ function templatePreview(previewUrl, type, fieldName) {
             }
         },
         
-        setupWatchers() {
-            // Watch for Livewire updates
-            if (window.Livewire) {
-                document.addEventListener('livewire:update', () => {
-                    this.findCodeMirror();
-                    this.debouncedUpdate();
-                });
-            }
-            
-            // Periodic update
-            this.intervalId = setInterval(() => {
-                this.findCodeMirror();
-                this.updatePreview();
-            }, 3000);
-        },
-        
-        debouncedUpdate() {
-            clearTimeout(this.debounceTimer);
-            this.debounceTimer = setTimeout(() => {
-                this.updatePreview();
-            }, 800);
-        },
-        
         async updatePreview() {
-            // Try to refresh content
-            if (!this.content) {
-                this.findCodeMirror();
-            }
+            // Refresh content from editor before updating
+            this.findCodeMirror();
+            
+            // Give a moment for content to be refreshed
+            await new Promise(resolve => setTimeout(resolve, 100));
             
             if (!this.content || !this.content.trim()) {
                 console.log('[Preview] No content, skipping update');
@@ -372,12 +354,6 @@ function templatePreview(previewUrl, type, fieldName) {
         },
         
         destroy() {
-            if (this.intervalId) {
-                clearInterval(this.intervalId);
-            }
-            if (this.debounceTimer) {
-                clearTimeout(this.debounceTimer);
-            }
             if (this.iframeSrc) {
                 URL.revokeObjectURL(this.iframeSrc);
             }
