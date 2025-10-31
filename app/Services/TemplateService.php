@@ -92,7 +92,7 @@ class TemplateService
                 
                 'code' => CodeEditor::make("{$dataKey}.{$placeholder}")
                     ->label($label)
-                    ->lineNumbers()
+                    //->lineNumbers()
                     ->maxLength(50000),
                 
                 // Date & Time

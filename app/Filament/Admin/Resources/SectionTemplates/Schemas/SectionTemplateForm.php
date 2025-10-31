@@ -25,7 +25,7 @@ class SectionTemplateForm
                         CodeEditor::make('html_content')
                             ->label(__('section-templates.field_html_content'))
                             ->required()
-                            ->lineNumbers()
+                            //->lineNumbers()
                             ->columnSpanFull()
                             ->helperText(__('section-templates.field_html_content_help')),
 

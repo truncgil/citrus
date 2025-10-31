@@ -25,7 +25,7 @@ class HeaderTemplateForm
                         CodeEditor::make('html_content')
                             ->label(__('header-templates.field_html_content'))
                             ->required()
-                            ->lineNumbers()
+                            //->lineNumbers()
                             ->columnSpanFull()
                             ->helperText(__('header-templates.field_html_content_help')),
 

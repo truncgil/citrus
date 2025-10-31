@@ -25,7 +25,7 @@ class FooterTemplateForm
                         CodeEditor::make('html_content')
                             ->label(__('footer-templates.field_html_content'))
                             ->required()
-                            ->lineNumbers()
+                            //->lineNumbers()
                             ->columnSpanFull()
                             ->helperText(__('footer-templates.field_html_content_help')),
 

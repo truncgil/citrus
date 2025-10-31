@@ -404,7 +404,7 @@ protected static function generateDynamicFields($template, string $dataKey): arr
             
             'code' => CodeEditor::make("{$dataKey}.{$placeholder}")
                 ->label($label)
-                ->lineNumbers()
+                //->lineNumbers()
                 ->maxLength(50000),
             
             // Date & Time
