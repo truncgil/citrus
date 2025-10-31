@@ -7,6 +7,13 @@
 	<meta name="description" content="{{ $meta['description'] ?? ($settings->default_meta_description ?? '') }}">
 	<link rel="icon" href="{{ $settings?->favicon_path ? asset($settings->favicon_path) : asset('assets/img/favicon.ico') }}">
 	<link rel="stylesheet" href="{{ asset('html/style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/fonts/unicons/unicons.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/plugins.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/colors/grape.css') }}">
+	<link rel="preload" href="{{ asset('assets/css/fonts/urbanist.css') }}" as="style" onload="this.rel='stylesheet'">
+
+
+
 </head>
 <body>
 	{{-- Dynamic Header Template or Static Navbar --}}
