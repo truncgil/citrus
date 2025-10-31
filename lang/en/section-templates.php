@@ -3,7 +3,7 @@
 return [
     // Navigation
     'navigation_group' => 'Templates',
-    'navigation_label' => 'Section Templates',
+    'navigation_label' => 'Section',
     'model_label' => 'Section Template',
     'plural_model_label' => 'Section Templates',
 
