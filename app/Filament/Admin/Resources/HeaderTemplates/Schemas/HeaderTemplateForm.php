@@ -23,14 +23,6 @@ class HeaderTemplateForm
                             ->maxLength(255)
                             ->columnSpanFull(),
 
-                        // Preview Component
-                        View::make('components.template-preview')
-                            ->extraAttributes([
-                                'data-type' => 'header',
-                                'data-field-name' => 'html_content',
-                            ])
-                            ->columnSpanFull(),
-
                         CodeEditor::make('html_content')
                             ->label(__('header-templates.field_html_content'))
                             ->required()
@@ -41,6 +33,14 @@ class HeaderTemplateForm
                                 'style' => 'min-height: 400px;',
                                 'data-field-name' => 'html_content',
                             ]),
+
+                        // Preview Component - placed after editor
+                        View::make('components.template-preview')
+                            ->extraAttributes([
+                                'data-type' => 'header',
+                                'data-field-name' => 'html_content',
+                            ])
+                            ->columnSpanFull(),
 
                         Toggle::make('is_active')
                             ->label(__('header-templates.field_is_active'))
