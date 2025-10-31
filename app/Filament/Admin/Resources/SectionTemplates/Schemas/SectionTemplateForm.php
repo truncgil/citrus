@@ -8,6 +8,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\CodeEditor\Enums\Language;
 
 class SectionTemplateForm
 {
@@ -27,6 +28,7 @@ class SectionTemplateForm
                             ->label(__('section-templates.field_html_content'))
                             ->required()
                             ->live(onBlur: false) // Real-time updates
+                            ->language(Language::Html)
                             ->columnSpanFull()
                             ->helperText(__('section-templates.field_html_content_help'))
                             ->extraAttributes([
