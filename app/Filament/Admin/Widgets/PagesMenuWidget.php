@@ -15,14 +15,11 @@ class PagesMenuWidget extends BaseWidget
 
     protected static int $maxDepth = 4;
 
-    protected ?string $treeTitle = null;
-
     protected bool $enableTreeTitle = true;
 
-    public function mount(): void
+    public function getTreeTitle(): string
     {
-        parent::mount();
-        $this->treeTitle = __('pages.menu_tree_title');
+        return __('pages.menu_tree_title');
     }
 
     protected function getTreeQuery(): Builder

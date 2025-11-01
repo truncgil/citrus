@@ -11,8 +11,6 @@ class MenuTree extends Page
 {
     protected static string $resource = PageResource::class;
 
-    protected string $view = 'filament.admin.pages.menu-tree';
-
     public function getTitle(): string
     {
         return __('pages.menu_tree_title');
@@ -36,7 +34,7 @@ class MenuTree extends Page
         ];
     }
 
-    protected function getHeaderWidgets(): array
+    protected function getFooterWidgets(): array
     {
         return [
             PagesMenuWidget::class,
