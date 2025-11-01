@@ -542,6 +542,41 @@ class PageForm
                             ->options(HeaderTemplate::where('is_active', true)->pluck('title', 'id'))
                             ->searchable()
                             ->live()
+                            ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                // Template seçildiğinde default verileri doldur
+                                if (!$state) {
+                                    return;
+                                }
+                                
+                                $template = HeaderTemplate::find($state);
+                                if (!$template) {
+                                    return;
+                                }
+                                
+                                // default_data'yı güvenli bir şekilde al
+                                $defaultData = $template->default_data;
+                                if (is_string($defaultData)) {
+                                    $defaultData = json_decode($defaultData, true) ?? [];
+                                }
+                                if (!is_array($defaultData) || empty($defaultData)) {
+                                    return;
+                                }
+                                
+                                // Mevcut header_data'yı al
+                                $existingData = $get('header_data') ?? [];
+                                
+                                // Her default veri için boş olan alanları doldur
+                                foreach ($defaultData as $key => $defaultValue) {
+                                    // Eğer bu alan boşsa veya yoksa, default değeri kullan
+                                    if (!isset($existingData[$key]) || 
+                                    
+                                        $existingData[$key] === null || 
+                                        $existingData[$key] === '' || 
+                                        (is_array($existingData[$key]) && empty($existingData[$key]))) {
+                                            $set("header_data.{$key}", $defaultValue);
+                                    }
+                                }
+                            })
                             ->columnSpanFull(),
                         
                         Group::make()
@@ -588,6 +623,40 @@ class PageForm
                                     ->searchable()
                                     ->live()
                                     ->required()
+                                    ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                        // Template seçildiğinde default verileri doldur
+                                        if (!$state) {
+                                            return;
+                                        }
+                                        
+                                        $template = SectionTemplate::find($state);
+                                        if (!$template) {
+                                            return;
+                                        }
+                                        
+                                        // default_data'yı güvenli bir şekilde al
+                                        $defaultData = $template->default_data;
+                                        if (is_string($defaultData)) {
+                                            $defaultData = json_decode($defaultData, true) ?? [];
+                                        }
+                                        if (!is_array($defaultData) || empty($defaultData)) {
+                                            return;
+                                        }
+                                        
+                                        // Mevcut section_data'yı al
+                                        $existingData = $get('section_data') ?? [];
+                                        
+                                        // Her default veri için boş olan alanları doldur
+                                        foreach ($defaultData as $key => $defaultValue) {
+                                            // Eğer bu alan boşsa veya yoksa, default değeri kullan
+                                            if (!isset($existingData[$key]) || 
+                                                $existingData[$key] === null || 
+                                                $existingData[$key] === '' || 
+                                                (is_array($existingData[$key]) && empty($existingData[$key]))) {
+                                                $set("section_data.{$key}", $defaultValue);
+                                            }
+                                        }
+                                    })
                                     ->columnSpanFull(),
                                 
                                 Group::make()
@@ -639,6 +708,31 @@ class PageForm
                             ->options(FooterTemplate::where('is_active', true)->pluck('title', 'id'))
                             ->searchable()
                             ->live()
+                            ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                // Template seçildiğinde default verileri doldur
+                                if (!$state) {
+                                    return;
+                                }
+                                
+                                $template = FooterTemplate::find($state);
+                                if (!$template || empty($template->default_data)) {
+                                    return;
+                                }
+                                
+                                // Mevcut footer_data'yı al
+                                $existingData = $get('footer_data') ?? [];
+                                
+                                // Her default veri için boş olan alanları doldur
+                                foreach ($template->default_data as $key => $defaultValue) {
+                                    // Eğer bu alan boşsa veya yoksa, default değeri kullan
+                                    if (!isset($existingData[$key]) || 
+                                        $existingData[$key] === null || 
+                                        $existingData[$key] === '' || 
+                                        (is_array($existingData[$key]) && empty($existingData[$key]))) {
+                                        $set("footer_data.{$key}", $defaultValue);
+                                    }
+                                }
+                            })
                             ->columnSpanFull(),
                         
                         Group::make()
