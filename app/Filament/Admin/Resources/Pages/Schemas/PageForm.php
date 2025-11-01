@@ -556,17 +556,17 @@ class PageForm
                                     return [];
                                 }
                                 
-                                // Get existing page data, or use template defaults
+                                // Get existing page data
                                 $existingData = $record?->header_data ?? [];
                                 $templateDefaults = $template->default_data ?? [];
                                 
-                                // Merge: existing data takes priority over defaults
-                                $mergedData = array_merge($templateDefaults, $existingData);
-                                
+                                // Pass both existingData and defaultData separately
+                                // TemplateService will handle empty value fallback
                                 return TemplateService::generateDynamicFields(
                                     $template,
                                     'header_data',
-                                    $mergedData
+                                    $existingData,
+                                    $templateDefaults
                                 );
                             })
                             ->visible(fn (Get $get): bool => filled($get('header_template_id')))
@@ -602,17 +602,17 @@ class PageForm
                                             return [];
                                         }
                                         
-                                        // Get existing section data, or use template defaults
+                                        // Get existing section data
                                         $existingData = $get('section_data') ?? [];
                                         $templateDefaults = $template->default_data ?? [];
                                         
-                                        // Only use defaults if no existing data
-                                        $mergedData = !empty($existingData) ? $existingData : $templateDefaults;
-                                        
+                                        // Pass both existingData and defaultData separately
+                                        // TemplateService will handle empty value fallback
                                         return TemplateService::generateDynamicFields(
                                             $template,
                                             'section_data',
-                                            $mergedData
+                                            $existingData,
+                                            $templateDefaults
                                         );
                                     })
                                     ->visible(fn (Get $get): bool => filled($get('section_template_id')))
@@ -653,17 +653,17 @@ class PageForm
                                     return [];
                                 }
                                 
-                                // Get existing page data, or use template defaults
+                                // Get existing page data
                                 $existingData = $record?->footer_data ?? [];
                                 $templateDefaults = $template->default_data ?? [];
                                 
-                                // Merge: existing data takes priority over defaults
-                                $mergedData = array_merge($templateDefaults, $existingData);
-                                
+                                // Pass both existingData and defaultData separately
+                                // TemplateService will handle empty value fallback
                                 return TemplateService::generateDynamicFields(
                                     $template,
                                     'footer_data',
-                                    $mergedData
+                                    $existingData,
+                                    $templateDefaults
                                 );
                             })
                             ->visible(fn (Get $get): bool => filled($get('footer_template_id')))

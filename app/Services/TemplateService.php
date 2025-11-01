@@ -18,8 +18,10 @@ class TemplateService
      * Generate dynamic form fields based on template placeholders
      * For default data (template forms), use dataKey = 'default_data'
      * For page data (page forms), use dataKey = 'header_data' or 'footer_data'
+     * 
+     * @param array|null $defaultData Template's default_data array
      */
-    public static function generateDynamicFields($template, string $dataKey, ?array $existingData = null): array
+    public static function generateDynamicFields($template, string $dataKey, ?array $existingData = null, ?array $defaultData = null): array
     {
         if (!$template) {
             return [];
@@ -41,6 +43,17 @@ class TemplateService
             
             // Get existing value from existingData if provided
             $existingValue = $existingData[$placeholder] ?? null;
+            
+            // Get default value from template's default_data
+            $defaultValue = $defaultData[$placeholder] ?? null;
+            
+            // If existing value is empty (null, empty string, empty array), use default
+            $isValueEmpty = $existingValue === null 
+                || $existingValue === '' 
+                || (is_array($existingValue) && empty($existingValue));
+            
+            // Use default if existing value is empty
+            $finalValue = $isValueEmpty && $defaultValue !== null ? $defaultValue : $existingValue;
             
             $field = match($type) {
                 // Text Input Variants
@@ -217,9 +230,9 @@ class TemplateService
                     ->helperText("Unknown type: {$type}"),
             };
             
-            // Set default value if existingValue is provided
-            if ($existingValue !== null) {
-                $field->default($existingValue);
+            // Set default value: use finalValue (which falls back to default if existing is empty)
+            if ($finalValue !== null) {
+                $field->default($finalValue);
             }
             
             $fields[] = $field;
