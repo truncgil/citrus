@@ -673,13 +673,41 @@ class PageForm
                                         // Mevcut section_data'yı al
                                         $existingData = $get('section_data') ?? [];
                                         
+                                        // Nested array'leri dot notation'a çeviren recursive fonksiyon
+                                        $flattenDefaultData = function ($array, $prefix = '') use (&$flattenDefaultData) {
+                                            $result = [];
+                                            foreach ($array as $key => $value) {
+                                                $newKey = $prefix ? "{$prefix}.{$key}" : $key;
+                                                if (is_array($value)) {
+                                                    $result = array_merge($result, $flattenDefaultData($value, $newKey));
+                                                } else {
+                                                    $result[$newKey] = $value;
+                                                }
+                                            }
+                                            return $result;
+                                        };
+                                        
+                                        // Default data'yı düzleştir
+                                        $flattenedDefaults = $flattenDefaultData($defaultData);
+                                        
                                         // Her default veri için boş olan alanları doldur
-                                        foreach ($defaultData as $key => $defaultValue) {
+                                        foreach ($flattenedDefaults as $key => $defaultValue) {
+                                            // Dot notation ile nested değeri kontrol et
+                                            $keys = explode('.', $key);
+                                            $currentValue = $existingData;
+                                            
+                                            // Nested değere eriş
+                                            foreach ($keys as $k) {
+                                                $currentValue = $currentValue[$k] ?? null;
+                                                if ($currentValue === null) {
+                                                    break;
+                                                }
+                                            }
+                                            
                                             // Eğer bu alan boşsa veya yoksa, default değeri kullan
-                                            if (!isset($existingData[$key]) || 
-                                                $existingData[$key] === null || 
-                                                $existingData[$key] === '' || 
-                                                (is_array($existingData[$key]) && empty($existingData[$key]))) {
+                                            if ($currentValue === null || 
+                                                $currentValue === '' || 
+                                                (is_array($currentValue) && empty($currentValue))) {
                                                 $set("section_data.{$key}", $defaultValue);
                                             }
                                         }
@@ -742,20 +770,57 @@ class PageForm
                                 }
                                 
                                 $template = FooterTemplate::find($state);
-                                if (!$template || empty($template->default_data)) {
+                                if (!$template) {
+                                    return;
+                                }
+                                
+                                // default_data'yı güvenli bir şekilde al
+                                $defaultData = $template->default_data;
+                                if (is_string($defaultData)) {
+                                    $defaultData = json_decode($defaultData, true) ?? [];
+                                }
+                                if (!is_array($defaultData) || empty($defaultData)) {
                                     return;
                                 }
                                 
                                 // Mevcut footer_data'yı al
                                 $existingData = $get('footer_data') ?? [];
                                 
+                                // Nested array'leri dot notation'a çeviren recursive fonksiyon
+                                $flattenDefaultData = function ($array, $prefix = '') use (&$flattenDefaultData) {
+                                    $result = [];
+                                    foreach ($array as $key => $value) {
+                                        $newKey = $prefix ? "{$prefix}.{$key}" : $key;
+                                        if (is_array($value)) {
+                                            $result = array_merge($result, $flattenDefaultData($value, $newKey));
+                                        } else {
+                                            $result[$newKey] = $value;
+                                        }
+                                    }
+                                    return $result;
+                                };
+                                
+                                // Default data'yı düzleştir
+                                $flattenedDefaults = $flattenDefaultData($defaultData);
+                                
                                 // Her default veri için boş olan alanları doldur
-                                foreach ($template->default_data as $key => $defaultValue) {
+                                foreach ($flattenedDefaults as $key => $defaultValue) {
+                                    // Dot notation ile nested değeri kontrol et
+                                    $keys = explode('.', $key);
+                                    $currentValue = $existingData;
+                                    
+                                    // Nested değere eriş
+                                    foreach ($keys as $k) {
+                                        $currentValue = $currentValue[$k] ?? null;
+                                        if ($currentValue === null) {
+                                            break;
+                                        }
+                                    }
+                                    
                                     // Eğer bu alan boşsa veya yoksa, default değeri kullan
-                                    if (!isset($existingData[$key]) || 
-                                        $existingData[$key] === null || 
-                                        $existingData[$key] === '' || 
-                                        (is_array($existingData[$key]) && empty($existingData[$key]))) {
+                                    if ($currentValue === null || 
+                                        $currentValue === '' || 
+                                        (is_array($currentValue) && empty($currentValue))) {
                                         $set("footer_data.{$key}", $defaultValue);
                                     }
                                 }
