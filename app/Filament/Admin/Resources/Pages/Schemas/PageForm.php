@@ -573,6 +573,9 @@ class PageForm
                                         $existingData[$key] === null || 
                                         $existingData[$key] === '' || 
                                         (is_array($existingData[$key]) && empty($existingData[$key]))) {
+                                            if(is_array($defaultValue)) {
+                                                $defaultValue = reset($defaultValue);
+                                            }
                                             $set("header_data.{$key}", $defaultValue);
                                     }
                                 }
