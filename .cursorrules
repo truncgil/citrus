@@ -85,6 +85,10 @@ $table
             DeleteBulkAction::make(),
         ]),
     ]);
+
+// Utilities (Schema içinde kullanım)
+use Filament\Schemas\Components\Utilities\Get;  // ✅ Doğru - Form state okuma
+use Filament\Schemas\Components\Utilities\Set;  // ✅ Doğru - Form state yazma
 ```
 
 #### **Form & Schema Components (DOĞRU):**
@@ -103,6 +107,7 @@ use Filament\Schemas\Components\Section;   // ✅ Doğru
 use Filament\Schemas\Components\Grid;      // ✅ Doğru
 use Filament\Schemas\Components\Fieldset;  // ✅ Doğru
 use Filament\Schemas\Components\Flex;      // ✅ Doğru
+use Filament\Schemas\Components\Group;     // ✅ Doğru - Schema içinde gruplamak için
 
 // Tabs components (ÖNEMLİ: Schemas namespace!)
 use Filament\Schemas\Components\Tabs;      // ✅ Doğru
@@ -189,8 +194,11 @@ public static function form(Schema $schema): Schema
 use Filament\Tables\Actions\EditAction;      // ❌
 use Filament\Forms\Components\Section;       // ❌
 use Filament\Forms\Components\Grid;          // ❌
+use Filament\Forms\Components\Group;         // ❌ Forms namespace altında Group YOK
 use Filament\Forms\Components\Tabs;          // ❌ Forms namespace altında Tabs YOK
 use Filament\Resources\Components\Tab;       // ❌ Bu class hiç YOK
+use Filament\Forms\Get;                       // ❌ Bu namespace YOK
+use Filament\Forms\Set;                       // ❌ Bu namespace YOK
 
 // ❌ YANLIŞ - Eski metod adları
 $table
@@ -204,11 +212,17 @@ $table
 - ✅ **Table Filters:** `Filament\Tables\Filters\` namespace
 - ✅ **Form Inputs:** `Filament\Forms\Components\` namespace
 - ✅ **Layout Components:** `Filament\Schemas\Components\` namespace
+  - Section, Grid, Fieldset, Flex, Group, Tabs, View vb.
 - ✅ **Tabs (Tüm Kullanımlar):** `Filament\Schemas\Components\Tabs\Tab` (Her yerde bu!)
+- ✅ **Utilities:** `Filament\Schemas\Components\Utilities\` namespace
+  - Get, Set (Schema içinde form state okuma/yazma)
 - ✅ **Infolist Entries:** `Filament\Infolists\Components\` namespace
 - ✅ **Table Methods:** `->recordActions()` ve `->toolbarActions()`
 
-**Önemli Not:** Filament 4.x'te `Filament\Resources\Components\Tab` diye bir class **YOK**. Tüm tab kullanımları `Filament\Schemas\Components\Tabs\Tab` ile yapılır!
+**Kritik Notlar:**
+- `Filament\Resources\Components\Tab` diye bir class **YOK**. Tüm tab kullanımları `Filament\Schemas\Components\Tabs\Tab` ile yapılır!
+- `Filament\Forms\Components\Group` diye bir class **YOK**. Schema içinde gruplamak için `Filament\Schemas\Components\Group` kullan!
+- `Filament\Forms\Get` ve `Filament\Forms\Set` diye class'lar **YOK**. `Filament\Schemas\Components\Utilities\Get` ve `Filament\Schemas\Components\Utilities\Set` kullan!
 
 #### **Filament 4.x REPEATER KULLANIM KURALLARI (KRİTİK!):**
 

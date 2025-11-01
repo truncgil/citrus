@@ -542,14 +542,43 @@ class PageForm
                             ->options(HeaderTemplate::where('is_active', true)->pluck('title', 'id'))
                             ->searchable()
                             ->live()
-                            ->afterStateUpdated(fn (Set $set) => $set('header_data', []))
+                            ->afterStateUpdated(function (Set $set, Get $get, $state, $record) {
+                                $template = HeaderTemplate::find($state);
+                                if ($template && $template->default_data) {
+                                    // If page doesn't have header_data or it's empty, load defaults
+                                    $currentData = $record ? ($record->header_data ?? []) : ($get('header_data') ?? []);
+                                    if (empty($currentData)) {
+                                        $set('header_data', $template->default_data);
+                                    }
+                                } else {
+                                    // If no template selected or no defaults, clear data
+                                    if (!$record || empty($record->header_data)) {
+                                        $set('header_data', []);
+                                    }
+                                }
+                            })
                             ->columnSpanFull(),
                         
                         Group::make()
-                            ->schema(fn (Get $get): array => TemplateService::generateDynamicFields(
-                                HeaderTemplate::find($get('header_template_id')),
-                                'header_data'
-                            ))
+                            ->schema(function (Get $get, $record): array {
+                                $template = HeaderTemplate::find($get('header_template_id'));
+                                if (!$template) {
+                                    return [];
+                                }
+                                
+                                // Get page's header_data or template's default_data
+                                $pageData = $record ? ($record->header_data ?? []) : ($get('header_data') ?? []);
+                                $templateDefaults = $template->default_data ?? [];
+                                
+                                // Merge: page data overrides template defaults
+                                $mergedData = array_merge($templateDefaults, $pageData);
+                                
+                                return TemplateService::generateDynamicFields(
+                                    $template,
+                                    'header_data',
+                                    $mergedData
+                                );
+                            })
                             ->visible(fn (Get $get): bool => filled($get('header_template_id')))
                             ->columnSpanFull(),
                     ])
@@ -569,13 +598,38 @@ class PageForm
                                     ->searchable()
                                     ->live()
                                     ->required()
+                                    ->afterStateUpdated(function (Set $set, Get $get, $state, $record) {
+                                        $template = SectionTemplate::find($state);
+                                        if ($template && $template->default_data) {
+                                            // If section doesn't have section_data or it's empty, load defaults
+                                            $currentData = $get('section_data') ?? [];
+                                            if (empty($currentData)) {
+                                                $set('section_data', $template->default_data);
+                                            }
+                                        }
+                                    })
                                     ->columnSpanFull(),
                                 
                                 Group::make()
-                                    ->schema(fn (Get $get): array => TemplateService::generateDynamicFields(
-                                        SectionTemplate::find($get('section_template_id')),
-                                        'section_data'
-                                    ))
+                                    ->schema(function (Get $get): array {
+                                        $template = SectionTemplate::find($get('section_template_id'));
+                                        if (!$template) {
+                                            return [];
+                                        }
+                                        
+                                        // Get section's data or template's default_data
+                                        $sectionData = $get('section_data') ?? [];
+                                        $templateDefaults = $template->default_data ?? [];
+                                        
+                                        // Merge: section data overrides template defaults
+                                        $mergedData = array_merge($templateDefaults, $sectionData);
+                                        
+                                        return TemplateService::generateDynamicFields(
+                                            $template,
+                                            'section_data',
+                                            $mergedData
+                                        );
+                                    })
                                     ->visible(fn (Get $get): bool => filled($get('section_template_id')))
                                     ->columnSpanFull(),
                             ])
@@ -600,14 +654,43 @@ class PageForm
                             ->options(FooterTemplate::where('is_active', true)->pluck('title', 'id'))
                             ->searchable()
                             ->live()
-                            ->afterStateUpdated(fn (Set $set) => $set('footer_data', []))
+                            ->afterStateUpdated(function (Set $set, Get $get, $state, $record) {
+                                $template = FooterTemplate::find($state);
+                                if ($template && $template->default_data) {
+                                    // If page doesn't have footer_data or it's empty, load defaults
+                                    $currentData = $record ? ($record->footer_data ?? []) : ($get('footer_data') ?? []);
+                                    if (empty($currentData)) {
+                                        $set('footer_data', $template->default_data);
+                                    }
+                                } else {
+                                    // If no template selected or no defaults, clear data
+                                    if (!$record || empty($record->footer_data)) {
+                                        $set('footer_data', []);
+                                    }
+                                }
+                            })
                             ->columnSpanFull(),
                         
                         Group::make()
-                            ->schema(fn (Get $get): array => TemplateService::generateDynamicFields(
-                                FooterTemplate::find($get('footer_template_id')),
-                                'footer_data'
-                            ))
+                            ->schema(function (Get $get, $record): array {
+                                $template = FooterTemplate::find($get('footer_template_id'));
+                                if (!$template) {
+                                    return [];
+                                }
+                                
+                                // Get page's footer_data or template's default_data
+                                $pageData = $record ? ($record->footer_data ?? []) : ($get('footer_data') ?? []);
+                                $templateDefaults = $template->default_data ?? [];
+                                
+                                // Merge: page data overrides template defaults
+                                $mergedData = array_merge($templateDefaults, $pageData);
+                                
+                                return TemplateService::generateDynamicFields(
+                                    $template,
+                                    'footer_data',
+                                    $mergedData
+                                );
+                            })
                             ->visible(fn (Get $get): bool => filled($get('footer_template_id')))
                             ->columnSpanFull(),
                     ])

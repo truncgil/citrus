@@ -2,10 +2,14 @@
 
 namespace App\Filament\Admin\Resources\FooterTemplates\Schemas;
 
+use App\Models\FooterTemplate;
+use App\Services\TemplateService;
 use Filament\Forms\Components\CodeEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\CodeEditor\Enums\Language;
@@ -51,6 +55,38 @@ class FooterTemplateForm
                             ->inline(false),
                     ])
                     ->columnSpanFull(),
+                
+                // Default Data Section - Dynamic fields based on placeholders
+                Section::make(__('footer-templates.section_default_data'))
+                    ->description(__('footer-templates.section_default_data_desc'))
+                    ->schema([
+                        Group::make()
+                            ->schema(function (Get $get, $record): array {
+                                $htmlContent = $get('html_content');
+                                if (empty($htmlContent)) {
+                                    return [];
+                                }
+                                
+                                // Create a temporary template object to parse placeholders
+                                $tempTemplate = new FooterTemplate();
+                                $tempTemplate->html_content = $htmlContent;
+                                
+                                // Get existing default_data if editing
+                                $existingData = $record ? ($record->default_data ?? []) : [];
+                                
+                                return TemplateService::generateDynamicFields(
+                                    $tempTemplate,
+                                    'default_data',
+                                    $existingData
+                                );
+                            })
+                            ->key('default_data_fields')
+                            ->visible(fn (Get $get): bool => filled($get('html_content')))
+                            ->columnSpanFull(),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(true)
+                    ->collapsed(false),
             ]);
     }
 }

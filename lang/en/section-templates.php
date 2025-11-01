@@ -9,6 +9,8 @@ return [
 
     // Sections
     'section_general' => 'General Information',
+    'section_default_data' => 'Default Values',
+    'section_default_data_desc' => 'You can enter default values for placeholders when creating templates. These values will be automatically loaded when the template is selected on pages.',
 
     // Form Fields
     'field_title' => 'Title',

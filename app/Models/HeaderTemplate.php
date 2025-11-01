@@ -13,11 +13,13 @@ class HeaderTemplate extends Model
     protected $fillable = [
         'title',
         'html_content',
+        'default_data',
         'is_active',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'default_data' => 'array',
     ];
 
     /**

@@ -37,9 +37,14 @@ class PageRenderer extends Component
             return '';
         }
 
+        // Merge template defaults with page data (page data overrides defaults)
+        $templateDefaults = $this->page->headerTemplate->default_data ?? [];
+        $pageData = $this->page->header_data ?? [];
+        $mergedData = array_merge($templateDefaults, $pageData);
+
         return TemplateService::replacePlaceholders(
             $this->page->headerTemplate->html_content,
-            $this->page->header_data ?? []
+            $mergedData
         );
     }
 
@@ -55,9 +60,14 @@ class PageRenderer extends Component
                 continue;
             }
 
+            // Merge template defaults with section data (section data overrides defaults)
+            $templateDefaults = $section['template']->default_data ?? [];
+            $sectionData = $section['data'] ?? [];
+            $mergedData = array_merge($templateDefaults, $sectionData);
+
             $output .= TemplateService::replacePlaceholders(
                 $section['template']->html_content,
-                $section['data']
+                $mergedData
             );
         }
 
@@ -73,9 +83,14 @@ class PageRenderer extends Component
             return '';
         }
 
+        // Merge template defaults with page data (page data overrides defaults)
+        $templateDefaults = $this->page->footerTemplate->default_data ?? [];
+        $pageData = $this->page->footer_data ?? [];
+        $mergedData = array_merge($templateDefaults, $pageData);
+
         return TemplateService::replacePlaceholders(
             $this->page->footerTemplate->html_content,
-            $this->page->footer_data ?? []
+            $mergedData
         );
     }
 }

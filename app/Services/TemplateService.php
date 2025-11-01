@@ -16,8 +16,10 @@ class TemplateService
 {
     /**
      * Generate dynamic form fields based on template placeholders
+     * For default data (template forms), use dataKey = 'default_data'
+     * For page data (page forms), use dataKey = 'header_data' or 'footer_data'
      */
-    public static function generateDynamicFields($template, string $dataKey): array
+    public static function generateDynamicFields($template, string $dataKey, ?array $existingData = null): array
     {
         if (!$template) {
             return [];
@@ -36,6 +38,9 @@ class TemplateService
             [$type, $name] = $parts;
             
             $label = str($name)->title()->replace('_', ' ')->toString();
+            
+            // Get existing value from existingData if provided
+            $existingValue = $existingData[$placeholder] ?? null;
             
             $field = match($type) {
                 // Text Input Variants
@@ -211,6 +216,11 @@ class TemplateService
                     ->maxLength(255)
                     ->helperText("Unknown type: {$type}"),
             };
+            
+            // Set default value if existingValue is provided
+            if ($existingValue !== null) {
+                $field->default($existingValue);
+            }
             
             $fields[] = $field;
         }

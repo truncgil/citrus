@@ -9,6 +9,8 @@ return [
 
     // Sections
     'section_general' => 'Genel Bilgiler',
+    'section_default_data' => 'Varsayılan Değerler',
+    'section_default_data_desc' => 'Template oluştururken placeholder\'lar için varsayılan değerleri girebilirsiniz. Bu değerler sayfalarda template seçildiğinde otomatik yüklenecektir.',
 
     // Form Fields
     'field_title' => 'Başlık',

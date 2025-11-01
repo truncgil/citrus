@@ -67,18 +67,28 @@ class PageController extends Controller
         // Render Header Template
         $renderedHeader = null;
         if ($page->headerTemplate) {
+            // Merge template defaults with page data (page data overrides defaults)
+            $templateDefaults = $page->headerTemplate->default_data ?? [];
+            $pageData = $page->header_data ?? [];
+            $mergedHeaderData = array_merge($templateDefaults, $pageData);
+            
             $renderedHeader = TemplateService::replacePlaceholders(
                 $page->headerTemplate->html_content,
-                $page->header_data ?? []
+                $mergedHeaderData
             );
         }
 
         // Render Footer Template
         $renderedFooter = null;
         if ($page->footerTemplate) {
+            // Merge template defaults with page data (page data overrides defaults)
+            $templateDefaults = $page->footerTemplate->default_data ?? [];
+            $pageData = $page->footer_data ?? [];
+            $mergedFooterData = array_merge($templateDefaults, $pageData);
+            
             $renderedFooter = TemplateService::replacePlaceholders(
                 $page->footerTemplate->html_content,
-                $page->footer_data ?? []
+                $mergedFooterData
             );
         }
 
@@ -137,18 +147,28 @@ public function show($slug)
         // Render Header Template
         $renderedHeader = null;
         if ($page->headerTemplate) {
+            // Merge template defaults with page data (page data overrides defaults)
+            $templateDefaults = $page->headerTemplate->default_data ?? [];
+            $pageData = $page->header_data ?? [];
+            $mergedHeaderData = array_merge($templateDefaults, $pageData);
+            
             $renderedHeader = TemplateService::replacePlaceholders(
                 $page->headerTemplate->html_content,
-                $page->header_data ?? []
+                $mergedHeaderData
             );
         }
 
         // Render Footer Template
         $renderedFooter = null;
         if ($page->footerTemplate) {
+            // Merge template defaults with page data (page data overrides defaults)
+            $templateDefaults = $page->footerTemplate->default_data ?? [];
+            $pageData = $page->footer_data ?? [];
+            $mergedFooterData = array_merge($templateDefaults, $pageData);
+            
             $renderedFooter = TemplateService::replacePlaceholders(
                 $page->footerTemplate->html_content,
-                $page->footer_data ?? []
+                $mergedFooterData
             );
         }
 
