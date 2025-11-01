@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\Pages\Schemas\Sections;
 
 use App\Models\SectionTemplate;
 use App\Services\TemplateService;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Group;
@@ -112,7 +113,15 @@ class SectionTemplatesSection
                     ->reorderable()
                     ->collapsible()
                     ->collapsed()
-                    ->itemLabel(__('pages.template_section'))
+                    ->itemLabel(function (array $state): ?string {
+                        if (!isset($state['section_template_id'])) {
+                            return __('pages.template_section');
+                        }
+                        
+                        $template = SectionTemplate::find($state['section_template_id']);
+                        return $template ? $template->title : __('pages.template_section');
+                    })
+                    
                     ->columnSpanFull(),
             ])
             ->columnSpanFull()
