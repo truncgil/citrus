@@ -7,10 +7,11 @@ use App\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SolutionForest\FilamentTree\Concern\ModelTree;
 
 class Page extends Model
 {
-    use HasFactory, SoftDeletes, HasTranslations;
+    use HasFactory, SoftDeletes, HasTranslations, ModelTree;
 
     protected $fillable = [
         'title',
@@ -171,5 +172,28 @@ class Page extends Model
                 'data' => $section['section_data'] ?? [],
             ];
         })->filter(fn($section) => $section['template'] !== null);
+    }
+
+    /**
+     * ModelTree - Custom column names
+     */
+    public function determineOrderColumnName(): string
+    {
+        return 'sort_order';
+    }
+
+    public function determineParentColumnName(): string
+    {
+        return 'parent_id';
+    }
+
+    public function determineTitleColumnName(): string
+    {
+        return 'title';
+    }
+
+    public static function defaultParentKey()
+    {
+        return null; // Mevcut migration nullable olduğu için null kullanıyoruz
     }
 }

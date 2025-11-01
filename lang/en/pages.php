@@ -16,11 +16,18 @@ return [
     // Actions
     'create' => 'Create New Page',
     'edit' => 'Edit Page',
+    'view' => 'View',
     'save' => 'Save',
     'cancel' => 'Cancel',
     'delete' => 'Delete Page',
     'restore' => 'Restore Page',
     'force_delete' => 'Force Delete',
+    
+    // Menu Tree
+    'menu_tree_title' => 'Menu Structure',
+    'menu_refresh' => 'Refresh',
+    'menu_back_to_pages' => 'Back to Pages',
+    'menu_tree_saved' => 'Menu structure saved successfully.',
     
     // Form sections
     'form_section_content' => 'Content',

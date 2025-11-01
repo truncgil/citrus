@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\Pages;
 use App\Filament\Admin\Resources\Pages\Pages\CreatePage;
 use App\Filament\Admin\Resources\Pages\Pages\EditPage;
 use App\Filament\Admin\Resources\Pages\Pages\ListPages;
+use App\Filament\Admin\Resources\Pages\Pages\MenuTree;
 use App\Filament\Admin\Resources\Pages\Schemas\PageForm;
 use App\Filament\Admin\Resources\Pages\Tables\PagesTable;
 use App\Models\Page;
@@ -60,6 +61,7 @@ class PageResource extends Resource
             'index' => ListPages::route('/'),
             'create' => CreatePage::route('/create'),
             'edit' => EditPage::route('/{record}/edit'),
+            'menu' => MenuTree::route('/menu'),
         ];
     }
 

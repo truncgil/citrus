@@ -16,11 +16,18 @@ return [
     // Actions
     'create' => 'Yeni Sayfa Oluştur',
     'edit' => 'Sayfayı Düzenle',
+    'view' => 'Görüntüle',
     'save' => 'Kaydet',
     'cancel' => 'İptal',
     'delete' => 'Sayfayı Sil',
     'restore' => 'Sayfayı Geri Yükle',
     'force_delete' => 'Kalıcı Olarak Sil',
+    
+    // Menu Tree
+    'menu_tree_title' => 'Menü Yapısı',
+    'menu_refresh' => 'Yenile',
+    'menu_back_to_pages' => 'Sayfalara Dön',
+    'menu_tree_saved' => 'Menü yapısı başarıyla kaydedildi.',
     
     // Form sections
     'form_section_content' => 'İçerik',
