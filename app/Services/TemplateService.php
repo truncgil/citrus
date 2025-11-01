@@ -114,29 +114,33 @@ class TemplateService
                 'image' => FileUpload::make("{$dataKey}.{$placeholder}")
                     ->label($label)
                     ->image()
+                    ->disk('public')
+                    ->directory('templates/images')
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9', '4:3', '1:1'])
-                    ->directory('templates/images')
                     ->maxSize(5120),
                 
                 'images' => FileUpload::make("{$dataKey}.{$placeholder}")
                     ->label($label)
                     ->image()
+                    ->disk('public')
+                    ->directory('templates/images')
                     ->multiple()
                     ->imageEditor()
-                    ->directory('templates/images')
                     ->maxSize(5120)
                     ->maxFiles(10),
                 
                 'file' => FileUpload::make("{$dataKey}.{$placeholder}")
                     ->label($label)
+                    ->disk('public')
                     ->directory('templates/files')
                     ->maxSize(10240),
                 
                 'files' => FileUpload::make("{$dataKey}.{$placeholder}")
                     ->label($label)
-                    ->multiple()
+                    ->disk('public')
                     ->directory('templates/files')
+                    ->multiple()
                     ->maxSize(10240)
                     ->maxFiles(10),
                 
@@ -276,13 +280,24 @@ class TemplateService
                 }
             }
             
+            // Extract type from placeholder to determine if it's a file/image
+            $parts = explode('.', $placeholder);
+            $type = $parts[0] ?? null;
+            
             // Handle different value types
             if (is_array($value)) {
+                // Handle arrays (e.g., multiple images)
+                $value = array_map(function($item) use ($type) {
+                    return self::formatFileUrl($item, $type);
+                }, $value);
                 $value = implode(', ', $value);
             } elseif (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             } elseif ($value === null) {
                 $value = '';
+            } else {
+                // Format file/image URLs
+                $value = self::formatFileUrl($value, $type);
             }
             
             // Replace both {text.title} and {{text.title}} formats
@@ -294,6 +309,52 @@ class TemplateService
         }
         
         return $html;
+    }
+    
+    /**
+     * Format file URL based on type
+     * Converts storage paths to public URLs
+     */
+    protected static function formatFileUrl($value, $type): string
+    {
+        // If it's already a full URL, return as is
+        if (is_string($value) && (str_starts_with($value, 'http://') || str_starts_with($value, 'https://'))) {
+            return $value;
+        }
+        
+        // Only process image and file types
+        if (!in_array($type, ['image', 'images', 'file', 'files'])) {
+            return (string) $value;
+        }
+        
+        // If value is empty, return empty string
+        if (empty($value) || !is_string($value)) {
+            return '';
+        }
+        
+        // Check if the path starts with storage/ (already formatted)
+        if (str_starts_with($value, 'storage/')) {
+            return asset($value);
+        }
+        
+        // Remove private/ prefix if exists (old format from private disk)
+        if (str_starts_with($value, 'private/')) {
+            $value = str_replace('private/', '', $value);
+        }
+        
+        // Check if the path is a relative path that should be in storage
+        // Templates are stored in templates/images or templates/files
+        if (str_starts_with($value, 'templates/')) {
+            return asset('storage/' . $value);
+        }
+        
+        // If it's already using asset() or Storage::url(), assume it's already formatted
+        // Otherwise, prepend storage/ if it looks like a storage path
+        if (!str_starts_with($value, '/')) {
+            return asset('storage/' . $value);
+        }
+        
+        return $value;
     }
 }
 
