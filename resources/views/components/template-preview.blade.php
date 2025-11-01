@@ -1,9 +1,8 @@
 @php
     $previewUrl = route('template.preview');
-    $type = $attributes->get('data-type') ?? 'section';
-    $fieldName = $attributes->get('data-field-name') ?? 'html_content';
+    $type = $type ?? 'section';
+    $fieldName = $fieldName ?? 'html_content';
 @endphp
-
 <div 
     x-data="templatePreview(@js($previewUrl), @js($type), @js($fieldName))"
     class="template-preview-wrapper w-full"

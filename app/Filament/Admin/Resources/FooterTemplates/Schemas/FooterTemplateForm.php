@@ -43,9 +43,9 @@ class FooterTemplateForm
 
                         // Preview Component - placed after editor
                         View::make('components.template-preview')
-                            ->extraAttributes([
-                                'data-type' => 'footer',
-                                'data-field-name' => 'html_content',
+                            ->viewData([
+                                'type' => 'footer',
+                                'fieldName' => 'html_content',
                             ])
                             ->columnSpanFull(),
 

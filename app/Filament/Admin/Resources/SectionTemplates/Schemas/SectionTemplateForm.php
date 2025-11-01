@@ -42,9 +42,9 @@ class SectionTemplateForm
 
                         // Preview Component - placed after editor
                         View::make('components.template-preview')
-                            ->extraAttributes([
-                                'data-type' => 'section',
-                                'data-field-name' => 'html_content',
+                            ->viewData([
+                                'type' => 'section',
+                                'fieldName' => 'html_content',
                             ])
                             ->columnSpanFull(),
 

@@ -42,9 +42,9 @@ class HeaderTemplateForm
 
                         // Preview Component - placed after editor
                         View::make('components.template-preview')
-                            ->extraAttributes([
-                                'data-type' => 'header',
-                                'data-field-name' => 'html_content',
+                            ->viewData([
+                                'type' => 'header',
+                                'fieldName' => 'html_content',
                             ])
                             ->columnSpanFull(),
 

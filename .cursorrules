@@ -108,6 +108,7 @@ use Filament\Schemas\Components\Grid;      // ✅ Doğru
 use Filament\Schemas\Components\Fieldset;  // ✅ Doğru
 use Filament\Schemas\Components\Flex;      // ✅ Doğru
 use Filament\Schemas\Components\Group;     // ✅ Doğru - Schema içinde gruplamak için
+use Filament\Schemas\Components\View;      // ✅ Doğru - Blade view component
 
 // Tabs components (ÖNEMLİ: Schemas namespace!)
 use Filament\Schemas\Components\Tabs;      // ✅ Doğru
@@ -223,6 +224,37 @@ $table
 - `Filament\Resources\Components\Tab` diye bir class **YOK**. Tüm tab kullanımları `Filament\Schemas\Components\Tabs\Tab` ile yapılır!
 - `Filament\Forms\Components\Group` diye bir class **YOK**. Schema içinde gruplamak için `Filament\Schemas\Components\Group` kullan!
 - `Filament\Forms\Get` ve `Filament\Forms\Set` diye class'lar **YOK**. `Filament\Schemas\Components\Utilities\Get` ve `Filament\Schemas\Components\Utilities\Set` kullan!
+
+#### **Filament 4.x VIEW COMPONENT KULLANIM KURALLARI (KRİTİK!):**
+
+View component'ine veri iletmek için **sadece `viewData()` metodu** kullanılır:
+
+```php
+use Filament\Schemas\Components\View;
+
+// ✅ DOĞRU - viewData() ile veri gönder
+View::make('components.template-preview')
+    ->viewData([
+        'type' => 'header',
+        'fieldName' => 'html_content',
+    ])
+    ->columnSpanFull();
+
+// ❌ YANLIŞ - with() metodu ÇALIŞMAZ!
+View::make('components.template-preview')
+    ->with([...])  // ❌ Bu metod View component'inde YOK!
+
+// ❌ YANLIŞ - extraAttributes() sadece HTML attribute'leri için
+View::make('components.template-preview')
+    ->extraAttributes([
+        'data-type' => 'header',  // ❌ Bu view'e değişken olarak GİTMEZ!
+    ])
+```
+
+**Özet:**
+- ✅ `->viewData([...])` → Blade view'e değişken gönderir
+- ❌ `->with([...])` → View component'inde bu metod YOK
+- ❌ `->extraAttributes([...])` → Sadece HTML attribute'leri için, view değişkenleri için DEĞİL
 
 #### **Filament 4.x REPEATER KULLANIM KURALLARI (KRİTİK!):**
 
