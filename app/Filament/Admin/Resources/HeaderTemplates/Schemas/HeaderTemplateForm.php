@@ -76,7 +76,8 @@ class HeaderTemplateForm
                                 return TemplateService::generateDynamicFields(
                                     $tempTemplate,
                                     'default_data',
-                                    $existingData
+                                    $existingData,
+                                    null // No fallback needed for template's own default_data
                                 );
                             })
                             ->key('default_data_fields')
