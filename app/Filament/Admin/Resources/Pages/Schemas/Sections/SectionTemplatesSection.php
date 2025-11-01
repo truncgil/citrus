@@ -94,7 +94,7 @@ class SectionTemplatesSection
                                     return [];
                                 }
                                 
-                                $existingData = $get('section_data') ?? [];
+                                $existingData = $state?->section_data ?? [];
                                 $templateDefaults = $template->default_data ?? [];
                                 
                                 return TemplateService::generateDynamicFields(

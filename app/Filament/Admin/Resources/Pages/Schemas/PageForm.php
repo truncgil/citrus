@@ -42,7 +42,7 @@ class PageForm
                 SeoSection::make(),
                 
                 // Full Width - Section Builder (Custom Page Sections)
-                SectionBuilderSection::make(),
+              //  SectionBuilderSection::make(),
                 
                 // Full Width - Dynamic Template System
                 HeaderTemplateSection::make(),
