@@ -37,7 +37,7 @@ class FooterTemplateForm
                             ->columnSpanFull()
                             ->helperText(__('footer-templates.field_html_content_help'))
                             ->extraAttributes([
-                                'style' => 'min-height: 400px;',
+                                'style' => 'max-height: 400px;overflow-y: auto;',
                                 'data-field-name' => 'html_content',
                             ]),
 

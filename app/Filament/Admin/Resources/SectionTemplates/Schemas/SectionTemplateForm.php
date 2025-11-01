@@ -36,7 +36,7 @@ class SectionTemplateForm
                             ->columnSpanFull()
                             ->helperText(__('section-templates.field_html_content_help'))
                             ->extraAttributes([
-                                'style' => 'min-height: 200px; overflow-x: auto;', // Metni yatay kaydırma eklendi
+                                'style' => 'max-height: 400px;overflow-y: auto;',
                                 'data-field-name' => 'html_content',
                             ]),
 

@@ -31,12 +31,12 @@ class HeaderTemplateForm
                         CodeEditor::make('html_content')
                             ->label(__('header-templates.field_html_content'))
                             ->required()
-                            ->live(onBlur: false) // Real-time updates
+                            ->live(onBlur: true) // Real-time updates
                             ->language(Language::Html)
                             ->columnSpanFull()
                             ->helperText(__('header-templates.field_html_content_help'))
                             ->extraAttributes([
-                                'style' => 'min-height: 400px;',
+                                'style' => 'max-height: 400px;overflow-y: auto;',
                                 'data-field-name' => 'html_content',
                             ]),
 
