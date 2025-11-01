@@ -32,7 +32,7 @@ class SectionTemplateForm
                             ->columnSpanFull()
                             ->helperText(__('section-templates.field_html_content_help'))
                             ->extraAttributes([
-                                'style' => 'min-height: 400px;',
+                                'style' => 'min-height: 200px; overflow-x: auto;', // Metni yatay kaydırma eklendi
                                 'data-field-name' => 'html_content',
                             ]),
 
