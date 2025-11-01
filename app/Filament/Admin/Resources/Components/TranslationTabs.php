@@ -167,10 +167,20 @@ class TranslationTabs
         $languages = Language::active()->ordered()->get();
         $fields = $record->getTranslatableFields();
 
+        // Eager load all translations to avoid N+1 queries
+        $allTranslations = $record->translations()
+            ->whereIn('language_code', $languages->pluck('code'))
+            ->whereIn('field_name', $fields)
+            ->get()
+            ->groupBy('language_code');
+
         foreach ($languages as $language) {
             $data['translations'][$language->code] = [];
+            $languageTranslations = $allTranslations->get($language->code) ?? collect();
+            $translationsByField = $languageTranslations->keyBy('field_name');
+            
             foreach ($fields as $field) {
-                $translation = $record->getTranslation($field, $language->code, false);
+                $translation = $translationsByField->get($field);
                 if ($translation) {
                     $data['translations'][$language->code][$field] = $translation->field_value;
                 }

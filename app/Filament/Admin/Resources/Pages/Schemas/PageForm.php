@@ -526,12 +526,13 @@ class PageForm
                             ->addActionLabel(__('pages.section_add'))
                             ->reorderable()
                             ->collapsible()
+                            ->collapsed()
                             ->itemLabel(fn (array $state): ?string => isset($state['type']) ? __('pages.section_type_' . $state['type']) : 'Bölüm')
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull()
                     ->collapsible(true)
-                    ->collapsed(false),
+                    ->collapsed(true),
                 
                 // Dynamic Template System
                 Section::make(__('pages.form_section_header_template'))
@@ -746,9 +747,8 @@ class PageForm
                             ->addActionLabel(__('pages.add_template_section'))
                             ->reorderable()
                             ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => 
-                                SectionTemplate::find($state['section_template_id'] ?? null)?->title ?? __('pages.template_section')
-                            )
+                            ->collapsed()
+                            ->itemLabel(__('pages.template_section'))
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull()
