@@ -565,18 +565,42 @@ class PageForm
                                 // Mevcut header_data'yı al
                                 $existingData = $get('header_data') ?? [];
                                 
+                                // Nested array'leri dot notation'a çeviren recursive fonksiyon
+                                $flattenDefaultData = function ($array, $prefix = '') use (&$flattenDefaultData) {
+                                    $result = [];
+                                    foreach ($array as $key => $value) {
+                                        $newKey = $prefix ? "{$prefix}.{$key}" : $key;
+                                        if (is_array($value)) {
+                                            $result = array_merge($result, $flattenDefaultData($value, $newKey));
+                                        } else {
+                                            $result[$newKey] = $value;
+                                        }
+                                    }
+                                    return $result;
+                                };
+                                
+                                // Default data'yı düzleştir
+                                $flattenedDefaults = $flattenDefaultData($defaultData);
+                                
                                 // Her default veri için boş olan alanları doldur
-                                foreach ($defaultData as $key => $defaultValue) {
-                                    // Eğer bu alan boşsa veya yoksa, default değeri kullan
-                                    if (!isset($existingData[$key]) || 
+                                foreach ($flattenedDefaults as $key => $defaultValue) {
+                                    // Dot notation ile nested değeri kontrol et
+                                    $keys = explode('.', $key);
+                                    $currentValue = $existingData;
                                     
-                                        $existingData[$key] === null || 
-                                        $existingData[$key] === '' || 
-                                        (is_array($existingData[$key]) && empty($existingData[$key]))) {
-                                            if(is_array($defaultValue)) {
-                                                $defaultValue = reset($defaultValue);
-                                            }
-                                            $set("header_data.{$key}", $defaultValue);
+                                    // Nested değere eriş
+                                    foreach ($keys as $k) {
+                                        $currentValue = $currentValue[$k] ?? null;
+                                        if ($currentValue === null) {
+                                            break;
+                                        }
+                                    }
+                                    
+                                    // Eğer bu alan boşsa veya yoksa, default değeri kullan
+                                    if ($currentValue === null || 
+                                        $currentValue === '' || 
+                                        (is_array($currentValue) && empty($currentValue))) {
+                                        $set("header_data.{$key}", $defaultValue);
                                     }
                                 }
                             })
