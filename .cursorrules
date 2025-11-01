@@ -124,6 +124,22 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 ```
+Get $get('data') şeklinde kullanma sakın bu sonsuz döngüye sebep olur. Aşağıdaki kullanımlar yanlış onun yerine
+```php
+$existingData = $get('data') ?? [];
+```
+```php
+$existingData = $get('data') ?? [];
+```
+```php
+$existingData = $get('data') ?? [];
+
+```
+onun yerineşu şekilde kullanılır.
+```php
+$existingData = $state?->section_data ?? []; 
+```
+
 
 #### **Filament 4.x TAB KULLANIM KURALLARI (KRİTİK!):**
 
