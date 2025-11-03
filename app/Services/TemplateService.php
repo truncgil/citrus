@@ -39,6 +39,11 @@ class TemplateService
             
             [$type, $name] = $parts;
             
+            // Skip custom.* placeholders - they are blade components, not form fields
+            if ($type === 'custom') {
+                continue;
+            }
+            
             $label = str($name)->title()->replace('_', ' ')->toString();
             
             // Get existing value from existingData if provided
@@ -268,6 +273,7 @@ class TemplateService
      * Replace placeholders in HTML with actual data
      * Supports both {text.title} and {{text.title}} formats
      * Also supports {menu} and {staticMenu} placeholders for menu rendering
+     * Also supports {custom.component_name} for custom blade components
      */
     public static function replacePlaceholders(string $html, array $data): string
     {
@@ -283,9 +289,38 @@ class TemplateService
             $html = str_replace('{staticMenu}', $renderedStaticMenu, $html);
         }
 
+        // Handle custom blade components: {custom.component_name}
+        preg_match_all('/\{custom\.([a-z_]+)\}/i', $html, $customMatches);
+        if (!empty($customMatches[0])) {
+            foreach ($customMatches[0] as $index => $fullMatch) {
+                $componentName = $customMatches[1][$index] ?? null;
+                if ($componentName) {
+                    $viewPath = "components.custom.{$componentName}";
+                    if (view()->exists($viewPath)) {
+                        try {
+                            $renderedComponent = view($viewPath)->render();
+                            $html = str_replace($fullMatch, $renderedComponent, $html);
+                        } catch (\Exception $e) {
+                            // If rendering fails, remove the placeholder or show error
+                            $html = str_replace($fullMatch, "<!-- Custom component '{$componentName}' could not be rendered: {$e->getMessage()} -->", $html);
+                        }
+                    } else {
+                        // Component doesn't exist, remove placeholder or show notice
+                        $html = str_replace($fullMatch, "<!-- Custom component '{$componentName}' not found -->", $html);
+                    }
+                }
+            }
+        }
+
         // First, parse all placeholders in the format {type.field_name}
+        // Exclude custom.* from this regex to avoid double processing
         preg_match_all('/\{([a-z]+\.[a-z_]+)\}/i', $html, $matches);
         $placeholders = array_unique($matches[1] ?? []);
+        
+        // Filter out custom.* placeholders as they're already handled above
+        $placeholders = array_filter($placeholders, function($placeholder) {
+            return !str_starts_with($placeholder, 'custom.');
+        });
         
         // Replace each placeholder
         foreach ($placeholders as $placeholder) {

@@ -28,6 +28,13 @@ class HeaderTemplateForm
                             ->maxLength(255)
                             ->columnSpanFull(),
 
+                        // Placeholder Picker Component
+                        View::make('components.placeholder-picker')
+                            ->viewData([
+                                'fieldName' => 'html_content',
+                            ])
+                            ->columnSpanFull(),
+
                         CodeEditor::make('html_content')
                             ->label(__('header-templates.field_html_content'))
                             ->required()
