@@ -48,9 +48,9 @@ class TemplatePreviewController extends Controller
         }
 
         // Replace placeholders with default data
-        if (!empty($defaultData)) {
-            $content = TemplateService::replacePlaceholders($content, $defaultData);
-        }
+        // Always call replacePlaceholders to handle custom components and special placeholders
+        // even if defaultData is empty
+        $content = TemplateService::replacePlaceholders($content, $defaultData ?? []);
 
         $html = TemplatePreviewService::getPreviewHtml($content, $type);
 

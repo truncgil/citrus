@@ -45,7 +45,7 @@
                                 :color="$selectedGuide === $guide['slug'] ? 'primary' : 'gray'"
                                 :variant="$selectedGuide === $guide['slug'] ? 'filled' : 'outline'"
                             >
-                                <div class="flex items-center justify-between w-full min-w-0">
+                                <div class="flex  justify-between w-full min-w-0">
                                     <div class="flex items-center gap-2 flex-1 min-w-0">
                                         <x-filament::icon
                                             icon="heroicon-o-document-text"
@@ -62,19 +62,7 @@
                                         />
                                     @endif
                                 </div>
-                                @if(isset($guide['modified_date']))
-                                    <div class="w-full mt-1.5 text-xs opacity-75">
-                                        <div class="flex items-center gap-1">
-                                            <x-filament::icon
-                                                icon="heroicon-o-clock"
-                                                class="w-3 h-3"
-                                            />
-                                            <span class="truncate">
-                                                {{ \Carbon\Carbon::parse($guide['modified_date'])->locale(app()->getLocale())->diffForHumans() }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endif
+                              
                             </x-filament::button>
                         </div>
                     @endforeach

@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Pages;
 use App\Services\GuideService;
 use BackedEnum;
 use Filament\Pages\Page;
+use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 
 class UserGuide extends Page
@@ -35,6 +36,11 @@ class UserGuide extends Page
     public function getTitle(): string
     {
         return __('user-guide.title');
+    }
+
+    public function getMaxContentWidth(): Width | string | null
+    {
+        return Width::Full;
     }
 
     public function getGuides(): array

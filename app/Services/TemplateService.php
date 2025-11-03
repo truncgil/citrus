@@ -295,18 +295,37 @@ class TemplateService
             foreach ($customMatches[0] as $index => $fullMatch) {
                 $componentName = $customMatches[1][$index] ?? null;
                 if ($componentName) {
+                    // Normalize component name to lowercase for consistent file system access
+                    $componentName = strtolower($componentName);
                     $viewPath = "components.custom.{$componentName}";
                     if (view()->exists($viewPath)) {
                         try {
                             $renderedComponent = view($viewPath)->render();
+                            // Ensure rendered component is properly formatted
+                            $renderedComponent = trim($renderedComponent);
                             $html = str_replace($fullMatch, $renderedComponent, $html);
                         } catch (\Exception $e) {
-                            // If rendering fails, remove the placeholder or show error
-                            $html = str_replace($fullMatch, "<!-- Custom component '{$componentName}' could not be rendered: {$e->getMessage()} -->", $html);
+                            // Log the error for debugging
+                            \Log::error("Custom component render error: {$viewPath}", [
+                                'error' => $e->getMessage(),
+                                'trace' => $e->getTraceAsString()
+                            ]);
+                            
+                            // Show error message in preview (visible in development)
+                            $errorMessage = htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
+                            $errorHtml = "<div style='padding: 10px; background: #fee; border: 1px solid #fcc; color: #c00; margin: 5px 0; border-radius: 4px;'>" .
+                                       "<strong>Custom Component Error:</strong> {$viewPath}<br>" .
+                                       "<small>{$errorMessage}</small>" .
+                                       "</div>";
+                            $html = str_replace($fullMatch, $errorHtml, $html);
                         }
                     } else {
-                        // Component doesn't exist, remove placeholder or show notice
-                        $html = str_replace($fullMatch, "<!-- Custom component '{$componentName}' not found -->", $html);
+                        // Component doesn't exist - show notice in preview
+                        $noticeHtml = "<div style='padding: 10px; background: #fff3cd; border: 1px solid #ffc107; color: #856404; margin: 5px 0; border-radius: 4px;'>" .
+                                    "<strong>Custom Component Not Found:</strong> {$viewPath}<br>" .
+                                    "<small>Create the file at: resources/views/components/custom/{$componentName}.blade.php</small>" .
+                                    "</div>";
+                        $html = str_replace($fullMatch, $noticeHtml, $html);
                     }
                 }
             }
