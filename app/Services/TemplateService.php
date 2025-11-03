@@ -267,7 +267,7 @@ class TemplateService
     /**
      * Replace placeholders in HTML with actual data
      * Supports both {text.title} and {{text.title}} formats
-     * Also supports {menu} placeholder for menu rendering
+     * Also supports {menu} and {staticMenu} placeholders for menu rendering
      */
     public static function replacePlaceholders(string $html, array $data): string
     {
@@ -275,6 +275,12 @@ class TemplateService
         if (str_contains($html, '{menu}')) {
             $renderedMenu = \App\Services\MenuService::render();
             $html = str_replace('{menu}', $renderedMenu, $html);
+        }
+        
+        // Handle special {staticMenu} placeholder
+        if (str_contains($html, '{staticMenu}')) {
+            $renderedStaticMenu = view('components.static-menu')->render();
+            $html = str_replace('{staticMenu}', $renderedStaticMenu, $html);
         }
 
         // First, parse all placeholders in the format {type.field_name}
