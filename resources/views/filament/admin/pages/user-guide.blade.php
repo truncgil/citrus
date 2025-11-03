@@ -1,7 +1,7 @@
 <x-filament-panels::page>
-    <div class="flex gap-6" x-data="{ search: '' }">
+    <div class="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8" x-data="{ search: '' }">
         {{-- Sol Navigation Bar --}}
-        <aside class="w-80 flex-shrink-0">
+        <aside class="w-full lg:w-80 flex-shrink-0">
             <x-filament::section>
                 <x-slot name="heading">
                     <div class="flex items-center gap-2">
@@ -83,7 +83,7 @@
         </aside>
 
         {{-- Sağ İçerik Alanı --}}
-        <main class="flex-1 min-w-0">
+        <main class="w-full min-w-0">
             @if($selectedGuide && $this->getSelectedGuideContent())
                 @php
                     $guide = $this->getSelectedGuideContent();
