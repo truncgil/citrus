@@ -4,6 +4,8 @@ return [
     'title' => 'Placeholder Variables',
     'click_to_insert' => 'Click to insert into editor',
     'special_placeholders' => 'Special Placeholders',
+    'search_placeholder' => 'Search placeholders...',
+    'no_results' => 'No results found',
     
     // Placeholder Types
     'type_text' => 'Text',

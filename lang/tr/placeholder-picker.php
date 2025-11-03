@@ -4,6 +4,8 @@ return [
     'title' => 'Placeholder Değişkenleri',
     'click_to_insert' => 'Tıklayarak editöre ekle',
     'special_placeholders' => 'Özel Placeholder\'lar',
+    'search_placeholder' => 'Placeholder ara...',
+    'no_results' => 'Arama sonucu bulunamadı',
     
     // Placeholder Tipleri
     'type_text' => 'Metin',
