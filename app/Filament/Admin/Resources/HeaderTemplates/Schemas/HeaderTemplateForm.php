@@ -42,10 +42,13 @@ class HeaderTemplateForm
 
                         // Preview Component - placed after editor
                         View::make('components.template-preview')
-                            ->viewData([
-                                'type' => 'header',
-                                'fieldName' => 'html_content',
-                            ])
+                            ->viewData(function ($record) {
+                                return [
+                                    'type' => 'header',
+                                    'fieldName' => 'html_content',
+                                    'recordId' => $record?->id,
+                                ];
+                            })
                             ->columnSpanFull(),
 
                         Toggle::make('is_active')

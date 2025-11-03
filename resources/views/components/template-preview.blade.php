@@ -2,9 +2,10 @@
     $previewUrl = route('template.preview');
     $type = $type ?? 'section';
     $fieldName = $fieldName ?? 'html_content';
+    $recordId = $recordId ?? null;
 @endphp
 <div 
-    x-data="templatePreview(@js($previewUrl), @js($type), @js($fieldName))"
+    x-data="templatePreview(@js($previewUrl), @js($type), @js($fieldName), @js($recordId))"
     class="template-preview-wrapper w-full"
     style="width: 100%;"
     wire:ignore.self>
@@ -68,20 +69,52 @@
 
 @push('scripts')
 <script>
-function templatePreview(previewUrl, type, fieldName) {
+function templatePreview(previewUrl, type, fieldName, recordIdFromView = null) {
     return {
         previewUrl: previewUrl,
         type: type,
         fieldName: fieldName,
         iframeSrc: '',
         isLoading: false,
-        recordId: null,
+        recordId: recordIdFromView,
         
         init() {
-            // URL'den ID'yi al
-            const urlMatch = window.location.pathname.match(/\/(\d+)\/(edit|view)$/);
+            // Önce viewData'dan gelen ID'yi kullan
+            if (this.recordId) {
+                return;
+            }
+            
+            // Yoksa URL'den ID'yi al (çeşitli formatları dene)
+            let urlMatch = window.location.pathname.match(/\/(\d+)\/(edit|view)$/);
             if (urlMatch && urlMatch[1]) {
                 this.recordId = urlMatch[1];
+                return;
+            }
+            
+            // Alternatif format: /admin/resource/{id}/edit
+            urlMatch = window.location.pathname.match(/\/(\d+)\/edit$/);
+            if (urlMatch && urlMatch[1]) {
+                this.recordId = urlMatch[1];
+                return;
+            }
+            
+            // Alternatif format: /admin/resource/{id}
+            urlMatch = window.location.pathname.match(/\/(\d+)$/);
+            if (urlMatch && urlMatch[1]) {
+                this.recordId = urlMatch[1];
+                return;
+            }
+            
+            // Filament Livewire component'inden ID almayı dene
+            try {
+                const livewireComponent = window.Livewire?.find(
+                    document.querySelector('[wire\\:id]')?.getAttribute('wire:id')
+                );
+                if (livewireComponent?.mounted?.id) {
+                    this.recordId = livewireComponent.mounted.id;
+                }
+            } catch (e) {
+                console.log('[Preview] Could not get ID from Livewire');
             }
         },
         

@@ -42,10 +42,13 @@ class SectionTemplateForm
 
                         // Preview Component - placed after editor
                         View::make('components.template-preview')
-                            ->viewData([
-                                'type' => 'section',
-                                'fieldName' => 'html_content',
-                            ])
+                            ->viewData(function ($record) {
+                                return [
+                                    'type' => 'section',
+                                    'fieldName' => 'html_content',
+                                    'recordId' => $record?->id,
+                                ];
+                            })
                             ->columnSpanFull(),
 
                         Toggle::make('is_active')
