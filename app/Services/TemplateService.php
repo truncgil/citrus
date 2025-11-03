@@ -267,9 +267,16 @@ class TemplateService
     /**
      * Replace placeholders in HTML with actual data
      * Supports both {text.title} and {{text.title}} formats
+     * Also supports {menu} placeholder for menu rendering
      */
     public static function replacePlaceholders(string $html, array $data): string
     {
+        // Handle special {menu} placeholder first
+        if (str_contains($html, '{menu}')) {
+            $renderedMenu = \App\Services\MenuService::render();
+            $html = str_replace('{menu}', $renderedMenu, $html);
+        }
+
         // First, parse all placeholders in the format {type.field_name}
         preg_match_all('/\{([a-z]+\.[a-z_]+)\}/i', $html, $matches);
         $placeholders = array_unique($matches[1] ?? []);

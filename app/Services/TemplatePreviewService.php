@@ -214,6 +214,7 @@ class TemplatePreviewService
         $bodyContent = match($type) {
             'header' => $content,
             'footer' => $content,
+            'menu' => $content,
             'section' => '<div class="container py-8">' . $content . '</div>',
             default => $content,
         };

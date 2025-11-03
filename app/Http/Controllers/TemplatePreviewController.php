@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\HeaderTemplate;
 use App\Models\FooterTemplate;
 use App\Models\SectionTemplate;
+use App\Models\MenuTemplate;
 use App\Services\TemplatePreviewService;
 use App\Services\TemplateService;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class TemplatePreviewController extends Controller
         $type = $request->input('type', 'section'); // header, footer, section
 
         // Validate type
-        if (!in_array($type, ['header', 'footer', 'section'])) {
+        if (!in_array($type, ['header', 'footer', 'section', 'menu'])) {
             $type = 'section';
         }
 
@@ -70,6 +71,7 @@ class TemplatePreviewController extends Controller
             'header' => HeaderTemplate::find($id),
             'footer' => FooterTemplate::find($id),
             'section' => SectionTemplate::find($id),
+            'menu' => MenuTemplate::find($id),
             default => null,
         };
     }

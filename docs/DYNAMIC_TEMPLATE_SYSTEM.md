@@ -35,6 +35,15 @@ Bu sistem, sayfalara dinamik header, section ve footer şablonları ekleyerek i�
   - `is_active` (boolean) - Aktif/Pasif
   - `created_at`, `updated_at`, `deleted_at`
 
+#### 1.4 Menu Template
+- **Tablo:** `menu_templates`
+- **Alanlar:**
+  - `id` (bigint, PK)
+  - `title` (string, 255) - Şablon başlığı
+  - `html_content` (longtext) - HTML içerik + {menu} placeholder ✅ **4GB kapasiteli**
+  - `is_active` (boolean) - Aktif/Pasif
+  - `created_at`, `updated_at`, `deleted_at`
+
 **Not:** `longtext` veri tipi MySQL'de **4,294,967,295 karakter** (4GB) kapasiteye sahiptir. Bu, en karmaşık HTML template'ler ve zengin içerikler için fazlasıyla yeterlidir.
 
 ### 2. Placeholder Sistemi
@@ -43,6 +52,10 @@ Bu sistem, sayfalara dinamik header, section ve footer şablonları ekleyerek i�
 ```
 {form_type.field_name}
 ```
+
+**Özel Placeholder'lar:**
+- `{menu}` → Menü yapısını render eder (MenuTemplate için kullanılır)
+- Diğer tüm template tiplerinde (header, footer, section) normal placeholder'lar kullanılır
 
 **Desteklenen Form Tipleri:**
 
