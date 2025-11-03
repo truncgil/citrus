@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Page;
+use App\Models\MenuTemplate;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 
 class MenuService
@@ -10,10 +12,9 @@ class MenuService
     /**
      * Render menu structure as HTML
      * 
-     * @param array|null $menuTemplate Optional menu template data
      * @return string Rendered menu HTML
      */
-    public static function render(?array $menuTemplate = null): string
+    public static function render(): string
     {
         // Get menu items from Pages
         $menuItems = Cache::remember('menu_items', 3600, function () {
@@ -31,15 +32,21 @@ class MenuService
                 ->get();
         });
 
-        // If menu template is provided, use it to wrap the menu
-        if ($menuTemplate && !empty($menuTemplate['html_content'])) {
-            $html = $menuTemplate['html_content'];
+        // Get menu template from Settings
+        $menuTemplateId = Setting::get('menu_template_id');
+        
+        if ($menuTemplateId) {
+            $menuTemplate = MenuTemplate::where('is_active', true)->find($menuTemplateId);
             
-            // Replace {menu} placeholder with rendered menu structure
-            $renderedMenu = self::buildMenuStructure($menuItems);
-            $html = str_replace('{menu}', $renderedMenu, $html);
-            
-            return $html;
+            if ($menuTemplate && !empty($menuTemplate->html_content)) {
+                $html = $menuTemplate->html_content;
+                
+                // Replace {menu} placeholder with rendered menu structure
+                $renderedMenu = self::buildMenuStructure($menuItems);
+                $html = str_replace('{menu}', $renderedMenu, $html);
+                
+                return $html;
+            }
         }
 
         // Otherwise, return default menu structure

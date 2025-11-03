@@ -791,17 +791,103 @@ protected $casts = [
 feature/dynamic-template-system
 ```
 
+## Menü Template Sistemi
+
+### Kurulum
+
+Menü template sistemi global bir ayardır. Admin panelden oluşturduğunuz menü template'ini Settings'e manuel olarak eklemeniz gerekir:
+
+#### 1. Admin Panelde Menü Template Oluştur
+```
+Admin Panel → Menü Şablonları → Yeni Menü Şablonu
+```
+
+**Örnek Menü Template:**
+```html
+<nav class="navbar">
+    <div class="menu-container">
+        {menu}
+    </div>
+</nav>
+```
+
+#### 2. Settings'e Menü Template ID Ekle
+Admin panelden yeni bir Setting oluşturun:
+- **Key:** `menu_template_id`
+- **Type:** `integer`
+- **Value:** Menü template ID'niz (örn: 1, 2, 3)
+- **Group:** `general`
+
+#### 3. Kullanım
+
+Menü otomatik olarak render edilir. Header template'inde `{menu}` placeholder'ı kullanabilirsiniz:
+
+**Header Template Örneği:**
+```html
+<header class="site-header">
+    <div class="logo">
+        <img src="{image.logo}" alt="{text.site_name}">
+    </div>
+    <nav class="main-nav">
+        {menu}
+    </nav>
+</header>
+```
+
+**Çıktı:**
+```html
+<header class="site-header">
+    <div class="logo">
+        <img src="/storage/logo.png" alt="My Site">
+    </div>
+    <nav class="main-nav">
+        <ul class="menu">
+            <li class="menu-item">
+                <a href="/home" class="menu-link">Ana Sayfa</a>
+            </li>
+            <li class="menu-item">
+                <a href="/about" class="menu-link">Hakkımızda</a>
+                <ul class="submenu">
+                    <li class="submenu-item">
+                        <a href="/about/team" class="submenu-link">Ekibimiz</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+```
+
+### Menü Rendering
+
+Menü otomatik olarak Pages tablosundan alınır:
+- Sadece `status = 'published'` olanlar
+- Sadece `show_in_menu = true` olanlar
+- Hierarchical yapı korunur (parent_id ile)
+- `sort_order` ile sıralanır
+
+### Cache
+
+Menü öğeleri 1 saat süreyle cache'lenir. Cache'i temizlemek için:
+
+```php
+use App\Services\MenuService;
+
+MenuService::clearCache();
+```
+
 ## İmplement Adımları
 
 1. ✅ Migrations oluştur (4 adet)
-2. ✅ Model'ler oluştur (3 adet)
-3. ✅ Filament Resources oluştur (3 adet)
+2. ✅ Model'ler oluştur (4 adet)
+3. ✅ Filament Resources oluştur (4 adet)
 4. ✅ TemplateService helper oluştur
 5. ✅ PageForm'u güncelle (template tabs ekle)
 6. ✅ PageRenderer component oluştur
-7. ✅ Lang dosyaları oluştur (6 adet)
+7. ✅ Lang dosyaları oluştur (8 adet)
 8. ✅ Frontend route ve controller güncelle
-9. ✅ Test
+9. ✅ Menü Service eklendi
+10. ✅ Test
 
 ---
 
