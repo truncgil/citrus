@@ -2,6 +2,14 @@
 
 ## Proje Genel Kuralları
 
+### UI Kuralları
+- Filament 4.x'te UI kurallarını kullan
+- Filament 4.x'te yeni komponentleri kullan
+- Filament 4.x'te yeni özellikleri kullan
+- Filament 4.x'te yeni modüller oluştur
+- Filament 4.x'te yeni modüller oluştur
+- Filament UI bileşenlerini kullan x-filament:: ile  olan 
+
 ### Dil ve Lokalizasyon
 - Tüm metinler Laravel Localization kullanmalı
 - Türkçe ve İngilizce dil desteği zorunlu
