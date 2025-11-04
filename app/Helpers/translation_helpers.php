@@ -181,10 +181,7 @@ if (!function_exists('switch_language')) {
         }
 
         app()->setLocale($languageCode);
-        
-        if (auth()->check()) {
-            session(['locale' => $languageCode]);
-        }
+        session(['locale' => $languageCode]);
 
         return true;
     }

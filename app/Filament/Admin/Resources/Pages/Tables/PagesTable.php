@@ -21,12 +21,7 @@ class PagesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('featured_image_url')
-                    ->label(__('pages.table_column_featured_image'))
-                    ->circular()
-                    ->size(40)
-                    ->defaultImageUrl('/images/placeholder-page.png'),
-                
+             
                 TextColumn::make('title')
                     ->label(__('pages.table_column_title'))
                     ->searchable()

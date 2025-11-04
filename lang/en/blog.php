@@ -1,6 +1,13 @@
 <?php
 
 return [
+	// Navigation & list
+	'nav-blog' => 'Blog',
+	'meta-index-title' => 'Blog',
+	'meta-index-description' => 'Latest posts',
+	'empty' => 'No posts yet.',
+
+	// Module labels
     'title' => 'Blog Posts',
     'navigation_label' => 'Blog',
     'model_label' => 'Blog Post',
@@ -9,6 +16,8 @@ return [
     // Actions
     'create' => 'Create New Blog Post',
     'edit' => 'Edit Blog Post',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
     'delete' => 'Delete Blog Post',
     'restore' => 'Restore Blog Post',
     'force_delete' => 'Force Delete',

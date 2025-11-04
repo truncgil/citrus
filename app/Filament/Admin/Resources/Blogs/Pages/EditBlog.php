@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\Blogs\Pages;
 
 use App\Filament\Admin\Resources\Blogs\BlogResource;
 use App\Filament\Admin\Resources\Components\TranslationTabs;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
@@ -21,13 +22,32 @@ class EditBlog extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('save')
+                ->label(__('blog.save'))
+                ->action('save')
+                ->keyBindings(['mod+s'])
+                ->color('primary')
+                ->size('sm'),
+            Action::make('cancel')
+                ->label(__('blog.cancel'))
+                ->url($this->getResource()::getUrl('index'))
+                ->color('gray')
+                ->size('sm'),
             DeleteAction::make()
-                ->label(__('blog.delete')),
+                ->label(__('blog.delete'))
+                ->size('sm'),
             RestoreAction::make()
-                ->label(__('blog.restore')),
+                ->label(__('blog.restore'))
+                ->size('sm'),
             ForceDeleteAction::make()
-                ->label(__('blog.force_delete')),
+                ->label(__('blog.force_delete'))
+                ->size('sm'),
         ];
+    }
+    
+    protected function getFormActions(): array
+    {
+        return []; // Boş array döndürerek alt taraftaki form action'larını gizliyoruz
     }
 
     protected function getRedirectUrl(): string

@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\Languages\Pages;
 
 use App\Filament\Admin\Resources\Languages\LanguageResource;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
@@ -21,13 +22,32 @@ class EditLanguage extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('save')
+                ->label(__('language.save'))
+                ->action('save')
+                ->keyBindings(['mod+s'])
+                ->color('primary')
+                ->size('sm'),
+            Action::make('cancel')
+                ->label(__('language.cancel'))
+                ->url($this->getResource()::getUrl('index'))
+                ->color('gray')
+                ->size('sm'),
             DeleteAction::make()
-                ->label(__('language.delete')),
+                ->label(__('language.delete'))
+                ->size('sm'),
             RestoreAction::make()
-                ->label(__('language.restore')),
+                ->label(__('language.restore'))
+                ->size('sm'),
             ForceDeleteAction::make()
-                ->label(__('language.force_delete')),
+                ->label(__('language.force_delete'))
+                ->size('sm'),
         ];
+    }
+    
+    protected function getFormActions(): array
+    {
+        return []; // Boş array döndürerek alt taraftaki form action'larını gizliyoruz
     }
 
     protected function getSavedNotification(): ?Notification

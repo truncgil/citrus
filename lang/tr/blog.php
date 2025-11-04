@@ -1,6 +1,13 @@
 <?php
 
 return [
+	// Navigation & list
+	'nav-blog' => 'Blog',
+	'meta-index-title' => 'Blog',
+	'meta-index-description' => 'Güncel paylaşımlarımız',
+	'empty' => 'Şu anda blog yazısı bulunmuyor.',
+
+	// Module labels
     'title' => 'Blog Yazıları',
     'navigation_label' => 'Blog',
     'model_label' => 'Blog Yazısı',
@@ -9,6 +16,8 @@ return [
     // Actions
     'create' => 'Yeni Blog Yazısı Oluştur',
     'edit' => 'Blog Yazısını Düzenle',
+    'save' => 'Kaydet',
+    'cancel' => 'İptal',
     'delete' => 'Blog Yazısını Sil',
     'restore' => 'Blog Yazısını Geri Yükle',
     'force_delete' => 'Kalıcı Olarak Sil',
