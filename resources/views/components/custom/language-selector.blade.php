@@ -1,15 +1,13 @@
 @php
     $languages = available_languages();
     $currentLang = current_language_code();
+    $currentLanguage = $languages->firstWhere('code', $currentLang);
 @endphp
 
 <div class="navbar-other w-full !flex !ml-auto">
     <ul class="navbar-nav !flex-row !items-center !ml-auto">
       <li class="nav-item dropdown language-select uppercase group">
         <a class="nav-link dropdown-item dropdown-toggle xl:!text-[.85rem] lg:!text-[.85rem] max-lg:!text-[1.05rem]" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          @php
-              $currentLanguage = $languages->firstWhere('code', $currentLang);
-          @endphp
           @if($currentLanguage)
            {{ strtoupper($currentLanguage->code) }}
           @else
@@ -19,7 +17,7 @@
         <ul class="dropdown-menu group-hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
           @foreach($languages as $language)
             <li class="nav-item">
-              <a class="dropdown-item hover:!text-[#747ed1] {{ $language->code === $currentLang ? 'active' : '' }}" 
+              <a class="dropdown-item hover:!text-[#747ed1] {{ $language->code === $currentLang ? 'active font-bold !text-[#3f78e0]' : '' }}" 
                  href="{{ route('language.switch', $language->code) }}">
               {{ strtoupper($language->code) }}
               </a>
