@@ -73,7 +73,7 @@
         </x-filament::input.wrapper>
         
         <!-- Placeholder List -->
-        <div class="max-h-96 overflow-y-auto space-y-4">
+        <div class="overflow-y-auto overflow-x-hidden space-y-4" style="height: 200px; padding: 10px;overflow-y: auto;">
             <template x-for="(info, type) in filteredCategories" x-bind:key="type">
                 <div class="space-y-2">
                     <h4 class="fi-section-header-heading text-xs font-semibold uppercase tracking-wide">
@@ -88,7 +88,17 @@
                                 x-on:click="window.insertPlaceholder('{{ $fieldName }}', type + '.' + example)"
                                 x-bind:tooltip="'{{ __('placeholder-picker.click_to_insert') }}'"
                             >
-                                <code class="text-xs font-mono" x-text="'{' + type + '.' + example + '}'"></code>
+                                <code 
+                                    class="text-xs font-mono" 
+                                    x-text="'{' + type + '.' + example + '}'"
+                                    draggable="true"
+                                    @dragstart="
+                                        event.dataTransfer.setData(
+                                            'text/plain', 
+                                            '{' + type + '.' + example + '}'
+                                        )
+                                    "
+                                ></code>
                             </x-filament::button>
                         </template>
                     </div>
