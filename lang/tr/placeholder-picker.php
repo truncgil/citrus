@@ -4,6 +4,7 @@ return [
     'title' => 'Placeholder Değişkenleri',
     'click_to_insert' => 'Tıklayarak editöre ekle',
     'special_placeholders' => 'Özel Placeholder\'lar',
+    'custom_placeholders' => 'Özel Placeholder\'lar',
     'search_placeholder' => 'Placeholder ara...',
     'no_results' => 'Arama sonucu bulunamadı',
     
@@ -31,5 +32,6 @@ return [
     'type_toggle' => 'Aç/Kapa',
     'type_color' => 'Renk',
     'type_tags' => 'Etiketler',
+    'type_custom' => 'Özel',
 ];
 

@@ -4,6 +4,7 @@ return [
     'title' => 'Placeholder Variables',
     'click_to_insert' => 'Click to insert into editor',
     'special_placeholders' => 'Special Placeholders',
+    'custom_placeholders' => 'Custom Placeholders',
     'search_placeholder' => 'Search placeholders...',
     'no_results' => 'No results found',
     
@@ -31,5 +32,6 @@ return [
     'type_toggle' => 'Toggle',
     'type_color' => 'Color',
     'type_tags' => 'Tags',
+    'type_custom' => 'Custom',
 ];
 

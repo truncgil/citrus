@@ -26,6 +26,37 @@
         'tags' => ['label' => __('placeholder-picker.type_tags'), 'examples' => ['tags', 'keywords', 'labels']],
     ];
     
+    // Custom klasöründeki blade dosyalarını tespit et ve placeholder types'a ekle
+    $customPlaceholders = [];
+    $customPath = resource_path('views/components/custom');
+    
+    if (is_dir($customPath)) {
+        $files = scandir($customPath);
+        
+        foreach ($files as $file) {
+            // . ve .. dizinlerini atla
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+            
+            // Sadece .blade.php uzantılı dosyaları al
+            $filePath = $customPath . DIRECTORY_SEPARATOR . $file;
+            if (is_file($filePath) && str_ends_with($file, '.blade.php')) {
+                $name = str_replace('.blade.php', '', $file);
+                $customPlaceholders[] = $name;
+            }
+        }
+        sort($customPlaceholders);
+        
+        // Custom placeholder'ları placeholder types'a ekle
+        if (!empty($customPlaceholders)) {
+            $placeholderTypes['custom'] = [
+                'label' => __('placeholder-picker.type_custom'),
+                'examples' => $customPlaceholders
+            ];
+        }
+    }
+    
     // Field name'i component'ten al
     $fieldName = $fieldName ?? 'html_content';
 @endphp
@@ -104,31 +135,6 @@
                     </div>
                 </div>
             </template>
-            
-            <!-- Özel placeholder'lar -->
-            <div x-show="hasSpecialPlaceholders" class="pt-3 border-t fi-border-color">
-                <h4 class="fi-section-header-heading text-xs font-semibold uppercase tracking-wide mb-2">
-                    {{ __('placeholder-picker.special_placeholders') }}
-                </h4>
-                <div class="flex flex-wrap gap-2">
-                    <x-filament::button
-                        size="sm"
-                        color="primary"
-                        outlined
-                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'menu')"
-                    >
-                        <code class="text-xs font-mono">{menu}</code>
-                    </x-filament::button>
-                    <x-filament::button
-                        size="sm"
-                        color="primary"
-                        outlined
-                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'staticMenu')"
-                    >
-                        <code class="text-xs font-mono">{staticMenu}</code>
-                    </x-filament::button>
-                </div>
-            </div>
             
             <!-- No Results -->
             <div 
