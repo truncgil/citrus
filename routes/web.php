@@ -54,6 +54,20 @@ Route::get('/debug-homepage', function () {
     ]);
 });
 
+// Language Switch
+Route::get('/lang/{locale}', function ($locale) {
+    if (function_exists('switch_language')) {
+        switch_language($locale);
+    } else {
+        $language = \App\Models\Language::findByCode($locale);
+        if ($language && $language->is_active) {
+            app()->setLocale($locale);
+            session(['locale' => $locale]);
+        }
+    }
+    return redirect()->back();
+})->name('language.switch');
+
 // Homepage -> admin panelinde "is_homepage" olarak işaretli sayfa dinamik olarak gösterilir
 Route::get('/', [PageController::class, 'index'])->name('homepage');
 
