@@ -11,7 +11,7 @@
               $currentLanguage = $languages->firstWhere('code', $currentLang);
           @endphp
           @if($currentLanguage)
-            {{ $currentLanguage->flag ?? '' }} {{ strtoupper($currentLanguage->code) }}
+           {{ strtoupper($currentLanguage->code) }}
           @else
             {{ strtoupper($currentLang) }}
           @endif
@@ -21,16 +21,13 @@
             <li class="nav-item">
               <a class="dropdown-item hover:!text-[#747ed1] {{ $language->code === $currentLang ? 'active' : '' }}" 
                  href="{{ route('language.switch', $language->code) }}">
-                {{ $language->flag ?? '' }} {{ strtoupper($language->code) }}
+              {{ strtoupper($language->code) }}
               </a>
             </li>
           @endforeach
         </ul>
       </li>
-      <li class="nav-item"><a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-info"><i class="uil uil-info-circle before:content-['\eb99'] !text-[1.1rem]"></i></a></li>
-      <li class="nav-item xl:!hidden lg:!hidden">
-        <button class="hamburger offcanvas-nav-btn"><span></span></button>
-      </li>
+      
     </ul>
     <!-- /.navbar-nav -->
   </div>

@@ -248,11 +248,11 @@ class TemplateService
 
     /**
      * Parse placeholders from HTML content
-     * Format: {type.field_name}
+     * Format: {type.field_name} or {type.field-name}
      */
     public static function parsePlaceholders(string $html): array
     {
-        preg_match_all('/\{([a-z]+\.[a-z_]+)\}/i', $html, $matches);
+        preg_match_all('/\{([a-z]+\.[a-z][a-z_-]*)\}/i', $html, $matches);
         return array_unique($matches[1] ?? []);
     }
 
@@ -289,8 +289,8 @@ class TemplateService
             $html = str_replace('{staticMenu}', $renderedStaticMenu, $html);
         }
 
-        // Handle custom blade components: {custom.component_name}
-        preg_match_all('/\{custom\.([a-z_]+)\}/i', $html, $customMatches);
+        // Handle custom blade components: {custom.component_name} or {custom.component-name}
+        preg_match_all('/\{custom\.([a-z][a-z_-]*)\}/i', $html, $customMatches);
         if (!empty($customMatches[0])) {
             foreach ($customMatches[0] as $index => $fullMatch) {
                 $componentName = $customMatches[1][$index] ?? null;
@@ -331,9 +331,9 @@ class TemplateService
             }
         }
 
-        // First, parse all placeholders in the format {type.field_name}
+        // First, parse all placeholders in the format {type.field_name} or {type.field-name}
         // Exclude custom.* from this regex to avoid double processing
-        preg_match_all('/\{([a-z]+\.[a-z_]+)\}/i', $html, $matches);
+        preg_match_all('/\{([a-z]+\.[a-z][a-z_-]*)\}/i', $html, $matches);
         $placeholders = array_unique($matches[1] ?? []);
         
         // Filter out custom.* placeholders as they're already handled above
