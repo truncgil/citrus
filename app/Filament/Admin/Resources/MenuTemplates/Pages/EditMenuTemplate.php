@@ -28,4 +28,11 @@ class EditMenuTemplate extends EditRecord
             RestoreAction::make(),
         ];
     }
+
+    protected function afterSave(): void
+    {
+        // Kaydetme sonrası preview'ı güncelle
+        // Livewire event dispatch et
+        $this->dispatch('template-saved');
+    }
 }

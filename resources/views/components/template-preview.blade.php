@@ -116,6 +116,27 @@ function templatePreview(previewUrl, type, fieldName, recordIdFromView = null) {
             } catch (e) {
                 console.log('[Preview] Could not get ID from Livewire');
             }
+            
+            // Livewire event listener ekle (Livewire 3.x için)
+            if (window.Livewire) {
+                document.addEventListener('livewire:init', () => {
+                    Livewire.on('template-saved', () => {
+                        this.updatePreview();
+                    });
+                });
+                
+                // Eğer Livewire zaten yüklendiyse direkt dinle
+                if (window.Livewire.hook) {
+                    Livewire.on('template-saved', () => {
+                        this.updatePreview();
+                    });
+                }
+            }
+            
+            // Window event listener ekle (alternatif - Livewire event'lerini de yakalar)
+            window.addEventListener('template-saved', () => {
+                this.updatePreview();
+            });
         },
         
         async updatePreview() {

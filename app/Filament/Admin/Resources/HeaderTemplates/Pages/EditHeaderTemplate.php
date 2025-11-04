@@ -52,4 +52,11 @@ class EditHeaderTemplate extends EditRecord
         
         return $data;
     }
+
+    protected function afterSave(): void
+    {
+        // Kaydetme sonrası preview'ı güncelle
+        // Livewire event dispatch et (JavaScript tarafında Livewire.on() ile dinlenecek)
+        $this->dispatch('template-saved');
+    }
 }

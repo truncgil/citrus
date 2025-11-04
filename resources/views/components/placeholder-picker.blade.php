@@ -85,7 +85,7 @@
                                 size="sm"
                                 color="gray"
                                 outlined
-                                @click="insertPlaceholder('{{ $fieldName }}', type + '.' + example)"
+                                x-on:click="window.insertPlaceholder('{{ $fieldName }}', type + '.' + example)"
                                 x-bind:tooltip="'{{ __('placeholder-picker.click_to_insert') }}'"
                             >
                                 <code class="text-xs font-mono" x-text="'{' + type + '.' + example + '}'"></code>
@@ -105,7 +105,7 @@
                         size="sm"
                         color="primary"
                         outlined
-                        @click="insertPlaceholder('{{ $fieldName }}', 'menu')"
+                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'menu')"
                     >
                         <code class="text-xs font-mono">{menu}</code>
                     </x-filament::button>
@@ -113,7 +113,7 @@
                         size="sm"
                         color="primary"
                         outlined
-                        @click="insertPlaceholder('{{ $fieldName }}', 'staticMenu')"
+                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'staticMenu')"
                     >
                         <code class="text-xs font-mono">{staticMenu}</code>
                     </x-filament::button>
@@ -179,25 +179,37 @@
         // Monaco Editor instance'ını bul
         const editorContainer = document.querySelector('[data-field-name=\'' + fieldName + '\']');
         let monacoEditorInstance = null;
-        let currentValue = '';
-        let cursorPosition = null;
         
-        // Monaco Editor'dan cursor pozisyonunu al
-        if (editorContainer && window.monaco) {
+        // Monaco Editor instance'ını bul
+        if (editorContainer && window.monaco && window.monaco.editor) {
+            // Tüm Monaco Editor instance'larını kontrol et
             const editorInstances = window.monaco.editor.getEditors();
             for (let editor of editorInstances) {
-                const container = editor.getContainerDomNode();
-                if (container && container.closest && container.closest('[data-field-name=\'' + fieldName + '\']')) {
-                    monacoEditorInstance = editor;
-                    const model = editor.getModel();
-                    currentValue = model.getValue();
-                    const selection = editor.getSelection();
-                    if (selection) {
-                        cursorPosition = model.getOffsetAt(selection.getStartPosition());
-                    } else {
-                        cursorPosition = currentValue.length;
+                try {
+                    const container = editor.getContainerDomNode();
+                    if (container) {
+                        // Container'ın parent'larını kontrol et
+                        let parent = container;
+                        while (parent && parent !== document.body) {
+                            if (parent.hasAttribute && parent.hasAttribute('data-field-name') && 
+                                parent.getAttribute('data-field-name') === fieldName) {
+                                monacoEditorInstance = editor;
+                                break;
+                            }
+                            parent = parent.parentElement;
+                        }
+                        
+                        // Veya closest metodunu kullan
+                        if (!monacoEditorInstance && container.closest) {
+                            const closest = container.closest('[data-field-name=\'' + fieldName + '\']');
+                            if (closest) {
+                                monacoEditorInstance = editor;
+                                break;
+                            }
+                        }
                     }
-                    break;
+                } catch (e) {
+                    console.debug('Monaco Editor container check failed:', e);
                 }
             }
         }
@@ -205,93 +217,90 @@
         // Monaco Editor varsa, doğrudan onu kullan
         if (monacoEditorInstance) {
             const model = monacoEditorInstance.getModel();
-            const newValue = currentValue.slice(0, cursorPosition) + placeholderText + currentValue.slice(cursorPosition);
+            const currentValue = model.getValue();
             
-            // Monaco Editor'da değeri güncelle
-            monacoEditorInstance.executeEdits('placeholder-insert', [{
-                range: new window.monaco.Range(
-                    model.getPositionAt(cursorPosition).lineNumber,
-                    model.getPositionAt(cursorPosition).column,
-                    model.getPositionAt(cursorPosition).lineNumber,
-                    model.getPositionAt(cursorPosition).column
-                ),
-                text: placeholderText
-            }]);
-            
-            // Cursor pozisyonunu güncelle
-            const newPosition = model.getPositionAt(cursorPosition + placeholderText.length);
-            monacoEditorInstance.setPosition(newPosition);
+            // Monaco Editor'ı focus et (önce focus et ki cursor pozisyonu doğru alınsın)
             monacoEditorInstance.focus();
             
-            // Filament form state'ini güncellemek için Monaco Editor'ın change event'ini tetikle
-            // Filament CodeEditor otomatik olarak değişiklikleri algılar
+            // Kısa bir delay ile cursor pozisyonunu al (focus işleminin tamamlanması için)
             setTimeout(() => {
-                // Monaco Editor model değişikliğini tetikle
-                // Bu, Filament'in CodeEditor component'inin otomatik olarak algılamasını sağlar
-                if (monacoEditorInstance) {
-                    // Model'in değerini tekrar set et (zaten set ettik ama event'i tetiklemek için)
-                    const model = monacoEditorInstance.getModel();
-                    
-                    // Monaco Editor'ın onDidChangeContent event'ini manuel tetikle
-                    // Filament CodeEditor bu event'i dinliyor ve form state'ini güncelliyor
-                    model.onDidChangeContent(() => {
-                        // Bu event zaten tetiklenmiş olacak, sadece emin olmak için
-                    });
-                    
+                // Cursor pozisyonunu al (selection varsa onu kullan, yoksa cursor pozisyonunu)
+                let selection = monacoEditorInstance.getSelection();
+                let cursorPosition;
+                
+                if (selection && !selection.isEmpty()) {
+                    // Seçili metin varsa, başlangıç pozisyonunu kullan
+                    cursorPosition = model.getOffsetAt(selection.getStartPosition());
+                } else {
+                    // Seçim yoksa cursor pozisyonunu kullan
+                    const position = monacoEditorInstance.getPosition();
+                    if (position) {
+                        cursorPosition = model.getOffsetAt(position);
+                    } else {
+                        // Cursor pozisyonu alınamazsa sona ekle
+                        cursorPosition = currentValue.length;
+                    }
+                }
+                
+                // Placeholder'ı cursor pozisyonuna ekle
+                const position = model.getPositionAt(cursorPosition);
+                const range = new window.monaco.Range(
+                    position.lineNumber,
+                    position.column,
+                    position.lineNumber,
+                    position.column
+                );
+                
+                // Edit işlemini yap
+                monacoEditorInstance.executeEdits('placeholder-insert', [{
+                    range: range,
+                    text: placeholderText
+                }]);
+                
+                // Cursor pozisyonunu güncelle (placeholder'ın sonuna)
+                const newCursorPosition = model.getPositionAt(cursorPosition + placeholderText.length);
+                monacoEditorInstance.setPosition(newCursorPosition);
+                
+                // Focus'u koru
+                monacoEditorInstance.focus();
+                
+                // Filament form state'ini güncellemek için güncel değeri al
+                const updatedValue = model.getValue();
+                
+                // Filament form state'ini güncelle
+                setTimeout(() => {
                     // Hidden input'u bul ve güncelle (eğer varsa)
                     const hiddenInput = editorContainer.querySelector('input[type=\'hidden\']');
                     if (hiddenInput) {
-                        hiddenInput.value = newValue;
+                        hiddenInput.value = updatedValue;
                         hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
                         hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                     
                     // Filament form'unu bul ve güncelle
-                    // Form component'ini bulmak için editor container'ın parent'larını kontrol et
-                    let formComponent = null;
                     const formWireElement = editorContainer.closest('form [wire\\:id], [wire\\:id][wire\\:key*="form"]');
                     
                     if (formWireElement && window.Livewire) {
                         const wireId = formWireElement.getAttribute('wire:id');
                         const component = window.Livewire.find(wireId);
                         
-                        // Component'in form component'i olup olmadığını kontrol et
-                        // Sadece field path'lerini kontrol et, 'data' property'sine direkt erişme
                         if (component && component.get) {
                             const fieldPath = 'data.' + fieldName;
                             try {
-                                // Field path'i kontrol et
                                 if (component.get(fieldPath) !== undefined) {
-                                    formComponent = component;
+                                    component.set(fieldPath, updatedValue);
                                 } else if (component.get('data.html_content') !== undefined) {
-                                    formComponent = component;
+                                    component.set('data.html_content', updatedValue);
                                 } else if (component.get('html_content') !== undefined) {
-                                    formComponent = component;
+                                    component.set('html_content', updatedValue);
                                 }
                             } catch (e) {
-                                // Property kontrolü sırasında hata alırsak, component'i kullanma
+                                console.debug('Livewire form state update skipped:', e.message);
                             }
                         }
                     }
-                    
-                    // Sadece form component'i bulunduysa güncelle
-                    if (formComponent) {
-                        try {
-                            const fieldPath = 'data.' + fieldName;
-                            if (formComponent.get(fieldPath) !== undefined) {
-                                formComponent.set(fieldPath, newValue);
-                            } else if (formComponent.get('data.html_content') !== undefined) {
-                                formComponent.set('data.html_content', newValue);
-                            } else if (formComponent.get('html_content') !== undefined) {
-                                formComponent.set('html_content', newValue);
-                            }
-                        } catch (e) {
-                            // Hata durumunda sadece console'a yaz, Monaco Editor zaten güncellenmiş
-                            console.debug('Livewire form state update skipped:', e.message);
-                        }
-                    }
-                }
-            }, 150);
+                }, 100);
+            }, 50);
             
             return;
         }
