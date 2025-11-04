@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <div class="flex flex-col lg:flex-row gap-9" x-data="{ search: '' }">
         {{-- Sol Navigation Bar --}}
-        <aside class="flex flex-1 flex-col overflow-y-auto p-4 [&>[data-slot=section]+[data-slot=section]]:mt-8" style="max-width: 14rem;">
+        <aside class="w-full lg:w-56 lg:flex-shrink-0 flex flex-col overflow-y-auto p-4 [&>[data-slot=section]+[data-slot=section]]:mt-8">
             <x-filament::section>
                 <x-slot name="heading">
                     <div class="flex items-center gap-2">
@@ -139,10 +139,6 @@
 
     @push('styles')
         <style>
-            aside {
-                max-width: 14rem !important;
-            }
-            
             @media (min-width: 1024px) {
                 aside {
                     width: 14rem !important;
