@@ -13,10 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Settings & Pages seed
+        // Settings seed
         $this->call([
             SettingSeeder::class,
-            PageSeeder::class,
         ]);
 
         // User::factory(10)->create();
