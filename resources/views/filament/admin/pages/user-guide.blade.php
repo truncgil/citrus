@@ -1,7 +1,7 @@
 <x-filament-panels::page>
-    <div class="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8" x-data="{ search: '' }">
+    <div class="flex flex-col lg:flex-row gap-9" x-data="{ search: '' }">
         {{-- Sol Navigation Bar --}}
-        <aside class="w-full lg:w-80 flex-shrink-0">
+        <aside class="flex flex-1 flex-col overflow-y-auto p-4 [&>[data-slot=section]+[data-slot=section]]:mt-8" style="max-width: 14rem;">
             <x-filament::section>
                 <x-slot name="heading">
                     <div class="flex items-center gap-2">
@@ -13,7 +13,7 @@
                     </x-slot>
 
                 {{-- Search Input --}}
-                <div class="mb-4">
+                <div class="fi-section-content">
                     <x-filament::input.wrapper>
                         <x-slot name="prefix">
                             <x-filament::icon
@@ -30,7 +30,7 @@
                 </div>
 
                 {{-- Guide List --}}
-                <nav class="space-y-2">
+                <nav class="fi-section-content" style="padding: 10px 0 ;">
 
                     @foreach($this->getGuides() as $guide)
                         <div
@@ -39,22 +39,18 @@
                             x-show="!search || '{{ strtolower(\Illuminate\Support\Str::title(str_replace(['-', '_'], ' ', $guide['name']))) }}'.includes(search.toLowerCase())"
                             x-transition
                         >
-                            <x-filament::button
+                            <x-filament::link
                                 wire:click="selectGuide('{{ $guide['slug'] }}')"
-                                class="w-full justify-start group"
+                                tag="button"
+                                icon="heroicon-o-document-text"
                                 :color="$selectedGuide === $guide['slug'] ? 'primary' : 'gray'"
-                                :variant="$selectedGuide === $guide['slug'] ? 'filled' : 'outline'"
+                                weight="medium"
+                                class="w-full justify-start group"
                             >
-                                <div class="flex  justify-between w-full min-w-0">
-                                    <div class="flex items-center gap-2 flex-1 min-w-0">
-                                        <x-filament::icon
-                                            icon="heroicon-o-document-text"
-                                            class="w-5 h-5 flex-shrink-0"
-                                        />
-                                        <span class="font-medium text-sm truncate">
-                                            {{ \Illuminate\Support\Str::title(str_replace(['-', '_'], ' ', $guide['name'])) }}
-                                        </span>
-                                    </div>
+                                <div class="flex justify-between items-center w-full min-w-0">
+                                    <span class="truncate">
+                                        {{ \Illuminate\Support\Str::title(str_replace(['-', '_'], ' ', $guide['name'])) }}
+                                    </span>
                                     @if($selectedGuide === $guide['slug'])
                                         <x-filament::icon
                                             icon="heroicon-o-check-circle"
@@ -62,8 +58,7 @@
                                         />
                                     @endif
                                 </div>
-                              
-                            </x-filament::button>
+                            </x-filament::link>
                         </div>
                     @endforeach
 
@@ -83,7 +78,7 @@
         </aside>
 
         {{-- Sağ İçerik Alanı --}}
-        <main class="w-full min-w-0">
+        <main class="w-full min-w-0 order-2 lg:order-2">
             @if($selectedGuide && $this->getSelectedGuideContent())
                 @php
                     $guide = $this->getSelectedGuideContent();
@@ -144,6 +139,17 @@
 
     @push('styles')
         <style>
+            aside {
+                max-width: 14rem !important;
+            }
+            
+            @media (min-width: 1024px) {
+                aside {
+                    width: 14rem !important;
+                    max-width: 14rem !important;
+                }
+            }
+            
             .guide-content {
                 @apply text-gray-900 dark:text-gray-100;
             }
