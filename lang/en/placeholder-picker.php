@@ -32,6 +32,7 @@ return [
     'type_toggle' => 'Toggle',
     'type_color' => 'Color',
     'type_tags' => 'Tags',
+    'type_setting' => 'Setting',
     'type_custom' => 'Custom',
 ];
 

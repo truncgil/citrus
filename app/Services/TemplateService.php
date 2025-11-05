@@ -384,36 +384,48 @@ class TemplateService
         
         // Replace each placeholder
         foreach ($placeholders as $placeholder) {
-            // Try to find the value in data with various key formats
-            $value = null;
+            // Extract type from placeholder
+            $parts = explode('.', $placeholder);
+            $type = $parts[0] ?? null;
+            $field = $parts[1] ?? null;
             
-            // 1. Try exact match (text.title)
-            if (isset($data[$placeholder])) {
-                $value = $data[$placeholder];
-            }
-            // 2. Try with section_data prefix (section_data.text.title)
-            elseif (isset($data["section_data.{$placeholder}"])) {
-                $value = $data["section_data.{$placeholder}"];
-            }
-            // 3. Try nested array access (data['section_data']['text.title'] or data['text']['title'])
-            else {
-                $parts = explode('.', $placeholder);
-                if (count($parts) === 2) {
-                    [$type, $field] = $parts;
-                    // Try nested: data['section_data'][$type][$field]
-                    if (isset($data['section_data'][$type][$field])) {
-                        $value = $data['section_data'][$type][$field];
-                    }
-                    // Try nested: data[$type][$field]
-                    elseif (isset($data[$type][$field])) {
-                        $value = $data[$type][$field];
+            // Handle setting.* placeholders - get value from Setting model
+            if ($type === 'setting' && $field) {
+                $value = setting($field, '');
+                
+                // Get setting type to determine if it's a file/image
+                $settingModel = \App\Models\Setting::where('key', $field)->where('is_active', true)->first();
+                if ($settingModel && in_array($settingModel->type, ['file', 'image'])) {
+                    // For file/image settings, use file type for formatting
+                    $type = 'file';
+                }
+            } else {
+                // Try to find the value in data with various key formats
+                $value = null;
+                
+                // 1. Try exact match (text.title)
+                if (isset($data[$placeholder])) {
+                    $value = $data[$placeholder];
+                }
+                // 2. Try with section_data prefix (section_data.text.title)
+                elseif (isset($data["section_data.{$placeholder}"])) {
+                    $value = $data["section_data.{$placeholder}"];
+                }
+                // 3. Try nested array access (data['section_data']['text.title'] or data['text']['title'])
+                else {
+                    if (count($parts) === 2) {
+                        [$type, $field] = $parts;
+                        // Try nested: data['section_data'][$type][$field]
+                        if (isset($data['section_data'][$type][$field])) {
+                            $value = $data['section_data'][$type][$field];
+                        }
+                        // Try nested: data[$type][$field]
+                        elseif (isset($data[$type][$field])) {
+                            $value = $data[$type][$field];
+                        }
                     }
                 }
             }
-            
-            // Extract type from placeholder to determine if it's a file/image
-            $parts = explode('.', $placeholder);
-            $type = $parts[0] ?? null;
             
             // Handle different value types
             if (is_array($value)) {

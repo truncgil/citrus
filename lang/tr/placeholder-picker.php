@@ -32,6 +32,7 @@ return [
     'type_toggle' => 'Aç/Kapa',
     'type_color' => 'Renk',
     'type_tags' => 'Etiketler',
+    'type_setting' => 'Ayar',
     'type_custom' => 'Özel',
 ];
 

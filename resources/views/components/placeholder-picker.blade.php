@@ -1,7 +1,20 @@
 @php
+    // Setting key'lerini veritabanından al (aktif ve public olanlar)
+    $settingKeys = \App\Models\Setting::where('is_active', true)
+        ->where('is_public', true)
+        ->orderBy('key')
+        ->pluck('key')
+        ->toArray();
+    
+    // Eğer setting yoksa, yaygın örnekleri kullan
+    if (empty($settingKeys)) {
+        $settingKeys = ['site_name', 'site_description', 'contact_email', 'contact_phone', 'site_url', 'copyright_text', 'seo_meta_title', 'seo_meta_description'];
+    }
+    
     // Desteklenen placeholder tipleri ve açıklamaları
     $placeholderTypes = [
         'special' => ['label' => __('placeholder-picker.special_placeholders'), 'examples' => ['page.content', 'page.title', 'page.excerpt', 'menu', 'staticMenu']],
+        'setting' => ['label' => __('placeholder-picker.type_setting'), 'examples' => array_slice($settingKeys, 0, 15)], // İlk 15 setting'i göster
         'text' => ['label' => __('placeholder-picker.type_text'), 'examples' => ['company_name', 'title', 'description', 'subtitle']],
         'email' => ['label' => __('placeholder-picker.type_email'), 'examples' => ['contact', 'support', 'info', 'sales']],
         'url' => ['label' => __('placeholder-picker.type_url'), 'examples' => ['website', 'facebook', 'twitter', 'linkedin']],
