@@ -105,6 +105,60 @@
         
         <!-- Placeholder List -->
         <div class="overflow-y-auto overflow-x-hidden space-y-4" style="height: 200px; padding: 10px;overflow-y: auto;">
+            <!-- Special Placeholders Section -->
+            <div class="space-y-2">
+                <h4 class="fi-section-header-heading text-xs font-semibold uppercase tracking-wide">
+                    {{ __('placeholder-picker.special_placeholders') }}
+                </h4>
+                <div class="flex flex-wrap gap-2">
+                    <x-filament::button
+                        size="sm"
+                        color="primary"
+                        outlined
+                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'page.content')"
+                        x-bind:tooltip="'{{ __('placeholder-picker.click_to_insert') }}'"
+                    >
+                        <code class="text-xs font-mono">{page.content}</code>
+                    </x-filament::button>
+                    <x-filament::button
+                        size="sm"
+                        color="primary"
+                        outlined
+                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'page.title')"
+                        x-bind:tooltip="'{{ __('placeholder-picker.click_to_insert') }}'"
+                    >
+                        <code class="text-xs font-mono">{page.title}</code>
+                    </x-filament::button>
+                    <x-filament::button
+                        size="sm"
+                        color="primary"
+                        outlined
+                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'page.excerpt')"
+                        x-bind:tooltip="'{{ __('placeholder-picker.click_to_insert') }}'"
+                    >
+                        <code class="text-xs font-mono">{page.excerpt}</code>
+                    </x-filament::button>
+                    <x-filament::button
+                        size="sm"
+                        color="primary"
+                        outlined
+                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'menu')"
+                        x-bind:tooltip="'{{ __('placeholder-picker.click_to_insert') }}'"
+                    >
+                        <code class="text-xs font-mono">{menu}</code>
+                    </x-filament::button>
+                    <x-filament::button
+                        size="sm"
+                        color="primary"
+                        outlined
+                        x-on:click="window.insertPlaceholder('{{ $fieldName }}', 'staticMenu')"
+                        x-bind:tooltip="'{{ __('placeholder-picker.click_to_insert') }}'"
+                    >
+                        <code class="text-xs font-mono">{staticMenu}</code>
+                    </x-filament::button>
+                </div>
+            </div>
+            
             <template x-for="(info, type) in filteredCategories" x-bind:key="type">
                 <div class="space-y-2">
                     <h4 class="fi-section-header-heading text-xs font-semibold uppercase tracking-wide">
@@ -190,6 +244,7 @@
     });
 
     function insertPlaceholder(fieldName, placeholder) {
+        // Placeholder'ı {placeholder} formatında oluştur
         const placeholderText = '{' + placeholder + '}';
         
         // Monaco Editor instance'ını bul

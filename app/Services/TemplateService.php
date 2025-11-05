@@ -274,9 +274,50 @@ class TemplateService
      * Supports both {text.title} and {{text.title}} formats
      * Also supports {menu} and {staticMenu} placeholders for menu rendering
      * Also supports {custom.component_name} for custom blade components
+     * Also supports {page.content}, {page.title}, {page.excerpt} for page data
      */
-    public static function replacePlaceholders(string $html, array $data): string
+    public static function replacePlaceholders(string $html, array $data, ?\App\Models\Page $page = null): string
     {
+        // Handle special {page.content} placeholder - Sayfa içeriğini gösterir
+        if (str_contains($html, '{page.content}')) {
+            $pageContent = '';
+            if ($page) {
+                // Translation desteği varsa çeviriyi kullan
+                if (method_exists($page, 'translate')) {
+                    $pageContent = $page->translate('content') ?: $page->content;
+                } else {
+                    $pageContent = $page->content;
+                }
+            }
+            $html = str_replace('{page.content}', $pageContent ?? '', $html);
+        }
+        
+        // Handle special {page.title} placeholder - Sayfa başlığını gösterir
+        if (str_contains($html, '{page.title}')) {
+            $pageTitle = '';
+            if ($page) {
+                if (method_exists($page, 'translate')) {
+                    $pageTitle = $page->translate('title') ?: $page->title;
+                } else {
+                    $pageTitle = $page->title;
+                }
+            }
+            $html = str_replace('{page.title}', $pageTitle ?? '', $html);
+        }
+        
+        // Handle special {page.excerpt} placeholder - Sayfa özetini gösterir
+        if (str_contains($html, '{page.excerpt}')) {
+            $pageExcerpt = '';
+            if ($page) {
+                if (method_exists($page, 'translate')) {
+                    $pageExcerpt = $page->translate('excerpt') ?: $page->excerpt;
+                } else {
+                    $pageExcerpt = $page->excerpt;
+                }
+            }
+            $html = str_replace('{page.excerpt}', $pageExcerpt ?? '', $html);
+        }
+        
         // Handle special {menu} placeholder first
         if (str_contains($html, '{menu}')) {
             $renderedMenu = \App\Services\MenuService::render();

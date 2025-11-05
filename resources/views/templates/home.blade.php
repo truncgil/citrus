@@ -16,7 +16,8 @@
 			@if($section['template'] ?? null)
 				{!! \App\Services\TemplateService::replacePlaceholders(
 					$section['template']->html_content,
-					$section['data'] ?? []
+					$section['data'] ?? [],
+					$page ?? null
 				) !!}
 			@endif
 		@endforeach

@@ -43,7 +43,7 @@ class SectionTemplateForm
                             ->columnSpanFull()
                             ->helperText(__('section-templates.field_html_content_help'))
                             ->extraAttributes([
-                                'style' => 'max-height: 400px;overflow-y: auto;',
+                                'style' => 'max-height: 400px;overflow-y: auto;max-width: 100%;',
                                 'data-field-name' => 'html_content',
                             ]),
 

@@ -74,7 +74,8 @@ class PageController extends Controller
             
             $renderedHeader = TemplateService::replacePlaceholders(
                 $page->headerTemplate->html_content,
-                $mergedHeaderData
+                $mergedHeaderData,
+                $page
             );
         }
 
@@ -88,7 +89,8 @@ class PageController extends Controller
             
             $renderedFooter = TemplateService::replacePlaceholders(
                 $page->footerTemplate->html_content,
-                $mergedFooterData
+                $mergedFooterData,
+                $page
             );
         }
 
@@ -154,7 +156,8 @@ public function show($slug)
             
             $renderedHeader = TemplateService::replacePlaceholders(
                 $page->headerTemplate->html_content,
-                $mergedHeaderData
+                $mergedHeaderData,
+                $page
             );
         }
 
@@ -168,7 +171,8 @@ public function show($slug)
             
             $renderedFooter = TemplateService::replacePlaceholders(
                 $page->footerTemplate->html_content,
-                $mergedFooterData
+                $mergedFooterData,
+                $page
             );
         }
 

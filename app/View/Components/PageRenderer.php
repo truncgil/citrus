@@ -44,7 +44,8 @@ class PageRenderer extends Component
 
         return TemplateService::replacePlaceholders(
             $this->page->headerTemplate->html_content,
-            $mergedData
+            $mergedData,
+            $this->page
         );
     }
 
@@ -67,7 +68,8 @@ class PageRenderer extends Component
 
             $output .= TemplateService::replacePlaceholders(
                 $section['template']->html_content,
-                $mergedData
+                $mergedData,
+                $this->page
             );
         }
 
@@ -90,7 +92,8 @@ class PageRenderer extends Component
 
         return TemplateService::replacePlaceholders(
             $this->page->footerTemplate->html_content,
-            $mergedData
+            $mergedData,
+            $this->page
         );
     }
 }
