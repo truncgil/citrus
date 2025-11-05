@@ -170,4 +170,10 @@ return [
     'form_section_footer_template' => 'Footer Şablonu',
     'form_section_footer_template_desc' => 'Sayfanın alt kısmı için dinamik footer şablonu seçin',
     'footer_template_field' => 'Footer Şablonu',
+    
+    // Bulk Actions
+    'bulk_action_duplicate' => 'Seçilenleri Çoğalt',
+    'bulk_action_publish' => 'Seçilenleri Yayınla',
+    'bulk_duplicated_successfully' => ':count sayfa başarıyla çoğaltıldı.',
+    'bulk_published_successfully' => ':count sayfa başarıyla yayınlandı.',
 ];

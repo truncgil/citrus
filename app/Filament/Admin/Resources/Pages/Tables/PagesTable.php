@@ -2,11 +2,13 @@
 
 namespace App\Filament\Admin\Resources\Pages\Tables;
 
+use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -120,6 +122,45 @@ class PagesTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    BulkAction::make('duplicate')
+                        ->label(__('pages.bulk_action_duplicate'))
+                        ->icon('heroicon-o-document-duplicate')
+                        ->color('info')
+                        ->action(function ($records) {
+                            $count = 0;
+                            foreach ($records as $record) {
+                                $record->duplicate();
+                                $count++;
+                            }
+                            
+                            Notification::make()
+                                ->title(__('pages.bulk_duplicated_successfully', ['count' => $count]))
+                                ->success()
+                                ->send();
+                        })
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion(),
+                    
+                    BulkAction::make('publish')
+                        ->label(__('pages.bulk_action_publish'))
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->action(function ($records) {
+                            $count = 0;
+                            foreach ($records as $record) {
+                                if ($record->publish()) {
+                                    $count++;
+                                }
+                            }
+                            
+                            Notification::make()
+                                ->title(__('pages.bulk_published_successfully', ['count' => $count]))
+                                ->success()
+                                ->send();
+                        })
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion(),
+                    
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),

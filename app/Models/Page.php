@@ -196,4 +196,52 @@ class Page extends Model
     {
         return null; // Mevcut migration nullable olduğu için null kullanıyoruz
     }
+
+    /**
+     * Duplicate the page
+     */
+    public function duplicate(): self
+    {
+        $duplicated = $this->replicate();
+        
+        // Generate unique slug
+        $baseSlug = $this->slug;
+        $counter = 1;
+        do {
+            $newSlug = $baseSlug . '-copy-' . $counter;
+            $counter++;
+        } while (static::where('slug', $newSlug)->exists());
+        
+        $duplicated->slug = $newSlug;
+        $duplicated->title = $this->title . ' (Kopya)';
+        $duplicated->status = 'draft';
+        $duplicated->published_at = null;
+        $duplicated->is_homepage = false; // Duplicate can't be homepage
+        $duplicated->author_id = auth()->id();
+        $duplicated->save();
+
+        // Duplicate translations if HasTranslations trait is used
+        if (method_exists($this, 'translations')) {
+            foreach ($this->translations()->get() as $translation) {
+                $duplicatedTranslation = $translation->replicate();
+                $duplicatedTranslation->translatable_type = get_class($duplicated);
+                $duplicatedTranslation->translatable_id = $duplicated->id;
+                $duplicatedTranslation->save();
+            }
+        }
+
+        return $duplicated;
+    }
+
+    /**
+     * Publish the page
+     */
+    public function publish(): bool
+    {
+        $this->status = 'published';
+        if (!$this->published_at) {
+            $this->published_at = now();
+        }
+        return $this->save();
+    }
 }

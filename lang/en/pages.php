@@ -170,4 +170,10 @@ return [
     'form_section_footer_template' => 'Footer Template',
     'form_section_footer_template_desc' => 'Select a dynamic footer template for the bottom of the page',
     'footer_template_field' => 'Footer Template',
+    
+    // Bulk Actions
+    'bulk_action_duplicate' => 'Duplicate Selected',
+    'bulk_action_publish' => 'Publish Selected',
+    'bulk_duplicated_successfully' => ':count page(s) duplicated successfully.',
+    'bulk_published_successfully' => ':count page(s) published successfully.',
 ];
