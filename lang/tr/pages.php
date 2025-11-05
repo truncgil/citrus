@@ -174,6 +174,8 @@ return [
     // Bulk Actions
     'bulk_action_duplicate' => 'Seçilenleri Çoğalt',
     'bulk_action_publish' => 'Seçilenleri Yayınla',
+    'bulk_action_draft' => 'Seçilenleri Taslağa Al',
     'bulk_duplicated_successfully' => ':count sayfa başarıyla çoğaltıldı.',
     'bulk_published_successfully' => ':count sayfa başarıyla yayınlandı.',
+    'bulk_drafted_successfully' => ':count sayfa başarıyla taslağa alındı.',
 ];

@@ -161,6 +161,26 @@ class PagesTable
                         ->requiresConfirmation()
                         ->deselectRecordsAfterCompletion(),
                     
+                    BulkAction::make('draft')
+                        ->label(__('pages.bulk_action_draft'))
+                        ->icon('heroicon-o-document-text')
+                        ->color('warning')
+                        ->action(function ($records) {
+                            $count = 0;
+                            foreach ($records as $record) {
+                                if ($record->draft()) {
+                                    $count++;
+                                }
+                            }
+                            
+                            Notification::make()
+                                ->title(__('pages.bulk_drafted_successfully', ['count' => $count]))
+                                ->success()
+                                ->send();
+                        })
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion(),
+                    
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),

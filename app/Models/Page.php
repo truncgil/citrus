@@ -244,4 +244,13 @@ class Page extends Model
         }
         return $this->save();
     }
+
+    /**
+     * Set the page to draft status
+     */
+    public function draft(): bool
+    {
+        $this->status = 'draft';
+        return $this->save();
+    }
 }

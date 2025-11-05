@@ -174,6 +174,8 @@ return [
     // Bulk Actions
     'bulk_action_duplicate' => 'Duplicate Selected',
     'bulk_action_publish' => 'Publish Selected',
+    'bulk_action_draft' => 'Move to Draft',
     'bulk_duplicated_successfully' => ':count page(s) duplicated successfully.',
     'bulk_published_successfully' => ':count page(s) published successfully.',
+    'bulk_drafted_successfully' => ':count page(s) moved to draft successfully.',
 ];
