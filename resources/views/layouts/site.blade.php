@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
+	
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>{{ $meta['title'] ?? ($settings->default_meta_title ?? config('app.name')) }}</title>
+	<title>{{ setting('seo_meta_title') }} - {{ $meta['title'] ?? ($settings->default_meta_title ?? config('app.name')) }}</title>
 	<meta name="description" content="{{ $meta['description'] ?? ($settings->default_meta_description ?? '') }}">
 	<link rel="icon" href="{{ $settings?->favicon_path ? asset($settings->favicon_path) : asset('assets/img/favicon.ico') }}">
 	<link rel="stylesheet" href="{{ asset('html/style.css') }}">
