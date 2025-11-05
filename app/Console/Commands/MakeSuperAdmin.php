@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class MakeSuperAdmin extends Command
@@ -54,18 +55,36 @@ class MakeSuperAdmin extends Command
             'guard_name' => 'web',
         ]);
 
-        // Kullanıcı zaten super admin mi kontrol et
-        if ($user->hasRole('super_admin')) {
-            $this->warn("Kullanıcı '{$user->name}' ({$user->email}) zaten super admin!");
-            return self::SUCCESS;
+        // Super admin rolünü ata (eğer yoksa)
+        if (!$user->hasRole('super_admin')) {
+            $user->assignRole('super_admin');
         }
 
-        // Super admin rolünü ata
-        $user->assignRole('super_admin');
+        // Tüm izinleri super admin rolüne ata (her zaman güncelle)
+        $this->info('Tüm izinler super admin rolüne atanıyor...');
+        $this->syncAllPermissions($role);
 
-        $this->info("✓ Kullanıcı '{$user->name}' ({$user->email}) başarıyla super admin yapıldı!");
+        $this->info("✓ Kullanıcı '{$user->name}' ({$user->email}) super admin yetkileri güncellendi!");
         
         return self::SUCCESS;
+    }
+
+    /**
+     * Tüm izinleri super admin rolüne senkronize et
+     */
+    protected function syncAllPermissions(Role $role): void
+    {
+        $allPermissions = Permission::where('guard_name', 'web')->get();
+        
+        if ($allPermissions->isEmpty()) {
+            $this->warn('Henüz hiç izin tanımlanmamış. İzinleri oluşturmak için: php artisan shield:generate --all');
+            return;
+        }
+
+        $permissionCount = $allPermissions->count();
+        $role->syncPermissions($allPermissions);
+        
+        $this->info("✓ {$permissionCount} adet izin super admin rolüne atandı.");
     }
 }
 

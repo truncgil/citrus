@@ -1,97 +1,70 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Language;
-use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LanguagePolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    use HandlesAuthorization;
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        return $user->hasRole('super_admin') || $user->can('language::viewAny');
+        return $authUser->can('ViewAny:Language');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Language $language): bool
+    public function view(AuthUser $authUser, Language $language): bool
     {
-        return $user->hasRole('super_admin') || $user->can('language::view');
+        return $authUser->can('View:Language');
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return $user->hasRole('super_admin') || $user->can('language::create');
+        return $authUser->can('Create:Language');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Language $language): bool
+    public function update(AuthUser $authUser, Language $language): bool
     {
-        // Cannot disable default language
-        if ($language->is_default && !$user->hasRole('super_admin')) {
-            return false;
-        }
-
-        return $user->hasRole('super_admin') || $user->can('language::update');
+        return $authUser->can('Update:Language');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Language $language): bool
+    public function delete(AuthUser $authUser, Language $language): bool
     {
-        // Cannot delete default language
-        if ($language->is_default) {
-            return false;
-        }
-
-        return $user->hasRole('super_admin') || $user->can('language::delete');
+        return $authUser->can('Delete:Language');
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Language $language): bool
+    public function restore(AuthUser $authUser, Language $language): bool
     {
-        return $user->hasRole('super_admin') || $user->can('language::restore');
+        return $authUser->can('Restore:Language');
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Language $language): bool
+    public function forceDelete(AuthUser $authUser, Language $language): bool
     {
-        // Cannot force delete default language
-        if ($language->is_default) {
-            return false;
-        }
-
-        return $user->hasRole('super_admin') || $user->can('language::forceDelete');
+        return $authUser->can('ForceDelete:Language');
     }
 
-    /**
-     * Determine whether the user can activate the language.
-     */
-    public function activate(User $user): bool
+    public function forceDeleteAny(AuthUser $authUser): bool
     {
-        return $user->hasRole('super_admin') || $user->can('language::activate');
+        return $authUser->can('ForceDeleteAny:Language');
     }
 
-    /**
-     * Determine whether the user can set the language as default.
-     */
-    public function setDefault(User $user): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
-        return $user->hasRole('super_admin') || $user->can('language::setDefault');
+        return $authUser->can('RestoreAny:Language');
     }
+
+    public function replicate(AuthUser $authUser, Language $language): bool
+    {
+        return $authUser->can('Replicate:Language');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Language');
+    }
+
 }
