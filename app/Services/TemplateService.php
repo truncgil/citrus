@@ -437,11 +437,11 @@ class TemplateService
             if ($type === 'page') {
                 if ($field === 'content' && str_contains($html, '{' . $originalPlaceholder . '}')) {
                     $pageContent = '';
-                    if ($page) {
-                        if (method_exists($page, 'translate')) {
-                            $pageContent = $page->translate('content') ?: $page->content;
+                    if ($model) {
+                        if (method_exists($model, 'translate')) {
+                            $pageContent = $model->translate('content') ?: $model->content;
                         } else {
-                            $pageContent = $page->content;
+                            $pageContent = $model->content;
                         }
                     }
                     $html = str_replace('{' . $originalPlaceholder . '}', $pageContent ?? '', $html);
@@ -450,11 +450,11 @@ class TemplateService
                 
                 if ($field === 'title' && str_contains($html, '{' . $originalPlaceholder . '}')) {
                     $pageTitle = '';
-                    if ($page) {
-                        if (method_exists($page, 'translate')) {
-                            $pageTitle = $page->translate('title') ?: $page->title;
+                    if ($model) {
+                        if (method_exists($model, 'translate')) {
+                            $pageTitle = $model->translate('title') ?: $model->title;
                         } else {
-                            $pageTitle = $page->title;
+                            $pageTitle = $model->title;
                         }
                     }
                     $html = str_replace('{' . $originalPlaceholder . '}', $pageTitle ?? '', $html);
@@ -463,11 +463,11 @@ class TemplateService
                 
                 if ($field === 'excerpt' && str_contains($html, '{' . $originalPlaceholder . '}')) {
                     $pageExcerpt = '';
-                    if ($page) {
-                        if (method_exists($page, 'translate')) {
-                            $pageExcerpt = $page->translate('excerpt') ?: $page->excerpt;
+                    if ($model) {
+                        if (method_exists($model, 'translate')) {
+                            $pageExcerpt = $model->translate('excerpt') ?: $model->excerpt;
                         } else {
-                            $pageExcerpt = $page->excerpt;
+                            $pageExcerpt = $model->excerpt;
                         }
                     }
                     $html = str_replace('{' . $originalPlaceholder . '}', $pageExcerpt ?? '', $html);

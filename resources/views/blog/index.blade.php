@@ -6,9 +6,9 @@
 		<div class="grid">
 			@forelse($posts as $post)
 				<article class="card">
-					@if(!empty($post->featured_image))
+					@if(!empty($post->featured_image_url))
 						<a href="{{ route('blog.show', $post->slug) }}">
-							<img src="{{ asset($post->featured_image) }}" alt="{{ method_exists($post, 'translate') ? $post->translate('title') : $post->title }}">
+							<img src="{{ $post->featured_image_url }}" alt="{{ method_exists($post, 'translate') ? $post->translate('title') : $post->title }}">
 						</a>
 					@endif
 					<h3>
