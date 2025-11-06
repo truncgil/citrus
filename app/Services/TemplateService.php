@@ -524,6 +524,32 @@ class TemplateService
                         }
                     }
                 }
+                
+                // 4. If value not found in data and model is provided, try to get from model attributes
+                if ($value === null && $model && count($parts) === 2) {
+                    [$type, $field] = $parts;
+                    
+                    // First, try to get accessor with _url suffix for image/file fields (e.g., featured_image_url)
+                    if (in_array($type, ['image', 'images', 'file', 'files'])) {
+                        $accessorField = $field . '_url';
+                        if ($model->offsetExists($accessorField) || isset($model->{$accessorField})) {
+                            try {
+                                $value = $model->{$accessorField};
+                            } catch (\Exception $e) {
+                                // Accessor doesn't exist, continue to try attribute
+                            }
+                        }
+                    }
+                    
+                    // Try to get from model attribute (e.g., featured_image, title, content)
+                    if ($value === null && ($model->offsetExists($field) || isset($model->{$field}))) {
+                        try {
+                            $value = $model->getAttribute($field);
+                        } catch (\Exception $e) {
+                            // Attribute doesn't exist
+                        }
+                    }
+                }
             }
             
             // Handle different value types
