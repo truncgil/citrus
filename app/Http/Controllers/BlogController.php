@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use App\Models\Blog;
+use App\Models\BlogComment;
 use App\Models\HeaderTemplate;
 use App\Models\FooterTemplate;
 use App\Services\TemplateService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
@@ -73,6 +76,42 @@ class BlogController extends Controller
 			->where('slug', $slug)
 			->firstOrFail();
 
+		// İlgili blog gönderilerini al (aynı kategoriden, mevcut gönderi hariç)
+		$relatedPosts = Blog::with(['category', 'author'])
+			->withCount('comments')
+			->published()
+			->where('id', '!=', $post->id)
+			->when($post->category_id, function($query) use ($post) {
+				return $query->where('category_id', $post->category_id);
+			})
+			->latest('published_at')
+			->limit(4)
+			->get();
+
+		// Eğer aynı kategoriden yeterli gönderi yoksa, diğer kategorilerden ekle
+		if ($relatedPosts->count() < 4) {
+			$additionalPosts = Blog::with(['category', 'author'])
+				->withCount('comments')
+				->published()
+				->where('id', '!=', $post->id)
+				->whereNotIn('id', $relatedPosts->pluck('id'))
+				->latest('published_at')
+				->limit(4 - $relatedPosts->count())
+				->get();
+			
+			$relatedPosts = $relatedPosts->merge($additionalPosts);
+		}
+
+		// Onaylanmış yorumları al (parent yorumlar ve reply'leri ile)
+		$comments = $post->comments()
+			->approved()
+			->whereNull('parent_id')
+			->with(['replies' => function($query) {
+				$query->approved()->orderBy('created_at', 'asc');
+			}])
+			->orderBy('created_at', 'desc')
+			->get();
+
 		// Render Header Template - En son aktif olan header template'i kullan
 		$renderedHeader = null;
 		$headerTemplate = HeaderTemplate::where('is_active', true)
@@ -106,6 +145,8 @@ class BlogController extends Controller
 		return view('blog.show', [
 			'settings' => $settings,
 			'post' => $post,
+			'relatedPosts' => $relatedPosts,
+			'comments' => $comments,
 			'renderedHeader' => $renderedHeader,
 			'renderedFooter' => $renderedFooter,
 			'meta' => [

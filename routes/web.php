@@ -74,6 +74,7 @@ Route::get('/', [PageController::class, 'index'])->name('homepage');
 // Blog
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::post('/blog/{slug}/comment', [BlogController::class, 'storeComment'])->name('blog.comment.store');
 
 // Template Preview (admin panel için)
 Route::post('/admin/template-preview', [TemplatePreviewController::class, 'preview'])
