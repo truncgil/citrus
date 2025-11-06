@@ -85,4 +85,23 @@ return [
     'slug_unique' => 'Bu URL yolu zaten kullanılıyor.',
     'content_required' => 'İçerik alanı zorunludur.',
     'author_required' => 'Yazar alanı zorunludur.',
+    
+    // Blog post page
+    'by' => 'Yazar',
+    'comments' => 'Yorum',
+    'share' => 'Paylaş',
+    'author' => 'Yazar',
+    'all_posts' => 'Tüm Yazılar',
+    'you_might_also_like' => 'Bunları da Beğenebilirsiniz',
+    'read_more' => 'Devamını Oku',
+    'reply' => 'Yanıtla',
+    'share_thoughts' => 'Düşüncelerinizi paylaşır mısınız?',
+    'comment_form_description' => 'E-posta adresiniz yayınlanmayacaktır. Zorunlu alanlar * ile işaretlenmiştir.',
+    'name' => 'Ad',
+    'email' => 'E-posta',
+    'website' => 'Web Sitesi',
+    'comment' => 'Yorum',
+    'submit' => 'Gönder',
+    'comment_submitted' => 'Yorumunuz gönderildi. Onaylandıktan sonra yayınlanacaktır.',
+    'comments_disabled' => 'Bu blog yazısında yorumlar devre dışı bırakılmıştır.',
 ];

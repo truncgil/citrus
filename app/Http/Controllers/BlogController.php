@@ -13,15 +13,35 @@ use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
 		$settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
-		$posts = class_exists(Blog::class)
+		
+		$query = class_exists(Blog::class)
 			? Blog::with(['category', 'author'])
 				->withCount('comments')
 				->published()
-				->latest('published_at')
-				->paginate(12)
+			: null;
+
+		// Author filtresi
+		if ($query && $request->has('author') && $request->author) {
+			$query = $query->where('author_id', $request->author);
+		}
+
+		// Category filtresi
+		if ($query && $request->has('category') && $request->category) {
+			$query = $query->whereHas('category', function($q) use ($request) {
+				$q->where('slug', $request->category);
+			});
+		}
+
+		// Tag filtresi
+		if ($query && $request->has('tag') && $request->tag) {
+			$query = $query->whereJsonContains('tags', $request->tag);
+		}
+
+		$posts = $query
+			? $query->latest('published_at')->paginate(12)
 			: collect();
 
 		// Render Header Template - En son aktif olan header template'i kullan
@@ -155,6 +175,49 @@ class BlogController extends Controller
 				'image' => $post->featured_image ? asset('storage/' . $post->featured_image) : null,
 			],
 		]);
+	}
+
+	public function storeComment(Request $request, string $slug)
+	{
+		if (!class_exists(Blog::class) || !class_exists(BlogComment::class)) {
+			abort(404);
+		}
+
+		$post = Blog::published()
+			->where('slug', $slug)
+			->firstOrFail();
+
+		if (!$post->allow_comments) {
+			return redirect()->route('blog.show', $slug)
+				->with('error', __('blog.comments_disabled'));
+		}
+
+		$validator = Validator::make($request->all(), [
+			'name' => 'required|string|max:255',
+			'email' => 'required|email|max:255',
+			'content' => 'required|string|min:10',
+			'parent_id' => 'nullable|exists:blog_comments,id',
+		]);
+
+		if ($validator->fails()) {
+			return redirect()->route('blog.show', $slug)
+				->withErrors($validator)
+				->withInput();
+		}
+
+		$comment = BlogComment::create([
+			'blog_id' => $post->id,
+			'name' => $request->name,
+			'email' => $request->email,
+			'content' => $request->content,
+			'parent_id' => $request->parent_id,
+			'status' => 'pending', // Yorumlar onay bekliyor olarak kaydedilir
+			'ip_address' => $request->ip(),
+			'user_agent' => $request->userAgent(),
+		]);
+
+		return redirect()->route('blog.show', $slug)
+			->with('success', __('blog.comment_submitted'));
 	}
 }
 

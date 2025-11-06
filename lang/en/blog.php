@@ -85,4 +85,23 @@ return [
     'slug_unique' => 'This URL slug is already in use.',
     'content_required' => 'Content field is required.',
     'author_required' => 'Author field is required.',
+    
+    // Blog post page
+    'by' => 'By',
+    'comments' => 'Comments',
+    'share' => 'Share',
+    'author' => 'Author',
+    'all_posts' => 'All Posts',
+    'you_might_also_like' => 'You Might Also Like',
+    'read_more' => 'Read More',
+    'reply' => 'Reply',
+    'share_thoughts' => 'Would you like to share your thoughts?',
+    'comment_form_description' => 'Your email address will not be published. Required fields are marked *',
+    'name' => 'Name',
+    'email' => 'Email',
+    'website' => 'Website',
+    'comment' => 'Comment',
+    'submit' => 'Submit',
+    'comment_submitted' => 'Your comment has been submitted. It will be published after approval.',
+    'comments_disabled' => 'Comments are disabled for this blog post.',
 ];

@@ -352,6 +352,16 @@
                 <hr>
                 <h3 class="!mb-3">{{ __('blog.share_thoughts') }}</h3>
                 <p class="!mb-7">{{ __('blog.comment_form_description') }}</p>
+                @if(session('success'))
+                  <div class="alert alert-success !mb-4">
+                    {{ session('success') }}
+                  </div>
+                @endif
+                @if(session('error'))
+                  <div class="alert alert-danger !mb-4">
+                    {{ session('error') }}
+                  </div>
+                @endif
                 <form class="comment-form" id="comment-form" method="POST" action="{{ route('blog.comment.store', $post->slug) }}">
                   @csrf
                   <input type="hidden" name="parent_id" id="parent_id" value="">
@@ -362,10 +372,6 @@
                   <div class="form-floating relative !mb-4">
                     <input type="email" class="form-control relative block w-full text-[.75rem] font-medium !text-[#60697b] bg-[#fefefe] bg-clip-padding border shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] rounded-[0.4rem] border-solid border-[rgba(8,60,130,0.07)] transition-[border-color] duration-[0.15s] ease-in-out focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] focus-visible:!border-[rgba(63,120,224,0.5)] placeholder:!text-[#959ca9] placeholder:opacity-100 m-0 !pr-9 p-[.6rem_1rem] h-[calc(2.5rem_+_2px)] min-h-[calc(2.5rem_+_2px)] !leading-[1.25]" placeholder="" id="c-email" name="email" value="{{ old('email') }}" required>
                     <label class="inline-block !text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none border origin-[0_0] px-4 py-[0.6rem] border-solid border-transparent left-0 top-0 font-Manrope" for="c-email">{{ __('blog.email') }} *</label>
-                  </div>
-                  <div class="form-floating relative !mb-4">
-                    <input type="text" class="form-control relative block w-full text-[.75rem] font-medium !text-[#60697b] bg-[#fefefe] bg-clip-padding border shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] rounded-[0.4rem] border-solid border-[rgba(8,60,130,0.07)] transition-[border-color] duration-[0.15s] ease-in-out focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] focus-visible:!border-[rgba(63,120,224,0.5)] placeholder:!text-[#959ca9] placeholder:opacity-100 m-0 !pr-9 p-[.6rem_1rem] h-[calc(2.5rem_+_2px)] min-h-[calc(2.5rem_+_2px)] !leading-[1.25]" placeholder="" id="c-web" name="website" value="{{ old('website') }}">
-                    <label class="inline-block !text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none border origin-[0_0] px-4 py-[0.6rem] border-solid border-transparent left-0 top-0 font-Manrope" for="c-web">{{ __('blog.website') }}</label>
                   </div>
                   <div class="form-floating relative !mb-4">
                     <textarea name="content" class="form-control relative block w-full text-[.75rem] font-medium !text-[#60697b] bg-[#fefefe] bg-clip-padding border shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] rounded-[0.4rem] border-solid border-[rgba(8,60,130,0.07)] transition-[border-color] duration-[0.15s] ease-in-out focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] focus-visible:!border-[rgba(63,120,224,0.5)] placeholder:!text-[#959ca9] placeholder:opacity-100 m-0 !pr-9 p-[.6rem_1rem] h-[calc(2.5rem_+_2px)] min-h-[calc(2.5rem_+_2px)] !leading-[1.25]" placeholder="" style="height: 150px" required>{{ old('content') }}</textarea>
