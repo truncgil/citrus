@@ -525,28 +525,35 @@ class TemplateService
                     }
                 }
                 
-                // 4. If value not found in data and model is provided, try to get from model attributes
+                // 4. If value not found in data and model is provided, try to get from model attributes/accessors
                 if ($value === null && $model && count($parts) === 2) {
                     [$type, $field] = $parts;
                     
                     // First, try to get accessor with _url suffix for image/file fields (e.g., featured_image_url)
                     if (in_array($type, ['image', 'images', 'file', 'files'])) {
                         $accessorField = $field . '_url';
-                        if ($model->offsetExists($accessorField) || isset($model->{$accessorField})) {
-                            try {
+                        try {
+                            // Laravel accessors are called as properties
+                            if (isset($model->{$accessorField})) {
                                 $value = $model->{$accessorField};
-                            } catch (\Exception $e) {
-                                // Accessor doesn't exist, continue to try attribute
                             }
+                        } catch (\Exception $e) {
+                            // Accessor doesn't exist, continue to try attribute
                         }
                     }
                     
                     // Try to get from model attribute (e.g., featured_image, title, content)
-                    if ($value === null && ($model->offsetExists($field) || isset($model->{$field}))) {
+                    if ($value === null) {
                         try {
-                            $value = $model->getAttribute($field);
+                            // Try as property first (may trigger accessor)
+                            if (isset($model->{$field})) {
+                                $value = $model->{$field};
+                            } else {
+                                // Try getAttribute directly
+                                $value = $model->getAttribute($field);
+                            }
                         } catch (\Exception $e) {
-                            // Attribute doesn't exist
+                            // Attribute doesn't exist, value stays null
                         }
                     }
                 }
