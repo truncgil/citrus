@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\Setting;
+use App\Models\HeaderTemplate;
+use App\Models\FooterTemplate;
 use App\Services\TemplateService;
 use Illuminate\Http\Request;
 
@@ -66,14 +68,23 @@ class PageController extends Controller
         
         // Render Header Template
         $renderedHeader = null;
-        if ($page->headerTemplate) {
+        $headerTemplate = $page->headerTemplate;
+        
+        // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
+        if (!$headerTemplate) {
+            $headerTemplate = HeaderTemplate::where('is_active', true)
+                ->latest('updated_at')
+                ->first();
+        }
+        
+        if ($headerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $page->headerTemplate->default_data ?? [];
+            $templateDefaults = $headerTemplate->default_data ?? [];
             $pageData = $page->header_data ?? [];
             $mergedHeaderData = array_merge($templateDefaults, $pageData);
             
             $renderedHeader = TemplateService::replacePlaceholders(
-                $page->headerTemplate->html_content,
+                $headerTemplate->html_content,
                 $mergedHeaderData,
                 $page
             );
@@ -81,14 +92,23 @@ class PageController extends Controller
 
         // Render Footer Template
         $renderedFooter = null;
-        if ($page->footerTemplate) {
+        $footerTemplate = $page->footerTemplate;
+        
+        // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
+        if (!$footerTemplate) {
+            $footerTemplate = FooterTemplate::where('is_active', true)
+                ->latest('updated_at')
+                ->first();
+        }
+        
+        if ($footerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $page->footerTemplate->default_data ?? [];
+            $templateDefaults = $footerTemplate->default_data ?? [];
             $pageData = $page->footer_data ?? [];
             $mergedFooterData = array_merge($templateDefaults, $pageData);
             
             $renderedFooter = TemplateService::replacePlaceholders(
-                $page->footerTemplate->html_content,
+                $footerTemplate->html_content,
                 $mergedFooterData,
                 $page
             );
@@ -148,14 +168,23 @@ public function show($slug)
 
         // Render Header Template
         $renderedHeader = null;
-        if ($page->headerTemplate) {
+        $headerTemplate = $page->headerTemplate;
+        
+        // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
+        if (!$headerTemplate) {
+            $headerTemplate = HeaderTemplate::where('is_active', true)
+                ->latest('updated_at')
+                ->first();
+        }
+        
+        if ($headerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $page->headerTemplate->default_data ?? [];
+            $templateDefaults = $headerTemplate->default_data ?? [];
             $pageData = $page->header_data ?? [];
             $mergedHeaderData = array_merge($templateDefaults, $pageData);
             
             $renderedHeader = TemplateService::replacePlaceholders(
-                $page->headerTemplate->html_content,
+                $headerTemplate->html_content,
                 $mergedHeaderData,
                 $page
             );
@@ -163,14 +192,23 @@ public function show($slug)
 
         // Render Footer Template
         $renderedFooter = null;
-        if ($page->footerTemplate) {
+        $footerTemplate = $page->footerTemplate;
+        
+        // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
+        if (!$footerTemplate) {
+            $footerTemplate = FooterTemplate::where('is_active', true)
+                ->latest('updated_at')
+                ->first();
+        }
+        
+        if ($footerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $page->footerTemplate->default_data ?? [];
+            $templateDefaults = $footerTemplate->default_data ?? [];
             $pageData = $page->footer_data ?? [];
             $mergedFooterData = array_merge($templateDefaults, $pageData);
             
             $renderedFooter = TemplateService::replacePlaceholders(
-                $page->footerTemplate->html_content,
+                $footerTemplate->html_content,
                 $mergedFooterData,
                 $page
             );

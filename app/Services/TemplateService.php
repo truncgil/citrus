@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\HeaderTemplate;
 use App\Models\SectionTemplate;
 use App\Models\FooterTemplate;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\{
     TextInput, Textarea, Select, Checkbox, CheckboxList,
     Radio, Toggle, ToggleButtons, DateTimePicker, DatePicker,
@@ -31,18 +32,46 @@ class TemplateService
         $fields = [];
         
         foreach ($placeholders as $placeholder) {
-            $parts = explode('.', $placeholder);
+            // Handle special.* prefix - remove it for processing
+            $normalizedPlaceholder = $placeholder;
+            if (str_starts_with($placeholder, 'special.')) {
+                $normalizedPlaceholder = substr($placeholder, 8); // Remove 'special.' prefix
+            }
             
-            if (count($parts) !== 2) {
+            $parts = explode('.', $normalizedPlaceholder);
+            
+            if (count($parts) < 2) {
                 continue; // Skip invalid placeholders
             }
             
-            [$type, $name] = $parts;
+            $type = $parts[0];
+            
+            // Skip special.* placeholders - they are special placeholders (page.*, menu, staticMenu), not form fields
+            if (str_starts_with($placeholder, 'special.')) {
+                continue;
+            }
             
             // Skip custom.* placeholders - they are blade components, not form fields
             if ($type === 'custom') {
                 continue;
             }
+            
+            // Skip page.* placeholders - they are special placeholders, not form fields
+            if ($type === 'page') {
+                continue;
+            }
+            
+            // Skip menu and staticMenu placeholders - they are special placeholders, not form fields
+            if ($normalizedPlaceholder === 'menu' || $normalizedPlaceholder === 'staticMenu') {
+                continue;
+            }
+            
+            // For form fields, we expect type.field format (2 parts)
+            if (count($parts) !== 2) {
+                continue; // Skip invalid placeholders
+            }
+            
+            [$type, $name] = $parts;
             
             $label = str($name)->title()->replace('_', ' ')->toString();
             
@@ -248,11 +277,12 @@ class TemplateService
 
     /**
      * Parse placeholders from HTML content
-     * Format: {type.field_name} or {type.field-name}
+     * Format: {type.field_name} or {type.field-name} or {special.type.field}
      */
     public static function parsePlaceholders(string $html): array
     {
-        preg_match_all('/\{([a-z]+\.[a-z][a-z_-]*)\}/i', $html, $matches);
+        // Pattern: {type.field} or {special.type.field} or {type.field.field2} etc.
+        preg_match_all('/\{([a-z]+(?:\.[a-z][a-z_-]*)+)\}/i', $html, $matches);
         return array_unique($matches[1] ?? []);
     }
 
@@ -275,44 +305,48 @@ class TemplateService
      * Also supports {menu} and {staticMenu} placeholders for menu rendering
      * Also supports {custom.component_name} for custom blade components
      * Also supports {page.content}, {page.title}, {page.excerpt} for page data
+     * 
+     * @param string $html HTML content with placeholders
+     * @param array $data Data array for placeholders
+     * @param Model|null $model Optional model instance (Page, Blog, etc.) for dynamic data
      */
-    public static function replacePlaceholders(string $html, array $data, ?\App\Models\Page $page = null): string
+    public static function replacePlaceholders(string $html, array $data, ?Model $model = null): string
     {
-        // Handle special {page.content} placeholder - Sayfa içeriğini gösterir
+        // Handle special {page.content} placeholder - Sayfa/model içeriğini gösterir
         if (str_contains($html, '{page.content}')) {
             $pageContent = '';
-            if ($page) {
+            if ($model) {
                 // Translation desteği varsa çeviriyi kullan
-                if (method_exists($page, 'translate')) {
-                    $pageContent = $page->translate('content') ?: $page->content;
+                if (method_exists($model, 'translate')) {
+                    $pageContent = $model->translate('content') ?: ($model->content ?? '');
                 } else {
-                    $pageContent = $page->content;
+                    $pageContent = $model->content ?? '';
                 }
             }
             $html = str_replace('{page.content}', $pageContent ?? '', $html);
         }
         
-        // Handle special {page.title} placeholder - Sayfa başlığını gösterir
+        // Handle special {page.title} placeholder - Sayfa/model başlığını gösterir
         if (str_contains($html, '{page.title}')) {
             $pageTitle = '';
-            if ($page) {
-                if (method_exists($page, 'translate')) {
-                    $pageTitle = $page->translate('title') ?: $page->title;
+            if ($model) {
+                if (method_exists($model, 'translate')) {
+                    $pageTitle = $model->translate('title') ?: ($model->title ?? '');
                 } else {
-                    $pageTitle = $page->title;
+                    $pageTitle = $model->title ?? '';
                 }
             }
             $html = str_replace('{page.title}', $pageTitle ?? '', $html);
         }
         
-        // Handle special {page.excerpt} placeholder - Sayfa özetini gösterir
+        // Handle special {page.excerpt} placeholder - Sayfa/model özetini gösterir
         if (str_contains($html, '{page.excerpt}')) {
             $pageExcerpt = '';
-            if ($page) {
-                if (method_exists($page, 'translate')) {
-                    $pageExcerpt = $page->translate('excerpt') ?: $page->excerpt;
+            if ($model) {
+                if (method_exists($model, 'translate')) {
+                    $pageExcerpt = $model->translate('excerpt') ?: ($model->excerpt ?? '');
                 } else {
-                    $pageExcerpt = $page->excerpt;
+                    $pageExcerpt = $model->excerpt ?? '';
                 }
             }
             $html = str_replace('{page.excerpt}', $pageExcerpt ?? '', $html);
@@ -373,8 +407,10 @@ class TemplateService
         }
 
         // First, parse all placeholders in the format {type.field_name} or {type.field-name}
+        // Also supports {special.page.title} format (special.* prefix)
         // Exclude custom.* from this regex to avoid double processing
-        preg_match_all('/\{([a-z]+\.[a-z][a-z_-]*)\}/i', $html, $matches);
+        // Pattern: {type.field} or {special.type.field} or {type.field.field2} etc.
+        preg_match_all('/\{([a-z]+(?:\.[a-z][a-z_-]*)+)\}/i', $html, $matches);
         $placeholders = array_unique($matches[1] ?? []);
         
         // Filter out custom.* placeholders as they're already handled above
@@ -384,10 +420,73 @@ class TemplateService
         
         // Replace each placeholder
         foreach ($placeholders as $placeholder) {
+            // Handle special.* prefix - remove it and process as normal placeholder
+            // e.g., {special.page.title} -> {page.title}, {special.menu} -> {menu}
+            $originalPlaceholder = $placeholder;
+            if (str_starts_with($placeholder, 'special.')) {
+                $placeholder = substr($placeholder, 8); // Remove 'special.' prefix (8 characters)
+            }
+            
             // Extract type from placeholder
             $parts = explode('.', $placeholder);
             $type = $parts[0] ?? null;
             $field = $parts[1] ?? null;
+            
+            // Handle special placeholders that were prefixed with special.*
+            // These are page data placeholders: page.content, page.title, page.excerpt
+            if ($type === 'page') {
+                if ($field === 'content' && str_contains($html, '{' . $originalPlaceholder . '}')) {
+                    $pageContent = '';
+                    if ($page) {
+                        if (method_exists($page, 'translate')) {
+                            $pageContent = $page->translate('content') ?: $page->content;
+                        } else {
+                            $pageContent = $page->content;
+                        }
+                    }
+                    $html = str_replace('{' . $originalPlaceholder . '}', $pageContent ?? '', $html);
+                    continue;
+                }
+                
+                if ($field === 'title' && str_contains($html, '{' . $originalPlaceholder . '}')) {
+                    $pageTitle = '';
+                    if ($page) {
+                        if (method_exists($page, 'translate')) {
+                            $pageTitle = $page->translate('title') ?: $page->title;
+                        } else {
+                            $pageTitle = $page->title;
+                        }
+                    }
+                    $html = str_replace('{' . $originalPlaceholder . '}', $pageTitle ?? '', $html);
+                    continue;
+                }
+                
+                if ($field === 'excerpt' && str_contains($html, '{' . $originalPlaceholder . '}')) {
+                    $pageExcerpt = '';
+                    if ($page) {
+                        if (method_exists($page, 'translate')) {
+                            $pageExcerpt = $page->translate('excerpt') ?: $page->excerpt;
+                        } else {
+                            $pageExcerpt = $page->excerpt;
+                        }
+                    }
+                    $html = str_replace('{' . $originalPlaceholder . '}', $pageExcerpt ?? '', $html);
+                    continue;
+                }
+            }
+            
+            // Handle special menu placeholders that were prefixed with special.*
+            if ($placeholder === 'menu' && str_contains($html, '{' . $originalPlaceholder . '}')) {
+                $renderedMenu = \App\Services\MenuService::render();
+                $html = str_replace('{' . $originalPlaceholder . '}', $renderedMenu, $html);
+                continue;
+            }
+            
+            if ($placeholder === 'staticMenu' && str_contains($html, '{' . $originalPlaceholder . '}')) {
+                $renderedStaticMenu = view('components.static-menu')->render();
+                $html = str_replace('{' . $originalPlaceholder . '}', $renderedStaticMenu, $html);
+                continue;
+            }
             
             // Handle setting.* placeholders - get value from Setting model
             if ($type === 'setting' && $field) {
@@ -444,11 +543,19 @@ class TemplateService
             }
             
             // Replace both {text.title} and {{text.title}} formats
-            $html = str_replace(
-                ["{{$placeholder}}", "{{{$placeholder}}}"],
-                [$value, $value],
-                $html
-            );
+            // Also replace original placeholder if it was prefixed with special.*
+            $replacements = [
+                "{{$placeholder}}",
+                "{{{$placeholder}}}"
+            ];
+            
+            if ($originalPlaceholder !== $placeholder) {
+                // Original placeholder had special.* prefix, replace it too
+                $replacements[] = "{{$originalPlaceholder}}";
+                $replacements[] = "{{{$originalPlaceholder}}}";
+            }
+            
+            $html = str_replace($replacements, array_fill(0, count($replacements), $value), $html);
         }
         
         return $html;
