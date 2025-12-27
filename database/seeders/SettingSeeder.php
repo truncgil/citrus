@@ -586,6 +586,26 @@ class SettingSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'key' => 'logo_light',
+                'value' => 'assets/img/logo-light.png',
+                'type' => 'file',
+                'group' => 'layout',
+                'label' => 'Light Logo',
+                'description' => 'Koyu zeminler için açık renkli logo',
+                'is_public' => true,
+                'is_active' => true,
+            ],
+            [
+                'key' => 'logo_dark',
+                'value' => 'assets/img/logo-dark.png',
+                'type' => 'file',
+                'group' => 'layout',
+                'label' => 'Dark Logo',
+                'description' => 'Açık zeminler için koyu renkli logo',
+                'is_public' => true,
+                'is_active' => true,
+            ],
+            [
                 'key' => 'favicon_path',
                 'value' => 'assets/img/favicon.ico',
                 'type' => 'string',
@@ -1298,10 +1318,26 @@ class SettingSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            Setting::updateOrCreate(
-                ['key' => $setting['key']],
-                $setting
-            );
+            $existing = Setting::where('key', $setting['key'])->first();
+            if ($existing) {
+                $updated = false;
+                // Sadece değişmişse güncelle
+                foreach ($setting as $field => $value) {
+                    if ($existing->$field != $value) {
+                        $updated = true;
+                        break;
+                    }
+                }
+                if ($updated) {
+                    $existing->update($setting);
+                    $this->command->info("Setting updated: " . $setting['key']);
+                } else {
+                    $this->command->info("Setting unchanged: " . $setting['key']);
+                }
+            } else {
+                Setting::create($setting);
+                $this->command->info("Setting created: " . $setting['key']);
+            }
         }
     }
 }
