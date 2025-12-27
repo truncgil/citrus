@@ -587,7 +587,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'logo_light',
-                'value' => 'assets/img/logo-light.png',
+                'value' => '',
                 'type' => 'file',
                 'group' => 'theme',
                 'label' => 'Light Logo',
@@ -597,7 +597,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'logo_dark',
-                'value' => 'assets/img/logo-dark.png',
+                'value' => '',
                 'type' => 'file',
                 'group' => 'theme',
                 'label' => 'Dark Logo',

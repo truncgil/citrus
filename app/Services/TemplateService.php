@@ -50,6 +50,11 @@ class TemplateService
             if (str_starts_with($placeholder, 'special.')) {
                 continue;
             }
+
+            // Skip setting.* placeholders - they are global settings managed via Settings module
+            if ($type === 'setting') {
+                continue;
+            }
             
             // Skip custom.* placeholders - they are blade components, not form fields
             if ($type === 'custom') {
@@ -282,7 +287,7 @@ class TemplateService
     public static function parsePlaceholders(string $html): array
     {
         // Pattern: {type.field} or {special.type.field} or {type.field.field2} etc.
-        preg_match_all('/\{([a-z]+(?:\.[a-z][a-z_-]*)+)\}/i', $html, $matches);
+        preg_match_all('/\{([a-z]+(?:\.[a-z][a-z0-9_-]*)+)\}/i', $html, $matches);
         return array_unique($matches[1] ?? []);
     }
 
@@ -410,7 +415,7 @@ class TemplateService
         // Also supports {special.page.title} format (special.* prefix)
         // Exclude custom.* from this regex to avoid double processing
         // Pattern: {type.field} or {special.type.field} or {type.field.field2} etc.
-        preg_match_all('/\{([a-z]+(?:\.[a-z][a-z_-]*)+)\}/i', $html, $matches);
+        preg_match_all('/\{([a-z]+(?:\.[a-z][a-z0-9_-]*)+)\}/i', $html, $matches);
         $placeholders = array_unique($matches[1] ?? []);
         
         // Filter out custom.* placeholders as they're already handled above

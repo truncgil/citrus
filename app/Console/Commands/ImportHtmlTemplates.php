@@ -143,41 +143,82 @@ class ImportHtmlTemplates extends Command
 
         // A. Header Özel Alanları
         if ($templateType === 'header') {
+            // Navbar sınıfını kontrol et
+            $navbar = $xpath->query('.//*[contains(@class, "navbar")]', $node)->item(0);
+            $isNavbarLight = $navbar && str_contains($navbar->getAttribute('class'), 'navbar-light');
+            $isNavbarDark = $navbar && str_contains($navbar->getAttribute('class'), 'navbar-dark');
+
             // Logo
             $brands = $xpath->query('.//*[contains(@class, "navbar-brand")]//img', $node);
             foreach ($brands as $img) {
                 $src = $this->fixAssetPath($img->getAttribute('src'));
                 $class = $img->getAttribute('class');
 
+                $settingKey = 'setting.logo';
+
                 if (str_contains($class, 'logo-dark')) {
-                    $data['setting.logo_dark'] = $src;
-                    $img->setAttribute('src', '{setting.logo_dark}');
+                    $settingKey = 'setting.logo_dark';
                 } elseif (str_contains($class, 'logo-light')) {
-                    $data['setting.logo_light'] = $src;
-                    $img->setAttribute('src', '{setting.logo_light}');
-                } else {
-                    $data['setting.logo'] = $src;
-                    $img->setAttribute('src', '{setting.logo}');
+                    $settingKey = 'setting.logo_light';
+                } elseif ($isNavbarLight) {
+                    // Navbar light ise (açık zemin), koyu logo gerekir
+                    $settingKey = 'setting.logo_dark';
+                } elseif ($isNavbarDark) {
+                    // Navbar dark ise (koyu zemin), açık logo gerekir
+                    $settingKey = 'setting.logo_light';
+                }
+
+                $data[$settingKey] = $src;
+                $img->setAttribute('src', '{' . $settingKey . '}');
+            }
+
+            // Menu ({custom.menu})
+            $navs = $xpath->query('.//*[contains(@class, "navbar-nav")]', $node);
+            foreach ($navs as $nav) {
+                // Sadece ana menüyü hedefle (genellikle navbar-collapse içinde olur)
+                // İçeriği tamamen temizle ve yerine placeholder koy
+                $parent = $nav->parentNode;
+                if ($parent) {
+                    // Eğer parent offcanvas-body veya navbar-collapse ise
+                    $textNode = $node->ownerDocument->createTextNode('___CUSTOM_MENU___');
+                    $parent->replaceChild($textNode, $nav);
                 }
             }
 
-            // Menu
-            $navs = $xpath->query('.//*[contains(@class, "navbar-nav")]', $node);
-            foreach ($navs as $nav) {
-                if (!$nav->parentNode) continue;
-                // İçini temizle
-                while ($nav->hasChildNodes()) {
-                    $nav->removeChild($nav->firstChild);
+            // Navbar Other ({custom.navbar})
+            $others = $xpath->query('.//*[contains(@class, "navbar-other")]', $node);
+            foreach ($others as $other) {
+                $parent = $other->parentNode;
+                if ($parent) {
+                    // Navbar other genellikle butonları içerir, bunu custom.navbar ile değiştiriyoruz
+                    // Ancak dil seçici de bunun içinde olabilir.
+                    // Kullanıcı örneğinde {custom.navbar} ve {custom.language-selector} yan yana.
+                    // Biz şimdilik navbar-other'ı komple custom.navbar yapalım.
+                    // Dil seçici için ayrıca bir mantık kuralım.
+                    
+                    // Dil seçiciyi kontrol et, eğer varsa onu çıkarıp yanına ekleyebiliriz ama
+                    // genellikle navbar-other kapsayıcıdır.
+                    
+                    $textNode = $node->ownerDocument->createTextNode('___CUSTOM_NAVBAR___');
+                    $parent->replaceChild($textNode, $other);
+                    
+                    // Hemen sonrasına language selector ekleyelim (varsayım)
+                    // Veya kullanıcı manuel eklesin.
+                    // Kullanıcının isteği: {custom.navbar} {custom.language-selector}
+                    $langNode = $node->ownerDocument->createTextNode('___CUSTOM_LANGUAGE___');
+                    $parent->appendChild($langNode);
                 }
-                // Placeholder metni ekle - Token olarak
-                $nav->nodeValue = '___SPECIAL_MENU___'; 
             }
             
-             // Dil Seçici
-             $langs = $xpath->query('.//*[contains(@class, "language")]', $node);
-             foreach ($langs as $lang) {
-                 $lang->nodeValue = '___SETTING_LANGUAGES___';
-             }
+            // Dil Seçici ({custom.language-selector}) - Eğer navbar-other dışında varsa
+            $langs = $xpath->query('.//*[contains(@class, "language-select") or contains(@class, "dropdown-language")]', $node);
+            foreach ($langs as $lang) {
+                 $parent = $lang->parentNode;
+                 if ($parent) {
+                     $textNode = $node->ownerDocument->createTextNode('___CUSTOM_LANGUAGE___');
+                     $parent->replaceChild($textNode, $lang);
+                 }
+            }
         }
 
         // B. Genel İşlemler
@@ -250,8 +291,11 @@ class ImportHtmlTemplates extends Command
         
         // SPECIAL TOKENS FIX
         if ($templateType === 'header') {
-            $html = str_replace('___SPECIAL_MENU___', '{special.menu}', $html);
-            $html = str_replace('___SETTING_LANGUAGES___', '{setting.available_languages}', $html);
+            $html = str_replace('___SPECIAL_MENU___', '{custom.menu}', $html); // Geriye dönük uyumluluk
+            $html = str_replace('___CUSTOM_MENU___', '{custom.menu}', $html);
+            $html = str_replace('___CUSTOM_NAVBAR___', '{custom.navbar}', $html);
+            $html = str_replace('___CUSTOM_LANGUAGE___', '{custom.language-selector}', $html);
+            $html = str_replace('___SETTING_LANGUAGES___', '{custom.language-selector}', $html);
         }
 
         return ['html' => $html, 'data' => $data];

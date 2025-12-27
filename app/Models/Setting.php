@@ -69,7 +69,12 @@ class Setting extends Model
      */
     public function setValueFileAttribute($value)
     {
-        $this->attributes['value'] = $value;
+        // Filament bazen dosya yolunu array olarak döndürebilir, bu durumda ilk elemanı alıyoruz
+        if (is_array($value)) {
+            $this->attributes['value'] = array_values($value)[0] ?? null;
+        } else {
+            $this->attributes['value'] = $value;
+        }
     }
 
     /**
@@ -174,6 +179,134 @@ class Setting extends Model
     public function setValueKeyValueAttribute($value)
     {
         $this->attributes['value'] = is_array($value) ? json_encode($value) : $value;
+    }
+
+    /**
+     * Get value for text field
+     */
+    public function getValueTextAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for boolean field
+     */
+    public function getValueBooleanAttribute()
+    {
+        return isset($this->attributes['value']) ? filter_var($this->attributes['value'], FILTER_VALIDATE_BOOLEAN) : false;
+    }
+
+    /**
+     * Get value for file field
+     */
+    public function getValueFileAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for date field
+     */
+    public function getValueDateAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for datetime field
+     */
+    public function getValueDatetimeAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for array field
+     */
+    public function getValueArrayAttribute()
+    {
+        return isset($this->attributes['value']) ? json_decode($this->attributes['value'], true) : [];
+    }
+
+    /**
+     * Get value for color picker field
+     */
+    public function getValueColorPickerAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for code editor field
+     */
+    public function getValueCodeEditorAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for rich editor field
+     */
+    public function getValueRichEditorAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for markdown editor field
+     */
+    public function getValueMarkdownEditorAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for tags input field
+     */
+    public function getValueTagsInputAttribute()
+    {
+        return isset($this->attributes['value']) ? json_decode($this->attributes['value'], true) : [];
+    }
+
+    /**
+     * Get value for checkbox list field
+     */
+    public function getValueCheckboxListAttribute()
+    {
+        return isset($this->attributes['value']) ? json_decode($this->attributes['value'], true) : [];
+    }
+
+    /**
+     * Get value for radio field
+     */
+    public function getValueRadioAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for toggle buttons field
+     */
+    public function getValueToggleButtonsAttribute()
+    {
+        return $this->attributes['value'] ?? null;
+    }
+
+    /**
+     * Get value for slider field
+     */
+    public function getValueSliderAttribute()
+    {
+        return isset($this->attributes['value']) ? (int) $this->attributes['value'] : 0;
+    }
+
+    /**
+     * Get value for key value field
+     */
+    public function getValueKeyValueAttribute()
+    {
+        return isset($this->attributes['value']) ? json_decode($this->attributes['value'], true) : [];
     }
 
     /**

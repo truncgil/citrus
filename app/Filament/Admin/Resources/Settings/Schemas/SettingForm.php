@@ -116,12 +116,6 @@ class SettingForm
                             ->required()
                             ->visible(fn (Get $get) => in_array($get('type'), ['string', 'text', 'json']))
                             ->rows(fn (Get $get) => $get('type') === 'text' ? 5 : 3)
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && in_array($record->type, ['string', 'text', 'json'])) {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         Toggle::make('value_boolean')
@@ -129,12 +123,6 @@ class SettingForm
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'boolean')
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'boolean') {
-                                    return filter_var($record->value, FILTER_VALIDATE_BOOLEAN);
-                                }
-                                return false;
-                            })
                             ->columnSpanFull(),
 
                         FileUpload::make('value_file')
@@ -146,12 +134,6 @@ class SettingForm
                             ->directory('settings')
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'text/*'])
                             ->maxSize(10240) // 10MB
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'file') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         DatePicker::make('value_date')
@@ -161,12 +143,6 @@ class SettingForm
                             ->visible(fn (Get $get) => $get('type') === 'date')
                             ->displayFormat('d/m/Y')
                             ->format('Y-m-d')
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'date') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         DateTimePicker::make('value_datetime')
@@ -177,12 +153,6 @@ class SettingForm
                             ->displayFormat('d/m/Y H:i')
                             ->format('Y-m-d H:i:s')
                             ->seconds(false)
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'datetime') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         Repeater::make('value_array')
@@ -213,13 +183,6 @@ class SettingForm
                             ->reorderable()
                             ->collapsible()
                             ->itemLabel(fn (array $state): ?string => $state['key'] ?? null)
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'array') {
-                                    $decoded = json_decode($record->value, true);
-                                    return is_array($decoded) ? $decoded : [];
-                                }
-                                return is_array($state) ? $state : [];
-                            })
                             ->columnSpanFull(),
 
                         ColorPicker::make('value_color_picker')
@@ -227,12 +190,6 @@ class SettingForm
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'color_picker')
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'color_picker') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         CodeEditor::make('value_code_editor')
@@ -241,12 +198,6 @@ class SettingForm
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'code_editor')
                             ->language(CodeEditorLanguage::Php)
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'code_editor') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         RichEditor::make('value_rich_editor')
@@ -272,12 +223,6 @@ class SettingForm
                                 'underline',
                                 'undo',
                             ])
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'rich_editor') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         MarkdownEditor::make('value_markdown_editor')
@@ -285,12 +230,6 @@ class SettingForm
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'markdown_editor')
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'markdown_editor') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         TagsInput::make('value_tags_input')
@@ -299,13 +238,6 @@ class SettingForm
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'tags_input')
                             ->separator(',')
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'tags_input') {
-                                    $decoded = json_decode($record->value, true);
-                                    return is_array($decoded) ? $decoded : [];
-                                }
-                                return is_array($state) ? $state : [];
-                            })
                             ->columnSpanFull(),
 
                         CheckboxList::make('value_checkbox_list')
@@ -318,13 +250,6 @@ class SettingForm
                                 'option2' => __('settings.checkbox_option_2'),
                                 'option3' => __('settings.checkbox_option_3'),
                             ])
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'checkbox_list') {
-                                    $decoded = json_decode($record->value, true);
-                                    return is_array($decoded) ? $decoded : [];
-                                }
-                                return is_array($state) ? $state : [];
-                            })
                             ->columnSpanFull(),
 
                         Radio::make('value_radio')
@@ -337,12 +262,6 @@ class SettingForm
                                 'option2' => __('settings.radio_option_2'),
                                 'option3' => __('settings.radio_option_3'),
                             ])
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'radio') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         ToggleButtons::make('value_toggle_buttons')
@@ -355,12 +274,6 @@ class SettingForm
                                 'option2' => __('settings.toggle_option_2'),
                                 'option3' => __('settings.toggle_option_3'),
                             ])
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'toggle_buttons') {
-                                    return $record->value;
-                                }
-                                return $state;
-                            })
                             ->columnSpanFull(),
 
                         Slider::make('value_slider')
@@ -370,12 +283,6 @@ class SettingForm
                             ->visible(fn (Get $get) => $get('type') === 'slider')
                             ->range(minValue: 0, maxValue: 100)
                             ->step(1)
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'slider') {
-                                    return (int) $record->value;
-                                }
-                                return $state ?? 0;
-                            })
                             ->columnSpanFull(),
 
                         KeyValue::make('value_key_value')
@@ -383,13 +290,6 @@ class SettingForm
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'key_value')
-                            ->formatStateUsing(function ($state, $record) {
-                                if ($record && $record->type === 'key_value') {
-                                    $decoded = json_decode($record->value, true);
-                                    return is_array($decoded) ? $decoded : [];
-                                }
-                                return is_array($state) ? $state : [];
-                            })
                             ->columnSpanFull(),
 
                         Toggle::make('is_active')
