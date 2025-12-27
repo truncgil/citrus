@@ -7,6 +7,7 @@ use App\Models\HeaderTemplate;
 use App\Models\SectionTemplate;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use DOMDocument;
 use DOMXPath;
 use DOMElement;
@@ -313,14 +314,53 @@ class ImportHtmlTemplates extends Command
 
     protected function fixAssetPath($path)
     {
+        // Eğer URL ise elleme
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        // Assets klasöründeki dosyaları storage'a taşı
         if (str_starts_with($path, 'assets/')) {
+            $sourcePath = public_path('html/' . $path);
+            
+            if (File::exists($sourcePath)) {
+                // Dosya adını ve klasörünü belirle
+                $fileName = basename($path);
+                // Çakışmayı önlemek için orijinal klasör yapısını korumaya çalışabiliriz
+                // veya basitçe 'templates/imported' altına atabiliriz.
+                
+                // Storage hedef yolu: templates/imported/filename.ext
+                $targetDir = 'templates/imported';
+                $targetPath = $targetDir . '/' . $fileName;
+                
+                // Eğer storage'da bu dosya yoksa kopyala
+                if (!Storage::disk('public')->exists($targetPath)) {
+                    Storage::disk('public')->put($targetPath, File::get($sourcePath));
+                }
+                
+                // Veritabanına kaydedilecek değer: templates/imported/filename.ext
+                // Bu değer Filament FileUpload tarafından 'public' diskinde otomatik olarak bulunur.
+                return $targetPath;
+            }
+            
+            // Dosya bulunamadıysa eski usul devam et
             return '/html/' . $path;
         }
+        
         return $path;
     }
 
     protected function fixAssetPathInString($html)
     {
+        // HTML string içindeki asset pathlerini güncelle
+        // Burada da aynı mantıkla storage pathlerine çevirebilirdik ama
+        // string içindeki pathleri tek tek bulup kopyalamak zor ve performanssız olabilir.
+        // Şimdilik sadece URL'leri düzeltiyoruz, import edilen resimler zaten processNode kısmında hallediliyor.
+        // Background-image gibi CSS içindeki pathler için burası önemli.
+        
+        // CSS içindeki url('assets/...') kısımlarını yakalamak için daha genel bir yaklaşım
+        // Ancak processNode zaten img taglerini hallettiği için burası sadece kalanlar için.
+        
         $html = str_replace('src="assets/', 'src="/html/assets/', $html);
         $html = str_replace('href="assets/', 'href="/html/assets/', $html);
         $html = str_replace("src='assets/", "src='/html/assets/", $html);

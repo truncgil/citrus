@@ -77,7 +77,7 @@ Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{slug}/comment', [BlogController::class, 'storeComment'])->name('blog.comment.store');
 
 // Template Preview (admin panel için)
-Route::post('/admin/template-preview', [TemplatePreviewController::class, 'preview'])
+Route::any('/admin/template-preview', [TemplatePreviewController::class, 'preview'])
     ->middleware(['auth'])
     ->name('template.preview');
 

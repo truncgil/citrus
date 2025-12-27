@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -51,6 +52,13 @@ class SectionTemplatesTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                Action::make('preview')
+                    ->label(__('section-templates.action_preview'))
+                    ->icon('heroicon-o-eye')
+                    ->modalContent(fn ($record) => view('filament.admin.resources.section-templates.preview', ['record' => $record]))
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false)
+                    ->modalWidth('7xl'),
                 ViewAction::make(),
                 EditAction::make(),
             ])

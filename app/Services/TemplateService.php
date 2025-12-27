@@ -314,8 +314,9 @@ class TemplateService
      * @param string $html HTML content with placeholders
      * @param array $data Data array for placeholders
      * @param Model|null $model Optional model instance (Page, Blog, etc.) for dynamic data
+     * @param array $defaultData Optional default data for fallback
      */
-    public static function replacePlaceholders(string $html, array $data, ?Model $model = null): string
+    public static function replacePlaceholders(string $html, array $data, ?Model $model = null, array $defaultData = []): string
     {
         // Handle special {page.content} placeholder - Sayfa/model içeriğini gösterir
         if (str_contains($html, '{page.content}')) {
@@ -562,6 +563,11 @@ class TemplateService
                         }
                     }
                 }
+            }
+            
+            // 5. Fallback to default data
+            if (($value === null || $value === '') && isset($defaultData[$placeholder])) {
+                $value = $defaultData[$placeholder];
             }
             
             // Handle different value types
