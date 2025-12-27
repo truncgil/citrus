@@ -26,6 +26,7 @@ return [
     'column_deleted_at' => 'Silinme',
 
     // Actions
+    'action_preview' => 'Önizleme',
     'create' => 'Yeni Section Şablonu',
     'edit' => 'Section Şablonunu Düzenle',
     'view' => 'Section Şablonunu Görüntüle',
@@ -39,4 +40,3 @@ return [
     'deleted_successfully' => 'Section şablonu başarıyla silindi.',
     'restored_successfully' => 'Section şablonu başarıyla geri yüklendi.',
 ];
-

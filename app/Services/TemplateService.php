@@ -641,6 +641,11 @@ class TemplateService
         if (str_starts_with($value, 'templates/')) {
             return asset('storage/' . $value);
         }
+
+        // Support for old assets/ path (if import not run)
+        if (str_starts_with($value, 'assets/')) {
+            return asset($value);
+        }
         
         // If it's already using asset() or Storage::url(), assume it's already formatted
         // Otherwise, prepend storage/ if it looks like a storage path

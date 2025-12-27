@@ -323,6 +323,11 @@ class ImportHtmlTemplates extends Command
         if (str_starts_with($path, 'assets/')) {
             $sourcePath = public_path('html/' . $path);
             
+            // Eğer html/assets altında yoksa, ana assets klasörüne bak
+            if (!File::exists($sourcePath)) {
+                $sourcePath = public_path($path);
+            }
+            
             if (File::exists($sourcePath)) {
                 // Dosya adını ve klasörünü belirle
                 $fileName = basename($path);
@@ -344,7 +349,7 @@ class ImportHtmlTemplates extends Command
             }
             
             // Dosya bulunamadıysa eski usul devam et
-            return '/html/' . $path;
+            return '/' . $path;
         }
         
         return $path;
@@ -361,13 +366,13 @@ class ImportHtmlTemplates extends Command
         // CSS içindeki url('assets/...') kısımlarını yakalamak için daha genel bir yaklaşım
         // Ancak processNode zaten img taglerini hallettiği için burası sadece kalanlar için.
         
-        $html = str_replace('src="assets/', 'src="/html/assets/', $html);
-        $html = str_replace('href="assets/', 'href="/html/assets/', $html);
-        $html = str_replace("src='assets/", "src='/html/assets/", $html);
-        $html = str_replace("href='assets/", "href='/html/assets/", $html);
-        $html = str_replace('url(assets/', 'url(/html/assets/', $html);
-        $html = str_replace('url("assets/', 'url("/html/assets/', $html);
-        $html = str_replace("url('assets/", "url('/html/assets/", $html);
+        $html = str_replace('src="assets/', 'src="/assets/', $html);
+        $html = str_replace('href="assets/', 'href="/assets/', $html);
+        $html = str_replace("src='assets/", "src='/assets/", $html);
+        $html = str_replace("href='assets/", "href='/assets/", $html);
+        $html = str_replace('url(assets/', 'url(/assets/', $html);
+        $html = str_replace('url("assets/', 'url("/assets/', $html);
+        $html = str_replace("url('assets/", "url('/assets/", $html);
         
         return $html;
     }

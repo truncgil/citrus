@@ -26,6 +26,7 @@ return [
     'column_deleted_at' => 'Deleted At',
 
     // Actions
+    'action_preview' => 'Preview',
     'create' => 'New Section Template',
     'edit' => 'Edit Section Template',
     'view' => 'View Section Template',
@@ -39,4 +40,3 @@ return [
     'deleted_successfully' => 'Section template deleted successfully.',
     'restored_successfully' => 'Section template restored successfully.',
 ];
-
