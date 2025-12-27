@@ -290,14 +290,12 @@ class ImportHtmlTemplates extends Command
         // DOMDocument attribute değerlerini encode ettiği için bunları geri çeviriyoruz
         $html = str_replace(['%7B', '%7D'], ['{', '}'], $html);
         
-        // SPECIAL TOKENS FIX
-        if ($templateType === 'header') {
-            $html = str_replace('___SPECIAL_MENU___', '{custom.menu}', $html); // Geriye dönük uyumluluk
-            $html = str_replace('___CUSTOM_MENU___', '{custom.menu}', $html);
-            $html = str_replace('___CUSTOM_NAVBAR___', '{custom.navbar}', $html);
-            $html = str_replace('___CUSTOM_LANGUAGE___', '{custom.language-selector}', $html);
-            $html = str_replace('___SETTING_LANGUAGES___', '{custom.language-selector}', $html);
-        }
+        // SPECIAL TOKENS FIX - Replace placeholder tokens with actual template syntax
+        $html = str_replace('___SPECIAL_MENU___', '{custom.menu}', $html);
+        $html = str_replace('___CUSTOM_MENU___', '{custom.menu}', $html);
+        $html = str_replace('___CUSTOM_NAVBAR___', '{custom.navbar}', $html);
+        $html = str_replace('___CUSTOM_LANGUAGE___', '{custom.language-selector}', $html);
+        $html = str_replace('___SETTING_LANGUAGES___', '{custom.language-selector}', $html);
 
         return ['html' => $html, 'data' => $data];
     }

@@ -12,6 +12,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Filament\Actions\Action;
 
 class FooterTemplatesTable
 {
@@ -56,6 +57,13 @@ class FooterTemplatesTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                Action::make('preview')
+                    ->label(__('footer-templates.action_preview'))
+                    ->icon('heroicon-o-eye')
+                    ->modalContent(fn ($record) => view('filament.admin.resources.footer-templates.preview', ['record' => $record]))
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false)
+                    ->modalWidth('7xl'),
                 ViewAction::make(),
                 EditAction::make(),
             ])

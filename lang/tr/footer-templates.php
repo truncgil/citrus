@@ -27,6 +27,7 @@ return [
     'column_deleted_at' => 'Silinme',
 
     // Actions
+    'action_preview' => 'Önizleme',
     'create' => 'Yeni Footer Şablonu',
     'edit' => 'Footer Şablonunu Düzenle',
     'view' => 'Footer Şablonunu Görüntüle',

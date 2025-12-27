@@ -27,6 +27,7 @@ return [
     'column_deleted_at' => 'Silinme',
 
     // Actions
+    'action_preview' => 'Önizleme',
     'create' => 'Yeni Header Şablonu',
     'edit' => 'Header Şablonunu Düzenle',
     'view' => 'Header Şablonunu Görüntüle',

@@ -27,6 +27,7 @@ return [
     'column_deleted_at' => 'Deleted At',
 
     // Actions
+    'action_preview' => 'Preview',
     'create' => 'New Header Template',
     'edit' => 'Edit Header Template',
     'view' => 'View Header Template',
