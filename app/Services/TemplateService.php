@@ -318,6 +318,14 @@ class TemplateService
      */
     public static function replacePlaceholders(string $html, array $data, ?Model $model = null, array $defaultData = []): string
     {
+        // Legacy/Import artifact fix: Replace ___CUSTOM_...___ tokens if they exist in DB
+        // These tokens might be leftover from import process if str_replace didn't catch them
+        $html = str_replace('___SPECIAL_MENU___', '{custom.menu}', $html);
+        $html = str_replace('___CUSTOM_MENU___', '{custom.menu}', $html);
+        $html = str_replace('___CUSTOM_NAVBAR___', '{custom.navbar}', $html);
+        $html = str_replace('___CUSTOM_LANGUAGE___', '{custom.language-selector}', $html);
+        $html = str_replace('___SETTING_LANGUAGES___', '{custom.language-selector}', $html);
+
         // Handle special {page.content} placeholder - Sayfa/model içeriğini gösterir
         if (str_contains($html, '{page.content}')) {
             $pageContent = '';

@@ -268,8 +268,8 @@ class ImportHtmlTemplates extends Command
             if (in_array(strtolower($parent->nodeName), ['script', 'style', 'noscript', 'iframe'])) continue;
             
             $textContent = trim($textNode->textContent);
-            // Özel tokenlarımızı atla
-            if (str_contains($textContent, '___SPECIAL_') || str_contains($textContent, '___SETTING_')) continue;
+            // Özel tokenlarımızı atla (___SPECIAL_, ___SETTING_, ___CUSTOM_)
+            if (str_contains($textContent, '___SPECIAL_') || str_contains($textContent, '___SETTING_') || str_contains($textContent, '___CUSTOM_')) continue;
             
             if (str_starts_with($textContent, '{') && str_ends_with($textContent, '}')) continue;
             if (mb_strlen($textContent) < 2) continue;
@@ -296,6 +296,17 @@ class ImportHtmlTemplates extends Command
         $html = str_replace('___CUSTOM_NAVBAR___', '{custom.navbar}', $html);
         $html = str_replace('___CUSTOM_LANGUAGE___', '{custom.language-selector}', $html);
         $html = str_replace('___SETTING_LANGUAGES___', '{custom.language-selector}', $html);
+
+        // Clean default_data from any leftover tokens
+        foreach ($data as $key => $value) {
+            if (is_string($value) && (
+                str_contains($value, '___CUSTOM_') || 
+                str_contains($value, '___SPECIAL_') || 
+                str_contains($value, '___SETTING_')
+            )) {
+                unset($data[$key]);
+            }
+        }
 
         return ['html' => $html, 'data' => $data];
     }
