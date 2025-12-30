@@ -135,6 +135,53 @@ App::setLocale('en');
 $title = __('pages.navigation_label');
 ```
 
+## Konsol Komutları
+
+Uygulamada kullanılan özel ve yardımcı konsol komutlarının listesi ve kullanım detayları aşağıdadır.
+
+### Özel Uygulama Komutları
+
+#### 1. HTML Tema İçe Aktarma
+`public/html` klasöründeki HTML şablon dosyalarını analiz eder, parçalara ayırır (header, footer, section) ve veritabanına kaydeder.
+
+```bash
+php artisan theme:import-html
+```
+
+**Seçenekler:**
+- `--force`: Mevcut şablonları günceller ve üzerine yazar.
+
+#### 2. Süper Yönetici Oluşturma
+Mevcut bir kullanıcıya `super_admin` yetkisi verir. Sistemdeki tüm izinleri bu role tanımlar.
+
+```bash
+php artisan make-super-admin
+```
+*Komut çalıştırıldığında kullanıcı e-posta adresi sorulacaktır.*
+
+### Filament ve Yetkilendirme Komutları
+
+#### 1. Yeni Kaynak (Resource) Oluşturma
+Filament standartlarına uygun yeni bir modül kaynağı oluşturmak için şu komutu kullanın (Model, Migration ve Factory otomatik oluşturulur):
+
+```bash
+php artisan make:filament-resource ModelName --generate --model --migration --factory
+```
+
+#### 2. İzinleri Oluşturma (Shield)
+Sisteme yeni bir Resource veya Policy eklendiğinde izinleri veritabanına kaydetmek için:
+
+```bash
+php artisan shield:generate --all
+```
+
+#### 3. Panel Kullanıcısı Oluşturma
+Filament paneline erişebilecek standart bir kullanıcı oluşturmak için:
+
+```bash
+php artisan make:filament-user
+```
+
 ## Test
 
 ### Test Çalıştırma
