@@ -19,11 +19,23 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\MenuItem;
+use App\Models\Language;
+use Illuminate\Support\Facades\Schema;
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $languages = [];
+        try {
+            if (Schema::hasTable('languages')) {
+                $languages = Language::where('is_active', true)->get();
+            }
+        } catch (\Exception $e) {
+            // Migration çalışmamış olabilir
+        }
+
         return $panel
             ->id('admin')
             ->path('admin')
@@ -60,6 +72,17 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->login()
+            ->profile() // Profil sayfası ve şifre değiştirme aktif
+            ->userMenuItems([
+                // Dilleri menüye ekle
+                ...collect($languages)->map(function ($language) {
+                    return MenuItem::make()
+                        ->label($language->native_name)
+                        ->url(url('/lang/' . $language->code))
+                        ->icon('heroicon-m-language')
+                        ->sort(100); // En sonda görünsün
+                })->toArray()
+            ])
             ->assets([
                 \Filament\Support\Assets\Css::make('citrus', resource_path('css/citrus.css')),
             ]);
