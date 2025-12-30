@@ -21,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        setlocale(LC_ALL, 'tr_TR.UTF-8', 'tr_TR', 'turkish');
+
         // Page model için observer kaydet
         Page::observe(PageObserver::class);
     }

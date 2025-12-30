@@ -130,7 +130,6 @@ class SettingForm
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'file')
-                            ->image()
                             ->disk('public')
                             ->directory('settings')
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'text/*'])
