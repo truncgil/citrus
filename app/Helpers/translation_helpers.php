@@ -2,6 +2,7 @@
 
 use App\Models\Language;
 use App\Models\Translation;
+use App\Models\SiteTranslation;
 use Illuminate\Support\Collection;
 
 if (!function_exists('current_language')) {
@@ -276,6 +277,22 @@ if (!function_exists('get_translation_value')) {
             ->first();
 
         return $translation ? $translation->field_value : null;
+    }
+}
+
+if (!function_exists('t')) {
+    /**
+     * Get site translation for a given key.
+     *
+     * @param string $key
+     * @return string
+     */
+    function t(string $key): string
+    {
+        if (empty($key)) {
+            return '';
+        }
+        return SiteTranslation::getTranslation($key);
     }
 }
 
