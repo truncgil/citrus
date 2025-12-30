@@ -142,7 +142,7 @@
 		<!--/column -->
 		<div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] max-w-full !mr-auto px-[7.5px] !mt-[50px] xl:!mt-0 lg:!mt-0">
 			<h2 class="!text-[0.8rem] uppercase !text-[#e31e24] !mb-3 !leading-[1.35 !tracking-[0.02rem] !mb-3">{!! t('Çözümlerimiz') !!}</h2>
-			<h3 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-semibold !mb-5 xxl:!pr-5">{!! t('Just sit & relax while we take care of your business needs.') !!}</h3>
+			<h3 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-semibold !mb-5 xxl:!pr-5">{!! t('İşletmenizin ihtiyaçlarını biz karşılarken siz arkanıza yaslanın ve rahatlayın.') !!}</h3>
 			<p class="!mb-6">{!! t('Siz sadece işinize odaklanın, biz dijital dönüşüm süreçlerinizi yönetelim.
 Teknoloji ve yazılım odaklı bir güç olarak, işletmenizin dijital çağa tam uyum sağlaması için uçtan uca inovatif çözümler geliştiriyoruz. İhtiyaçlarınıza özel yazılım mimarileri ve modern altyapılar kurarak, manuel süreçlerinizi tam otomatik ve verimli sistemlere dönüştürüyoruz. Sektörel tecrübemizle markanızın teknolojik dönüşümünü gerçekleştirirken, sürdürülebilir başarı ve ölçeklenebilir büyüme için en ileri yazılım teknolojilerini işinizin merkezine yerleştiriyoruz.') !!}</p>
 			<div class="flex flex-wrap mx-[-15px] items-center counter-wrapper !mt-[-30px]">
@@ -164,6 +164,67 @@ Teknoloji ve yazılım odaklı bir güç olarak, işletmenizin dijital çağa ta
 		<!--/column -->
 		</div>
 		<!--/.row -->
+		<div class="flex flex-wrap mx-[-15px] xl:mx-0 lg:mx-0 !mt-[-50px] !mb-[5rem] xl:!mb-[8rem] lg:!mb-[8rem] md:!mb-[8rem] items-center">
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-0 lg:px-0 !px-[15px] max-w-full !mt-[50px]">
+			  <div class="flex flex-wrap mx-[-15px] !mt-[-30px] !text-center">
+				<div class="xl:w-6/12 lg:w-6/12 md:w-6/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mt-[30px]">
+				  <div class="flex flex-wrap mx-[-15px]">
+					<div class="w-full flex-[0_0_auto] !px-[15px] max-w-full">
+					  <figure class="!rounded-[.4rem] !mb-6"><img class="!rounded-[.4rem]" src="assets/img/photos/se1.jpg" alt="image"></figure>
+					</div>
+					<!-- /column -->
+					<div class="w-full flex-[0_0_auto] !px-[15px] max-w-full">
+					  <div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
+						<div class="card-body flex-[1_1_auto] p-[40px]">
+						  <div class="icon btn btn-circle btn-lg btn-soft-purple pointer-events-none !mb-3 xl:!text-[1.3rem] w-12 h-12 lg:!text-[calc(1.255rem_+_0.06vw)] md:!text-[calc(1.255rem_+_0.06vw)] max-md:!text-[calc(1.255rem_+_0.06vw)] !inline-flex !items-center !justify-center !leading-none !p-0 !rounded-[100%]"> <i class="uil uil-monitor before:content-['\ec19']"></i> </div>
+						  <h4 class="!text-[1rem] !leading-[1.45]">{!! t('Web Tasarım') !!}</h4>
+						  <p class="!mb-2">{!! t('İşinizi bir üst seviyeye taşıyacak özgün ve modern web tasarımları üretiyoruz.') !!}</p>
+						  <a href="#" class="more hover !text-[#e31e24] focus:!text-[#e31e24] hover:!text-[#e31e24]">{!! t('Detaylı Bilgi') !!}</a>
+						</div>
+						<!--/.card-body -->
+					  </div>
+					  <!--/.card -->
+					</div>
+					<!-- /column -->
+				  </div>
+				  <!-- /.row -->
+				</div>
+				<!-- /column -->
+				<div class="xl:w-6/12 lg:w-6/12 md:w-6/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mt-[30px]">
+				  <div class="flex flex-wrap mx-[-15px]">
+					<div class="w-full flex-[0_0_auto] !px-[15px] max-w-full xl:!order-2 lg:!order-2 md:!order-2">
+					  <figure class="!rounded-[.4rem] !mb-6 xl:!mb-0 lg:!mb-0 md:!mb-0"><img class="!rounded-[.4rem]" src="assets/img/photos/se2.jpg" alt="image"></figure>
+					</div>
+					<!-- /column -->
+					<div class="w-full flex-[0_0_auto] !px-[15px] max-w-full">
+					  <div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] xl:!mb-6 lg:!mb-6 md:!mb-6 lg:!mt-6 xl:!mt-6">
+						<div class="card-body flex-[1_1_auto] p-[40px]">
+						  <div class="icon btn btn-circle btn-lg btn-danger pointer-events-none !mb-3 xl:!text-[1.3rem] w-12 h-12 lg:!text-[calc(1.255rem_+_0.06vw)] md:!text-[calc(1.255rem_+_0.06vw)] max-md:!text-[calc(1.255rem_+_0.06vw)] !inline-flex !items-center !justify-center !leading-none !p-0 !rounded-[100%]"> <i class="uil uil-mobile-android before:content-['\ec0a']"></i> </div>
+						  <h4 class="!text-[1rem] !leading-[1.45]">{!! t('Mobil Tasarım') !!}</h4>
+						  <p class="!mb-2">{!! t('Mobil cihazlara uygun yenilikçi ve kullanıcı dostu tasarımlar geliştiriyoruz.') !!}</p>
+						  <a href="#" class="more hover !text-[#e31e24] focus:!text-[#e31e24] hover:!text-[#e31e24]">{!! t('Detaylı Bilgi') !!}</a>
+						</div>
+						<!--/.card-body -->
+					  </div>
+					  <!--/.card -->
+					</div>
+					<!-- /column -->
+				  </div>
+				  <!-- /.row -->
+				</div>
+				<!-- /column -->
+			  </div>
+			  <!-- /.row -->
+			</div>
+			<!-- /column -->
+			<div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] xl:px-0 lg:px-0 !px-[15px] max-w-full xl:!ml-[8.33333333%] lg:!ml-[8.33333333%] !mt-[50px]">
+			  <h2 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-bold !mb-3">{!! t('Ne Yapıyoruz?') !!}</h2>
+			  <p class="lead !text-[1.1rem] !leading-[1.5] font-medium">{!! t('Sunduğumuz tüm hizmetler, iş gereksinimlerinizi en iyi şekilde karşılamak için özel olarak tasarlandı.') !!}</p>
+			  <p>{!! t('Ekibimiz, markanız için uçtan uca dijital çözümler sunar. Akıllı teknolojiler ve kullanıcı deneyimini ön planda tutarak, işinize değer katıyoruz.') !!}</p>
+			  <a href="#" class="btn btn-danger !text-white !bg-[#e31e24] border-[#e31e24] hover:text-white hover:bg-[#e31e24] hover:!border-[#e31e24] active:text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:text-white disabled:bg-[#e31e24] disabled:border-[#e31e24] !text-[.85rem] !rounded-[50rem] !mt-3">{!! t('Daha Fazla Detay') !!}</a>
+			</div>
+			<!-- /column -->
+		  </div>
 		<div class="card !bg-[#f0f0f8] !rounded-[0.8rem] !mb-20 xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem]">
 		<div class="card-body py-[4.5rem] xl:!px-0 lg:!px-0 px-[40px]">
 			<div class="flex flex-wrap mx-[-15px] !text-center">
@@ -238,48 +299,49 @@ Teknoloji ve yazılım odaklı bir güç olarak, işletmenizin dijital çağa ta
 		<!--/.card -->
 		
 		<!--/.row -->
-		<div class="flex flex-wrap mx-[-7.5px] !mt-[-50px] xl:!mt-0 lg:!mt-0 items-center">
-		<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] px-[7.5px] !mt-[50px] xl:!mt-0 lg:!mt-0 max-w-full">
-			<figure class="m-0 p-0"><img class="w-auto" src="{{ setting('home_lets_talk_image', asset('assets/img/illustrations/3d3.png')) }}" alt="image"></figure>
-		</div>
-		<!--/column -->
-		<div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] px-[7.5px] !mt-[50px] xl:!mt-0 lg:!mt-0 max-w-full !ml-auto">
-			<h2 class="!text-[0.8rem] uppercase !text-[#e31e24] !mb-3 !leading-[1.35] !tracking-[0.02rem]">{!! t('Let’s Talk') !!}</h2>
-			<h3 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-semibold !mb-3">{!! t('Let\'s make something great together. We are trusted by over 5000+ clients.') !!}</h3>
-			<p>{!! t('Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas faucibus mollis interdum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.') !!}</p>
-			<a href="#" class="btn btn-grape !text-white !bg-[#e31e24] border-[#e31e24] hover:text-white hover:bg-[#e31e24] hover:!border-[#e31e24]   active:text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:text-white disabled:bg-[#e31e24] disabled:border-[#e31e24] rounded !mt-2">{!! t('Join Us') !!}</a>
-		</div>
-		<!--/column -->
-		</div>
-		<!--/.row -->
-	</div>
-	<!-- /.container -->
-	</section>
-	<section class="wrapper !bg-[#f0f0f8]">
-	<div class="container py-[4.5rem] xl:!py-24 lg:!py-24 md:!py-24">
-		<div class="flex flex-wrap mx-[-15px] !mb-8">
-		<div class="xl:w-8/12 lg:w-8/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto !text-center">
-			<h2 class="!text-[0.8rem] uppercase !text-[#e31e24] !mb-3 !leading-[1.35] !tracking-[0.02rem]">{!! t('Analyze Now') !!}</h2>
-			<h3 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-semibold  !mb-0">{!! t('Wonder how much faster your website can go? Easily check your SEO Score now.') !!}</h3>
-		</div>
-		<!-- /column -->
-		</div>
+		
 		<!-- /.row -->
-		<div class="flex flex-wrap mx-[-15px]">
-		<div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto">
-			<form action="#">
-			<div class="form-floating input-group relative">
-				<input type="url" class="form-control border-0 relative block w-full text-[.75rem] font-medium !text-[#60697b] bg-[#fefefe] bg-clip-padding shadow-[0_0_1.25rem_rgba(30,34,40,0.04)] rounded-[0.4rem] duration-[0.15s] ease-in-out focus:shadow-[0_0_1.25rem_rgba(30,34,40,0.04),unset] placeholder:!text-[#959ca9] placeholder:opacity-100 m-0 !pr-9 p-[.6rem_1rem] h-[calc(2.5rem_+_2px)] min-h-[calc(2.5rem_+_2px)] !leading-[1.25]" placeholder="" id="analyze">
-				<label class="inline-block !text-[#959ca9] text-[.75rem] absolute z-[2] h-full overflow-hidden text-start text-ellipsis whitespace-nowrap pointer-events-none border origin-[0_0] px-4 py-[0.6rem] border-solid border-transparent left-0 top-0 font-Manrope" for="analyze">{!! t('Enter Website URL') !!}</label>
-				<button class="btn btn-grape !text-white !bg-[#e31e24] border-[#e31e24] hover:text-white hover:bg-[#e31e24] hover:!border-[#e31e24] active:text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:text-white disabled:bg-[#e31e24] disabled:border-[#e31e24] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)] hover:!translate-none" type="button">{!! t('Analyze') !!}</button>
+		<div class="flex flex-wrap mx-[-7.5px] !mt-[-50px] !mb-[5rem] xl:!mb-[8rem] lg:!mb-[8rem] md:!mb-[8rem]  items-center">
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] px-[7.5px] !mt-[50px] max-w-full">
+			  <figure class="m-0 p-0"><img class="w-auto" src="assets/img/illustrations/3d3.png" alt="image"></figure>
 			</div>
-			</form>
-		</div>
-		<!-- /column -->
-		</div>
+			<!--/column -->
+			<div class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] px-[7.5px] !mt-[50px] max-w-full xl:!ml-[8.33333333%] lg:!ml-[8.33333333%]">
+			  <h2 class="!text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">{{ t('İletişim') }}</h2>
+			  <h3 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] !tracking-[normal] !mb-8">{{ t('Bir sorunuz mu var? Bizimle iletişime geçmekten çekinmeyin.') }}</h3>
+			  <div class="flex flex-row">
+				<div>
+				  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 255.84" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/pin.svg" class="svg-inject icon-svg !w-[1.8rem] !h-[1.8rem]  solid-duo text-grape-fuchsia !mt-1 !mr-4"><path class="fill-secondary" d="M10.67 255.84a10.68 10.68 0 01-7.54-18.23l86.08-86a10.67 10.67 0 1115.08 15.1l-86.08 86a10.61 10.61 0 01-7.54 3.13z"></path><path class="fill-primary" d="M250.54 80.72L175.12 5.29a19.12 19.12 0 00-26.4 0L138.3 15.71a27.18 27.18 0 00-6.61 27.93A11.25 11.25 0 01129 55.21L98.38 85.79a13.3 13.3 0 01-9.38 3.9H76.46a29.11 29.11 0 00-20.73 8.59l-5.06 5.06a18.66 18.66 0 000 26.4l75.42 75.42a18.64 18.64 0 0026.4 0l5.06-5.07a29.12 29.12 0 008.59-20.73v-12.5a13.43 13.43 0 013.91-9.42l30.57-30.58a11.24 11.24 0 0111.57-2.74 27.14 27.14 0 0027.92-6.6l10.42-10.42a18.65 18.65 0 000-26.38z"></path></svg>
+				</div>
+				<div>
+				  <h5 class="!mb-0">{{ t('Adres') }}</h5>
+				  <address class=" not-italic !leading-[inherit] !mb-4">{{ t(setting('contact_address', 'Adres bilgisi yakında')) }}</address>
+				</div>
+			  </div>
+			  <div class="flex flex-row">
+				<div>
+				  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.01 256" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/rotary.svg" class="svg-inject icon-svg !w-[1.8rem] !h-[1.8rem]  solid-duo text-grape-fuchsia !mt-1 !mr-4"><path class="fill-secondary" d="M128 106.67a128.15 128.15 0 00-128 128A21.36 21.36 0 0021.34 256h213.32A21.36 21.36 0 00256 234.67c0-70.57-57.42-128-128-128zM128 224a42.67 42.67 0 1142.67-42.67A42.71 42.71 0 01128 224z"></path><path class="fill-primary" d="M33.45 117.34a22.89 22.89 0 01-12.56-3.69 50.7 50.7 0 01-6.61-5.12A43.84 43.84 0 01.74 68.3C5.45 43.31 33.27 27.06 53.8 17A169.32 169.32 0 01128 0c34.77 0 69.86 10.62 96.26 29.14 11.95 8.4 26.22 20.11 30.4 36.41a44 44 0 01-12.93 43 49.9 49.9 0 01-6.49 5 23.84 23.84 0 01-26.87-.76L171.1 86.18c-8.32-5.94-11.64-16.42-8.08-25.52.19-.53.41-1 .64-1.56a113 113 0 00-71.33 0l.67 1.54c3.57 9.1.22 19.6-8.08 25.52l-37.3 26.61a24.15 24.15 0 01-14.14 4.57z"></path></svg>
+				</div>
+				<div>
+				  <h5 class="!mb-0">{{ t('Telefon') }}</h5>
+				  <p>{{ t(setting('contact_phone', 'Telefon bilgisi yakında')) }}</p>
+				</div>
+			  </div>
+			  <div class="flex flex-row">
+				<div>
+				  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 202.66" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/emails.svg" class="svg-inject icon-svg !w-[1.8rem] !h-[1.8rem]  solid-duo text-grape-fuchsia !mt-1 !mr-4"><path class="fill-primary" d="M192 0H21.33A21.36 21.36 0 000 21.33v96a21.36 21.36 0 0021.33 21.33H192a21.36 21.36 0 0021.33-21.33v-96A21.36 21.36 0 00192 0zm0 48l-73.6 37.12A25.12 25.12 0 01106.67 88a24.39 24.39 0 01-11.84-3L21.34 48V30.08l80.85 40.75a9.64 9.64 0 008.85.11l81-40.86z"></path><path class="fill-secondary" d="M234.67 64v53.33A42.72 42.72 0 01192 160H42.67v21.33A21.36 21.36 0 0064 202.66h170.67A21.36 21.36 0 00256 181.33v-96A21.36 21.36 0 00234.67 64z"></path></svg>
+				</div>
+				<div>
+				  <h5 class="!mb-0">{{ t('E-mail') }}</h5>
+				  <p class="!mb-0"><a href="mailto:{{ t(setting('contact_email', 'E-mail bilgisi yakında')) }}" class="!text-[#60697b] hover:!text-[#60697b]">{{ t(setting('contact_email', 'E-mail bilgisi yakında')) }}</a></p>
+				</div>
+			  </div>
+			</div>
+			<!--/column -->
+		  </div>
 		<!-- /.row -->
 	</div>
 	<!-- /.container -->
-	<figure class="m-0 p-0"><img class="w-full max-w-full !h-auto" src="{{ asset('assets/img/photos/clouds.png') }}" alt="image"></figure>
+	
 	</section>
 @endsection
