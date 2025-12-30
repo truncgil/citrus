@@ -223,6 +223,18 @@ class ImportHtmlTemplates extends Command
         }
 
         // B. Genel İşlemler
+        
+        // 0. Address tag'larını setting.contact_address ile değiştir
+        $addresses = $xpath->query('.//address', $node);
+        foreach ($addresses as $address) {
+            // Address içeriğini temizle ve placeholder koy
+            while ($address->firstChild) {
+                $address->removeChild($address->firstChild);
+            }
+            $textNode = $node->ownerDocument->createTextNode('{setting.contact_address}');
+            $address->appendChild($textNode);
+        }
+
         // 1. Resimler
         $images = $xpath->query('.//img', $node);
         foreach ($images as $img) {
