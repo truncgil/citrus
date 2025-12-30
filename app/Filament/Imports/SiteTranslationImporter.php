@@ -16,8 +16,9 @@ class SiteTranslationImporter extends Importer
     {
         $columns = [
             ImportColumn::make('key')
+                ->label('Key')
                 ->requiredMapping()
-                ->rules(['required', 'max:255']),
+                ->rules(['required']),
         ];
 
         try {
@@ -35,6 +36,12 @@ class SiteTranslationImporter extends Importer
 
     public function resolveRecord(): ?SiteTranslation
     {
+        if (empty($this->data['key'])) {
+            return null;
+        }
+
+        // Key üzerinden kaydı bul veya yeni oluştur
+        // Not: key alanı text olduğu için tam eşleşme arıyoruz
         return SiteTranslation::firstOrNew([
             'key' => $this->data['key'],
         ]);
@@ -44,19 +51,13 @@ class SiteTranslationImporter extends Importer
     {
         $translations = $this->record->translations ?? [];
         
-        // CSV'den gelen verileri al (data array içinde mapped column adları ile gelir)
-        // getColumns'da column adlarını dil kodu olarak verdik: $language->code
-        
         $languages = Language::where('is_active', true)->pluck('code')->toArray();
 
         foreach ($languages as $code) {
-            if (isset($this->data[$code])) {
-                // Boş string gelse bile güncelleyelim mi? Evet, çeviri silinmiş olabilir.
-                // Ancak null gelirse (CSV'de sütun yoksa) dokunmayalım.
-                // ImportColumn boş hücreleri null veya boş string olarak getirebilir.
-                
+            if (array_key_exists($code, $this->data)) {
                 $value = $this->data[$code];
                 
+                // Boş string de olsa güncelleyelim, null ise (CSV'de yoksa) dokunmayalım
                 if ($value !== null) {
                      $translations[$code] = $value;
                 }
@@ -65,6 +66,8 @@ class SiteTranslationImporter extends Importer
         
         $this->record->translations = $translations;
         
+        // Hash'i manuel oluşturmaya gerek yok, model event'i halledecek ama 
+        // new record ise ve event çalışmazsa diye garantiye alalım (import toplu insert yapabilir mi? Hayır record record işler)
         if (!$this->record->exists && empty($this->record->hash)) {
              $this->record->hash = md5($this->record->key);
         }
@@ -81,4 +84,3 @@ class SiteTranslationImporter extends Importer
         return $body;
     }
 }
-
