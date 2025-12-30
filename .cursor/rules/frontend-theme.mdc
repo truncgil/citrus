@@ -1,0 +1,138 @@
+---
+description: Public HTML şablonlarını Laravel Blade yapısına dönüştürme kuralları
+globs: resources/views/**/*.blade.php, public/html/**/*.html
+---
+# Frontend Theme Implementation Rules
+
+Bu kurallar, `public/html` dizinindeki statik HTML şablonlarının Laravel Blade yapısına dönüştürülmesi sırasında geçerlidir.
+
+## 1. Kaynak ve Hedef Yapısı
+
+- **Kaynak (Source):** `public/html/` dizinindeki `.html` dosyaları referans alınır.
+- **Hedef (Target):** `resources/views/front/` dizini altında Blade dosyaları oluşturulur.
+- **Assets (Varlıklar):** Statik dosyalar `public/html/assets` altındadır. Blade içinde erişim `asset('html/assets/...')` şeklinde olmalıdır.
+
+## 2. Bileşen (Component) Yapısı
+
+Yeni UI bileşenleri oluştururken aşağıdaki isimlendirme ve klasör yapısını kullan:
+
+- **Layout:** `resources/views/layouts/front.blade.php` (Master layout)
+- **Header:** `resources/views/components/front/header.blade.php` -> `<x-front.header />`
+- **Footer:** `resources/views/components/front/footer.blade.php` -> `<x-front.footer />`
+- **Page Sections:** `resources/views/components/front/sections/` altında:
+    - Hero/Slider -> `<x-front.sections.hero />`
+    - Features -> `<x-front.sections.features />`
+    - About -> `<x-front.sections.about />`
+
+## 3. Kod Dönüştürme Kuralları
+
+### A. CSS ve Sınıflar
+- **ÖNEMLİ:** Şablondaki `!` önekli Tailwind sınıflarını (örn: `!bg-[#f0f0f8]`, `!absolute`) KESİNLİKLE KORU. Bunlar temanın çalışması için kritiktir.
+- HTML'deki `class="..."` yapılarını birebir kopyala, Tailwind sınıflarını sadeleştirme veya değiştirme.
+
+### B. Asset Bağlantıları
+HTML içindeki:
+```html
+<link rel="stylesheet" href="assets/css/plugins.css">
+<img src="assets/img/logo.png">
+```
+Blade içinde şu şekilde olmalı:
+```blade
+<link rel="stylesheet" href="{{ asset('html/assets/css/plugins.css') }}">
+<img src="{{ asset('html/assets/img/logo.png') }}">
+```
+
+### C. Dinamik İçerik
+- Metinleri `{{ __('theme.key') }}` şeklinde lokalizasyon fonksiyonu ile sar.
+- Tekrarlayan elemanları (örn: slider itemları, hizmet kutuları) `@foreach` döngüsü içine al.
+
+## 4. Layout Şablonu (Örnek)
+
+`front.blade.php` layout dosyası şu yapıda olmalıdır:
+
+```blade
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', config('app.name'))</title>
+    <!-- CSS Assets from public/html/index.html head -->
+    @stack('styles')
+</head>
+<body class="!bg-[#f0f0f8]">
+    
+    <x-front.header />
+
+    <main class="grow shrink-0">
+        @yield('content')
+    </main>
+
+    <x-front.footer />
+
+    <!-- JS Assets from public/html/index.html bottom -->
+    @stack('scripts')
+</body>
+</html>
+```
+
+## 5. CMS Entegrasyonu (Dinamik Şablon Seçimi)
+
+Kullanıcı, bir prompt ile belirli bir section, header veya footer şablonunun kullanılmasını istediğinde (örn: "Header V1 ve About Section 3 kullan"), aşağıdaki stratejiyi izle:
+
+1.  **Veritabanı Araması:** İlgili şablonun veritabanında (genellikle `sections` veya `templates` tablosunda) var olduğunu varsay.
+2.  **Seeder/Migration Oluşturma:** Kullanıcının istediği yapıyı oluşturmak için bir Laravel Seeder veya Migration kodu üret. Bu kod:
+    - İlgili şablonu (title veya slug ile) bulmalı.
+    - Sayfa veya layout ile ilişkilendirmeli.
+
+**Örnek Senaryo:** "Ana sayfada 'Hero Slider V2' ve 'Services Grid' kullan."
+**Üretilecek Kod (Örnek):**
+```php
+// DatabaseSeeder.php veya özel bir seeder içinde
+$homePage = Page::firstOrCreate(['slug' => 'home'], ['title' => 'Ana Sayfa']);
+
+// Şablonları bul
+$heroSection = Section::where('title', 'like', '%Hero Slider V2%')->first();
+$servicesSection = Section::where('title', 'like', '%Services Grid%')->first();
+
+// İlişkilendir (Proje yapısına göre attach veya update)
+if ($heroSection) {
+    // Örnek ilişkilendirme mantığı
+    $homePage->sections()->attach($heroSection->id, ['order' => 1]);
+}
+```
+
+## 6. Otomatik Menü ve Sayfa Yapılandırması
+
+Kullanıcı "Şu yapıda bir menü tasarla" dediğinde (örn: "Ana Sayfa, Kurumsal > Hakkımızda, İletişim"):
+
+1.  **Page Modeli:** İstenen sayfaların veritabanında var olup olmadığını kontrol eden ve yoksa oluşturan bir kod bloğu hazırla.
+2.  **Menu Modeli:** Sayfaları hiyerarşik olarak menü yapısına ekleyen bir kod bloğu hazırla.
+3.  **Çıktı:** Bu işlemleri gerçekleştirecek bir `php artisan tinker` komutu veya `MenuSeeder` sınıfı sun.
+
+**Örnek Prompt:** "Menü: Ana Sayfa, Kurumsal (Hakkımızda, Vizyon), İletişim"
+**Beklenen Aksiyon:**
+```php
+// 1. Sayfaları Oluştur
+$pages = [
+    'Ana Sayfa' => '/',
+    'Kurumsal' => '#',
+    'Hakkımızda' => '/kurumsal/hakkimizda',
+    'Vizyon' => '/kurumsal/vizyon',
+    'İletişim' => '/iletisim'
+];
+
+foreach ($pages as $title => $url) {
+    Page::firstOrCreate(['title' => $title], ['slug' => Str::slug($title)]);
+}
+
+// 2. Menü Yapısını Kur
+$mainMenu = Menu::firstOrCreate(['name' => 'Main Menu']);
+// ... Menü elemanlarını ekleyen kod ...
+```
+
+## 7. Analiz Stratejisi
+Bir sayfayı dönüştürürken:
+1. Önce `public/html` altındaki ilgili `.html` dosyasını oku.
+2. `header` ve `footer` kısımlarını ayır.
+3. `main` içeriğindeki her bir `section` veya mantıksal bloğu ayrı bir Blade component olarak çıkar.
