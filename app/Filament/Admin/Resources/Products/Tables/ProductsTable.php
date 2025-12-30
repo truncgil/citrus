@@ -17,23 +17,33 @@ class ProductsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('hero_image'),
+                ImageColumn::make('hero_image')
+                    ->label(__('products.hero_image')),
                 TextColumn::make('title')
+                    ->label(__('products.title'))
                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
+                    ->label(__('products.type'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'product' => 'info',
                         'service' => 'success',
                         default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'product' => __('products.product'),
+                        'service' => __('products.service'),
+                        default => $state,
                     }),
                 TextColumn::make('category.title')
                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
-                    ->label('Category'),
-                ToggleColumn::make('is_active'),
+                    ->label(__('products.category')),
+                ToggleColumn::make('is_active')
+                    ->label(__('products.is_active')),
                 TextColumn::make('sort_order')
+                    ->label(__('products.sort_order'))
                     ->sortable(),
             ])
             ->filters([

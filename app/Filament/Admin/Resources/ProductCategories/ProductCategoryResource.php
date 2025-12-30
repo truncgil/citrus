@@ -20,21 +20,24 @@ class ProductCategoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
-    protected static \UnitEnum|string|null $navigationGroup = 'Ürün ve Hizmetler';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('product_categories.navigation_group');
+    }
 
     public static function getNavigationLabel(): string
     {
-        return 'Kategoriler';
+        return __('product_categories.menu_label');
     }
 
     public static function getModelLabel(): string
     {
-        return 'Kategori';
+        return __('product_categories.model_label');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Kategoriler';
+        return __('product_categories.plural_model_label');
     }
 
     public static function form(Schema $schema): Schema

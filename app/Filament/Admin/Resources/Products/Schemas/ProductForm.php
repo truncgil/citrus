@@ -17,19 +17,21 @@ class ProductForm
     {
         return $schema
             ->schema([
-                Section::make('General')
+                Section::make(__('products.general_section'))
                     ->schema([
                         TextInput::make('slug')
+                            ->label(__('products.slug'))
                             ->required()
                             ->unique(ignoreRecord: true),
                         Select::make('type')
+                            ->label(__('products.type'))
                             ->options([
-                                'product' => 'Product',
-                                'service' => 'Service',
+                                'product' => __('products.product'),
+                                'service' => __('products.service'),
                             ])
                             ->required(),
                         Select::make('product_category_id')
-                            ->label('Category')
+                            ->label(__('products.category'))
                             ->options(function () {
                                 return ProductCategory::all()->mapWithKeys(function ($category) {
                                     $title = is_array($category->title) 
@@ -40,30 +42,33 @@ class ProductForm
                             })
                             ->searchable(),
                         FileUpload::make('hero_image')
+                            ->label(__('products.hero_image'))
                             ->image()
                             ->directory('products'),
                         TextInput::make('view_template')
-                            ->label('Custom View Path')
-                            ->placeholder('e.g. front.products.custom-page')
-                            ->helperText('Leave empty to use the default landing page.'),
+                            ->label(__('products.view_template'))
+                            ->placeholder(__('products.view_template_placeholder'))
+                            ->helperText(__('products.view_template_helper')),
                         TextInput::make('sort_order')
+                            ->label(__('products.sort_order'))
                             ->numeric()
                             ->default(0),
                         Toggle::make('is_active')
+                            ->label(__('products.is_active'))
                             ->default(true),
                     ])->columns(2),
 
-                Section::make('Translations')
+                Section::make(__('products.translations_section'))
                     ->schema([
                         TranslationTabs::make([
                             'title' => [
                                 'type' => 'text',
-                                'label' => 'Title',
+                                'label' => __('products.title'),
                                 'required' => true,
                             ],
                             'content' => [
                                 'type' => 'richtext',
-                                'label' => 'Content',
+                                'label' => __('products.content'),
                             ],
                         ]),
                     ]),

@@ -17,18 +17,23 @@ class ProductCategoriesTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('product_categories.title'))
                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('slug')
+                    ->label(__('product_categories.slug'))
                     ->searchable(),
                 TextColumn::make('parent.title') // This might fail if parent title is JSON
                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
-                    ->label('Parent'),
+                    ->label(__('product_categories.parent')),
                 TextColumn::make('sort_order')
+                    ->label(__('product_categories.sort_order'))
                     ->sortable(),
-                ToggleColumn::make('is_active'),
+                ToggleColumn::make('is_active')
+                    ->label(__('product_categories.is_active')),
                 TextColumn::make('created_at')
+                    ->label(__('product_categories.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

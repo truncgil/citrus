@@ -16,13 +16,14 @@ class ProductCategoryForm
     {
         return $schema
             ->schema([
-                Section::make('General')
+                Section::make(__('product_categories.general_section'))
                     ->schema([
                         TextInput::make('slug')
+                            ->label(__('product_categories.slug'))
                             ->required()
                             ->unique(ignoreRecord: true),
                         Select::make('parent_id')
-                            ->label('Parent Category')
+                            ->label(__('product_categories.parent_category'))
                             ->options(function () {
                                 return ProductCategory::all()->mapWithKeys(function ($category) {
                                     $title = is_array($category->title) 
@@ -33,18 +34,20 @@ class ProductCategoryForm
                             })
                             ->searchable(),
                         TextInput::make('sort_order')
+                            ->label(__('product_categories.sort_order'))
                             ->numeric()
                             ->default(0),
                         Toggle::make('is_active')
+                            ->label(__('product_categories.is_active'))
                             ->default(true),
                     ])->columns(2),
 
-                Section::make('Translations')
+                Section::make(__('product_categories.translations_section'))
                     ->schema([
                         TranslationTabs::make([
                             'title' => [
                                 'type' => 'text',
-                                'label' => 'Title',
+                                'label' => __('product_categories.title'),
                                 'required' => true,
                             ],
                         ]),

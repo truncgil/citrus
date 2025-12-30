@@ -22,6 +22,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Navigation\MenuItem;
 use App\Models\Language;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Middleware\SetLocale;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -67,6 +68,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                SetLocale::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
