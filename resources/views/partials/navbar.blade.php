@@ -13,218 +13,33 @@
             </div>
             <div class="offcanvas-body xl:!ml-auto lg:!ml-auto flex  flex-col !h-full">
               <ul class="navbar-nav">
+                @php
+                    $productCategories = \App\Models\ProductCategory::with(['products' => fn($q) => $q->where('is_active', true)->orderBy('sort_order')])
+                        ->where('is_active', true)
+                        ->orderBy('sort_order')
+                        ->get();
+                @endphp
                 <li class="nav-item dropdown dropdown-mega">
-                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Demos</a>
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Ürün ve Hizmetler</a>
                   <ul class="dropdown-menu mega-menu mega-menu-dark mega-menu-img">
                     <li class="mega-menu-content mega-menu-scroll">
-                      <ul class="grid grid-cols-1 xl:grid-cols-6 lg:grid-cols-6 mx-0 xl:mx-[-10px] lg:mx-[-10px] xl:!mt-[-10px] lg:!mt-[-10px] !pl-0 list-none">
+                      <ul class="grid grid-cols-1 xl:grid-cols-5 lg:grid-cols-5 mx-0 xl:mx-[-10px] lg:mx-[-10px] xl:!mt-[-10px] lg:!mt-[-10px] !pl-0 list-none">
+                        @foreach($productCategories as $category)
                         <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo1.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi1.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 1</span>
-                          </a>
+                            <h6 class="dropdown-header !text-white !mb-2">{{ $category->title }}</h6>
+                            <ul class="list-none pl-0">
+                                @foreach($category->products as $product)
+                                <li>
+                                    <a class="dropdown-item !text-[#cacaca] hover:!text-white" href="{{ route('products.show', $product->slug) }}">
+                                        {{ $product->title }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
                         </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo2.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi2.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 2</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo3.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi3.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 3</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo4.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi4.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 4</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo5.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi5.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 5</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo6.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi6.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 6</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo7.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi7.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 7</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo8.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi8.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 8</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo9.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi9.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 9</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo10.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi10.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 10</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo11.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi11.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 11</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo12.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi12.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 12</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo13.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi13.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 13</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo14.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi14.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 14</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo15.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi15.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 15</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo16.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi16.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 16</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo17.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi17.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 17</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo18.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi18.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 18</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo19.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi19.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 19</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo20.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi20.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 20</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo21.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi21.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 21</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo22.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi22.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 22</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo23.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi23.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 23</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo24.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi24.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 24</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo25.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi25.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 25</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo26.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi26.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 26</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo27.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi27.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 27</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo28.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi28.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 28</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo29.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi29.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 29</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo30.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi30.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 30</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo31.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi31.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 31</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo32.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi32.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 32</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo33.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi33.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 33</span>
-                          </a>
-                        </li>
-                        <li class="xl:!px-[10px] xl:!mt-[10px] lg:!px-[10px] lg:!mt-[10px]">
-                          <a class='dropdown-item' href='demo34.html'>
-                            <figure class="!rounded-[.4rem] lift hidden xl:block lg:block"><img class="!rounded-[.4rem]" src="assets/img/demos/mi34.jpg" alt="image"></figure>
-                            <span class="xl:!hidden lg:!hidden">Demo 34</span>
-                          </a>
-                        </li>
+                        @endforeach
                       </ul>
                       <!--/.row -->
-                      <span class="hidden xl:!flex lg:!flex"><i class="uil uil-direction before:content-['\ea93']"></i><strong>Scroll to view more</strong></span>
                     </li>
                     <!--/.mega-menu-content-->
                   </ul>

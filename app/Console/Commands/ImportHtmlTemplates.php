@@ -29,7 +29,7 @@ class ImportHtmlTemplates extends Command
         'span' => 'text.content',
         'address' => 'text.address',
         'button' => 'text.button',
-        'a' => 'url.link', 
+        'a' => 'text.link_text', 
         'li' => 'text.list_item',
         'label' => 'text.label',
     ];
@@ -260,7 +260,7 @@ class ImportHtmlTemplates extends Command
         $links = $xpath->query('.//a', $node);
         foreach ($links as $link) {
             $href = $link->getAttribute('href');
-            if (empty($href) || str_starts_with($href, '#') || str_starts_with($href, 'javascript:') || str_starts_with($href, 'mailto:') || str_starts_with($href, 'tel:') || str_starts_with($href, '{')) continue;
+            if (empty($href) || str_starts_with($href, 'javascript:') || str_starts_with($href, 'mailto:') || str_starts_with($href, 'tel:') || str_starts_with($href, '{')) continue;
 
             $fixedHref = $this->fixAssetPath($href);
             if (str_ends_with($fixedHref, '.html')) {
@@ -268,7 +268,7 @@ class ImportHtmlTemplates extends Command
                 if($fixedHref == 'index') $fixedHref = '/';
             }
 
-            $key = $this->generateKey('url.link', $counts);
+            $key = $this->generateKey('text.link_url', $counts);
             $data[$key] = $fixedHref;
             $link->setAttribute('href', "{" . $key . "}");
         }

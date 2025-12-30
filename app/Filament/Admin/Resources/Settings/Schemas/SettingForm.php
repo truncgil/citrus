@@ -130,11 +130,20 @@ class SettingForm
                             ->helperText(__('settings.value_helper'))
                             ->required()
                             ->visible(fn (Get $get) => $get('type') === 'file')
+                            ->image()
                             ->disk('public')
                             ->directory('settings')
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'text/*'])
                             ->maxSize(10240) // 10MB
-                            ->columnSpanFull(),
+                            ->openable()
+                            ->downloadable()
+                            ->previewable(true)
+                            ->columnSpanFull()
+                            ->afterStateHydrated(function ($component, $state, $record) {
+                                if ($record && $record->type === 'file') {
+                                    $component->state($record->value);
+                                }
+                            }),
 
                         DatePicker::make('value_date')
                             ->label(__('settings.value'))

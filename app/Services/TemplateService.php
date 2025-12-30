@@ -107,7 +107,7 @@ class TemplateService
                 
                 'url' => TextInput::make("{$dataKey}.{$placeholder}")
                     ->label($label)
-                    ->url()
+                    // ->url() // Allow #, mailto, tel, relative paths
                     ->maxLength(500),
                 
                 'tel' => TextInput::make("{$dataKey}.{$placeholder}")

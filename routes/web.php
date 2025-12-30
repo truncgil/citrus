@@ -81,5 +81,8 @@ Route::any('/admin/template-preview', [TemplatePreviewController::class, 'previe
     ->middleware(['auth'])
     ->name('template.preview');
 
+// Products & Services
+Route::get('/urun-hizmet/{slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
+
 // Pages (en sonda olmalı - catch-all)
 Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');
