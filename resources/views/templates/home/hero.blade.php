@@ -1,4 +1,4 @@
-<section class="wrapper image-wrapper bg-image bg-overlay bg-overlay-300 !bg-fixed bg-no-repeat bg-[center_center] bg-cover relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(30,34,40,.3)]" data-image-src="./assets/img/photos/bg14.png" style="background-image: url('./assets/img/photos/bg14.png');">
+<section class="wrapper image-wrapper bg-image bg-overlay bg-overlay-300 !bg-fixed bg-no-repeat bg-[center_center] bg-cover relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(30,34,40,.3)]" data-image-src="./assets/img/photos/bg16.png" style="background-image: url('./assets/img/photos/bg16.png');">
 	<div class="container pt-28 pb-36 xl:pt-32 lg:pt-32 md:pt-32 xl:pb-28 lg:pb-28 md:pb-28 !text-center">
 	<div class="flex flex-wrap mx-[-15px]">
 		<div class="lg:w-8/12 xl:w-7/12 xxl:w-6/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto" data-cues="slideInDown" data-group="page-title" data-disabled="true">

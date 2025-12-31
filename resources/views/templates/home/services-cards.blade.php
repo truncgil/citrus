@@ -1,5 +1,5 @@
 <section class="wrapper !bg-[#ffffff]">
-<div class="container pb-20 xl:pb-[7rem] lg:pb-[7rem] md:pb-[7rem]">
+<div class="container">
 	<div class="flex flex-wrap mx-[-15px] xl:mx-[-12.5px] lg:mx-[-12.5px] md:mx-[-12.5px] !mb-[4.5rem] !mt-[-9rem] xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem]">
 	<div class="md:w-6/12 lg:w-6/12 xl:w-3/12 w-full flex-[0_0_auto] max-w-full !px-[15px] xl:!px-[12.5px] lg:!px-[12.5px] md:!px-[12.5px] !mt-[25px]">
 		<div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] h-full flex flex-col">

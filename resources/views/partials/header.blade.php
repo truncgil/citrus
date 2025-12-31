@@ -20,7 +20,7 @@
       <div class="navbar-collapse-wrapper flex flex-row items-center w-full">
         <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
           <div class="offcanvas-header lg:mx-auto xl:mx-auto order-0 lg:!order-1 lg:!px-[5rem] xl:!order-1 xl:!px-[5rem] p-[1.5rem] !flex items-center justify-between flex-row">
-            <a class="transition-none hidden lg:!flex xl:!flex" href="index.html"><img class="logo-dark" src="assets/img/truncgil-yatay.svg" alt="image">
+            <a class="transition-none hidden lg:!flex xl:!flex" href="./"><img class="logo-dark" src="assets/img/truncgil-yatay.svg" alt="image">
               <img class="logo-light" src="assets/img/truncgil-yatay-dark.svg" alt="image"></a>
               
               
@@ -514,14 +514,15 @@
           <div class="offcanvas-body xl:!hidden lg:!hidden order-4 !mt-auto">
             <div class="offcanvas-footer">
               <div>
-                <a href="mailto:first.last@email.com" class="link-inverse">info@truncgil.com</a>
-                <br> 00 (123) 456 78 90 <br>
+                <a href="mailto:{{setting('contact_email')}}" class="link-inverse">{{setting('contact_email')}}</a>
+                <br> <a href="tel:{{setting('contact_phone')}}">{{setting('contact_phone')}}</a> <br>
                 <nav class="nav social social-white !mt-4">
-                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-twitter before:content-['\ed59'] !text-white text-[1rem]"></i></a>
-                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i></a>
-                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-dribbble before:content-['\eaa2'] !text-white text-[1rem]"></i></a>
-                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i></a>
-                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i></a>
+                  <?php $social_media = json_decode(setting('social_links'), true); ?>
+                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Twitter']) ? $social_media['Twitter'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-twitter before:content-['\ed59'] !text-white text-[1rem]"></i></a>
+                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Facebook']) ? $social_media['Facebook'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i></a>
+                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Github']) ? $social_media['Github'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-github before:content-['\eb40'] !text-white text-[1rem]"></i></a>
+                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Instagram']) ? $social_media['Instagram'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i></a>
+                <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Youtube']) ? $social_media['Youtube'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i></a>
                 </nav>
                 <!-- /.social -->
               </div>
