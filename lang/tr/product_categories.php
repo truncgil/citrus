@@ -20,3 +20,5 @@ return [
     'created_at' => 'Oluşturulma Tarihi',
 ];
 
+
+

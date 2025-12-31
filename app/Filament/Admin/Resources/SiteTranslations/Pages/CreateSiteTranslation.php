@@ -10,3 +10,5 @@ class CreateSiteTranslation extends CreateRecord
     protected static string $resource = SiteTranslationResource::class;
 }
 
+
+
