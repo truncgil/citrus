@@ -56,9 +56,11 @@ class PageController extends Controller
 
                 // Footer Render
                 $footerTemplate = $page->footerTemplate;
+                /*
                 if (!$footerTemplate) {
                     $footerTemplate = FooterTemplate::where('is_active', true)->latest('updated_at')->first();
                 }
+                */
                 
                 if ($footerTemplate) {
                     $templateDefaults = $footerTemplate->default_data ?? [];
@@ -162,11 +164,13 @@ class PageController extends Controller
         $footerTemplate = $page->footerTemplate;
         
         // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
+        /*
         if (!$footerTemplate) {
             $footerTemplate = FooterTemplate::where('is_active', true)
                 ->latest('updated_at')
                 ->first();
         }
+        */
         
         if ($footerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)
@@ -245,9 +249,11 @@ class PageController extends Controller
 
                 // Render Footer Template
                 $footerTemplate = $page->footerTemplate;
+                /*
                 if (!$footerTemplate) {
                     $footerTemplate = FooterTemplate::where('is_active', true)->latest('updated_at')->first();
                 }
+                */
                 
                 if ($footerTemplate) {
                     $templateDefaults = $footerTemplate->default_data ?? [];
@@ -334,11 +340,13 @@ class PageController extends Controller
         $footerTemplate = $page->footerTemplate;
         
         // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
+        /*
         if (!$footerTemplate) {
             $footerTemplate = FooterTemplate::where('is_active', true)
                 ->latest('updated_at')
                 ->first();
         }
+        */
         
         if ($footerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)

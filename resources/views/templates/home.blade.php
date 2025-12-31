@@ -1,5 +1,5 @@
 @extends('layouts.site')
-Ş
+
 @section('title', 'Anasayfa')
 
 @section('content')

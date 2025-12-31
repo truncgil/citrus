@@ -34,7 +34,7 @@ $favicon_path = setting('site_favicon');
 	@yield('content')
 
 	{{-- Dynamic Footer Template or Static Footer --}}
-	@if(isset($renderedFooter) && $renderedFooter)
+	@if(isset($renderedFooter) && !empty(trim($renderedFooter)))
 		{!! $renderedFooter !!}
 	@else
 		@include('partials.footer')
