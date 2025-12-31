@@ -6,7 +6,7 @@
 	@include('templates.home.hero')
 	@include('templates.home.services-cards')
 	@include('templates.home.why-choose-us')
-	@include('templates.home.what-we-do')
+	
 	@include('templates.home.solutions')
 	@include('templates.home.services-grid')
 	@include('templates.home.testimonials')
