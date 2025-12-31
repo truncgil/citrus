@@ -5,12 +5,14 @@
 		  <div class="widget !text-[#cacaca]">
 			<img class="!mb-4" src="../../assets/img/truncgil-yatay-dark.svg" alt="image">
 			<p class="!mb-4">© {{ date('Y') }} {{ t('Trunçgil Teknoloji') }}. <br class="hidden xl:block lg:block !text-[#cacaca]">{{ t('Tüm hakları saklıdır.') }}</p>
+			<?php $social_media = json_decode(setting('social_links'), true); 
+			?>
 			<nav class="nav social social-white">
-			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-twitter before:content-['\ed59'] !text-white text-[1rem]"></i></a>
-			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i></a>
-			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-dribbble before:content-['\eaa2'] !text-white text-[1rem]"></i></a>
-			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i></a>
-			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i></a>
+			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Twitter']) ? $social_media['Twitter'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-twitter before:content-['\ed59'] !text-white text-[1rem]"></i></a>
+			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Facebook']) ? $social_media['Facebook'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i></a>
+			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Github']) ? $social_media['Github'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-github before:content-['\eb40'] !text-white text-[1rem]"></i></a>
+			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Instagram']) ? $social_media['Instagram'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i></a>
+			  <a class="!text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="{{ !empty($social_media['Youtube']) ? $social_media['Youtube'] : '#' }}" target="_blank" rel="noopener"><i class="uil uil-youtube before:content-['\edb5'] !text-white text-[1rem]"></i></a>
 			</nav>
 			<!-- /.social -->
 		  </div>
