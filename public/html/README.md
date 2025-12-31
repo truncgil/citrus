@@ -185,10 +185,10 @@ HTML dosyasının `<head>` bölümünde renk şemasını değiştirebilirsiniz:
 
 ```html
 <!-- Mevcut -->
-<link rel="stylesheet" href="assets/css/colors/grape.css">
+<link rel="stylesheet" href="../assets/css/colors/grape.css">
 
 <!-- Yeni renk şeması -->
-<link rel="stylesheet" href="assets/css/colors/aqua.css">
+<link rel="stylesheet" href="../assets/css/colors/aqua.css">
 ```
 
 ## 🔤 Yazı Tipleri
@@ -206,10 +206,10 @@ HTML dosyasının `<head>` bölümünde yazı tipini değiştirebilirsiniz:
 
 ```html
 <!-- Mevcut -->
-<link rel="stylesheet" type="text/css" href="assets/css/fonts/space.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/fonts/space.css">
 
 <!-- Yeni yazı tipi -->
-<link rel="stylesheet" type="text/css" href="assets/css/fonts/thicccboi.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/fonts/thicccboi.css">
 ```
 
 Ve `<body>` etiketine font sınıfı ekleyin:
@@ -309,14 +309,14 @@ Detaylı dokümantasyon için:
 
 ```html
 <a href='index.html'>
-  <img src="assets/img/logo-dark.png" alt="Logo">
+  <img src="../assets/img/logo-dark.png" alt="Logo">
 </a>
 ```
 
 ### Favicon Değiştirme
 
 ```html
-<link rel="shortcut icon" href="assets/img/favicon.png">
+<link rel="shortcut icon" href="../assets/img/favicon.png">
 ```
 
 ### Meta Bilgileri
