@@ -3,14 +3,195 @@
 @section('title', 'Anasayfa')
 
 @section('content')
+	<section class="wrapper image-wrapper bg-image bg-overlay bg-overlay-300 !bg-fixed bg-no-repeat bg-[center_center] bg-cover relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(30,34,40,.3)]" data-image-src="./assets/img/photos/bg14.png" style="background-image: url('./assets/img/photos/bg14.png');">
+		<div class="container pt-28 pb-36 xl:pt-32 lg:pt-32 md:pt-32 xl:pb-28 lg:pb-28 md:pb-28 !text-center">
+		<div class="flex flex-wrap mx-[-15px]">
+			<div class="lg:w-8/12 xl:w-7/12 xxl:w-6/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto" data-cues="slideInDown" data-group="page-title" data-disabled="true">
+			<h1 class="xl:!text-[3rem] !text-[calc(1.425rem_+_2.1vw)] font-semibold !leading-[1.15] !text-white !mb-4 md:!px-20 lg:!px-0 xl:!px-0" data-cue="slideInDown" data-group="page-title" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 0ms; animation-direction: normal; animation-fill-mode: both;">Hayatı <span class="!relative z-[2] after:content-[''] after:absolute after:z-[-1] after:block after:bg-no-repeat after:bg-bottom after:bottom-0 after:w-[110%] after:h-[0.3em] after:-translate-x-2/4 after:left-2/4  style-2 yellow">kolaylaştıran</span> çözümler sunuyoruz</h1>
+			<p class="lead !text-[1.2rem] !text-white !leading-[1.5] font-medium !mb-7 md:mx-[4rem] lg:mx-[2.5rem] xl:mx-[2.5rem]" data-cue="slideInDown" data-group="page-title" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 300ms; animation-direction: normal; animation-fill-mode: both;">{{ t('Hayatı kolaylaştıran uygulamaları insan odaklı, akılcı ve sade bir biçimde gerçekleştirmek için var gücümüzle çalışıyoruz.') }}</p>
+			<div data-cue="slideInDown" data-group="page-title" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 600ms; animation-direction: normal; animation-fill-mode: both;">
+				<a class="btn btn-white !rounded-[50rem] !mb-10 xxl:!mb-5">{{ t('Daha Fazla Oku') }}</a>
+			</div>
+			</div>
+			<!-- /column -->
+		</div>
+		<!-- /.row -->
+		</div>
+		<!-- /.container -->
+		<div class="overflow-hidden">
+		<div class="divider !text-[#fefefe] mx-[-0.5rem]">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60">
+			<path fill="currentColor" d="M0,0V60H1440V0A5771,5771,0,0,1,0,0Z"></path>
+			</svg>
+		</div>
+		</div>
+	</section>
+	<section class="wrapper !bg-[#ffffff]">
+	<div class="container pb-20 xl:pb-[7rem] lg:pb-[7rem] md:pb-[7rem]">
+		<div class="flex flex-wrap mx-[-15px] xl:mx-[-12.5px] lg:mx-[-12.5px] md:mx-[-12.5px] !mb-[4.5rem] !mt-[-9rem] xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem]">
+		<div class="md:w-6/12 lg:w-6/12 xl:w-3/12 w-full flex-[0_0_auto] max-w-full !px-[15px] xl:!px-[12.5px] lg:!px-[12.5px] md:!px-[12.5px] !mt-[25px]">
+			<div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
+			<div class="card-body flex-[1_1_auto] p-[40px]">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#e668b3] text-fuchsia !mb-3"><path class="fill-primary" d="M152 0H29.33A29.32 29.32 0 000 29.33v165.33A29.32 29.32 0 0029.33 224h78.72l2.35-13.12a29.71 29.71 0 018.11-15.68l62.83-62.72V29.33A29.33 29.33 0 00152 0zM42.67 42.67h42.67a10.67 10.67 0 110 21.33H42.66a10.67 10.67 0 010-21.33zM96 149.33H42.67a10.67 10.67 0 110-21.33H96a10.67 10.67 0 110 21.33zm42.67-42.66h-96a10.67 10.67 0 010-21.34h96a10.67 10.67 0 110 21.34z"></path><path class="fill-secondary" d="M133.63 256a8 8 0 01-7.89-9.38l5.67-32.06a8 8 0 012.22-4.27l79.2-79.2c9.73-9.75 19.28-7.12 24.51-1.89l13.2 13.2a18.69 18.69 0 010 26.4l-79.2 79.2a7.83 7.83 0 01-4.27 2.22l-32 5.67a10.71 10.71 0 01-1.44.11zm32.05-13.65z"></path></svg>
+				<h4>Content Marketing</h4>
+				<p class="!mb-2">Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus cras justo.</p>
+				<a href="#" class="more hover !text-[#e668b3] focus:!text-[#e668b3] hover:!text-[#e668b3]">Learn More</a>
+			</div>
+			<!--/.card-body -->
+			</div>
+			<!--/.card -->
+		</div>
+		<!--/column -->
+		<div class="md:w-6/12 lg:w-6/12 xl:w-3/12 w-full flex-[0_0_auto] max-w-full !px-[15px] xl:!px-[12.5px] lg:!px-[12.5px] md:!px-[12.5px] !mt-[25px]">
+			<div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
+			<div class="card-body flex-[1_1_auto] p-[40px]">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255.98 256" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/team.svg" class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#a07cc5] text-violet !mb-3"><circle class="fill-primary" cx="128" cy="26.67" r="26.67"></circle><circle class="fill-primary" cx="202.67" cy="176" r="26.67"></circle><circle class="fill-primary" cx="53.33" cy="176" r="26.67"></circle><path class="fill-primary" d="M173.33 106.67H82.66a8 8 0 01-8-8v-5.33A29.35 29.35 0 01104 64h48a29.35 29.35 0 0129.33 29.32v5.33a8 8 0 01-8 8.02zM248 256h-90.67a8 8 0 01-8-8v-5.33a29.36 29.36 0 0129.33-29.33h48A29.36 29.36 0 01256 242.67V248a8 8 0 01-8 8zm-149.33 0H8a8 8 0 01-8-8v-5.33a29.36 29.36 0 0129.33-29.33h48a29.37 29.37 0 0129.33 29.33V248a8 8 0 01-8 8z"></path><path class="fill-secondary" d="M29.33 136.13a8 8 0 01-8-8 107.1 107.1 0 0161.73-96.77 8 8 0 116.73 14.51 91 91 0 00-52.48 82.26 8 8 0 01-7.98 8zm197.34 0a8 8 0 01-8-8 91 91 0 00-52.48-82.26 8 8 0 116.74-14.51 107.09 107.09 0 0161.73 96.77 8 8 0 01-8 8zM128 234.8a105.08 105.08 0 01-11.15-.58 8 8 0 011.66-15.9 93.73 93.73 0 0019.6-.06 8 8 0 011.76 15.9 110.68 110.68 0 01-11.87.64z"></path></svg>
+				<h4>Social Engagement</h4>
+				<p class="!mb-2">Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus cras justo.</p>
+				<a href="#" class="more hover !text-[#a07cc5] focus:!text-[#a07cc5] hover:!text-[#a07cc5]">Learn More</a>
+			</div>
+			<!--/.card-body -->
+			</div>
+			<!--/.card -->
+		</div>
+		<!--/column -->
+		<div class="md:w-6/12 lg:w-6/12 xl:w-3/12 w-full flex-[0_0_auto] max-w-full !px-[15px] xl:!px-[12.5px] lg:!px-[12.5px] md:!px-[12.5px] !mt-[25px]">
+			<div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
+			<div class="card-body flex-[1_1_auto] p-[40px]">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/lamp.svg" class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#f78b77] text-orange !mb-3"><path class="fill-secondary" d="M128 36.86a8 8 0 01-8-8V8a8 8 0 0116 0v20.86a8 8 0 01-8 8zm70.1 29.04a8 8 0 01-5.67-13.64l14.77-14.77a8 8 0 1111.31 11.31l-14.77 14.77a8 8 0 01-5.64 2.33zM248 136h-20.86a8 8 0 010-16H248a8 8 0 010 16zm-35.15 84.85a8.06 8.06 0 01-5.67-2.34l-14.76-14.77a8 8 0 0111.31-11.31l14.77 14.77a8 8 0 010 11.31 7.92 7.92 0 01-5.65 2.34zm-169.7 0a8 8 0 01-5.66-13.65l14.77-14.77a8 8 0 0111.31 11.31L48.8 218.51a7.93 7.93 0 01-5.65 2.34zM28.86 136H8a8 8 0 010-16h20.86a8 8 0 110 16zM57.9 65.9a8 8 0 01-5.66-2.33L37.47 48.8a8 8 0 1111.31-11.31l14.77 14.77A8 8 0 0157.9 65.9z"></path><path class="fill-primary" d="M160 224v13.33A18.76 18.76 0 01141.33 256h-26.67c-9 0-18.66-6.83-18.66-21.76V224zm15-154a74.93 74.93 0 00-63-15c-28.27 5.91-51.2 29-57.07 57.21a74.74 74.74 0 0028.16 75.41A32.19 32.19 0 0195.25 208v.12A2 2 0 0196 208h64a.93.93 0 01.53.11V208c1.49-8.11 6.29-15.57 13.65-21.33A74.72 74.72 0 00175 70zm-7 63.36a8.06 8.06 0 01-8-8A29.32 29.32 0 00130.67 96a8 8 0 110-16A45.43 45.43 0 01176 125.33a8.06 8.06 0 01-8 8z"></path><path class="fill-secondary" d="M95.25 208H96a1.8 1.8 0 00-.75.11z"></path><path class="fill-primary" d="M160.53 208v.11a.93.93 0 00-.53-.11z"></path></svg>
+				<h4>Identity &amp; Branding</h4>
+				<p class="!mb-2">Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus cras justo.</p>
+				<a href="#" class="more hover !text-[#f78b77] focus:!text-[#f78b77] hover:!text-[#f78b77]">Learn More</a>
+			</div>
+			<!--/.card-body -->
+			</div>
+			<!--/.card -->
+		</div>
+		<!--/column -->
+		<div class="md:w-6/12 lg:w-6/12 xl:w-3/12 w-full flex-[0_0_auto] max-w-full !px-[15px] xl:!px-[12.5px] lg:!px-[12.5px] md:!px-[12.5px] !mt-[25px]">
+			<div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
+			<div class="card-body flex-[1_1_auto] p-[40px]">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/delivery-box.svg" class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#45c4a0] text-green !mb-3"><path class="fill-secondary" d="M172 20.57L55.79 80 9.6 57.32 123.71 1A9.43 9.43 0 01132 1zm74.27 36.75l-118.21 58.56-44.27-21.8-6.38-3.25L193.7 31.36l6.4 3.24z"></path><path class="fill-primary" d="M118.59 132.76L118.46 256 5.23 196.91A9.89 9.89 0 010 188.22V74.2l48 23.64v41.55a9.6 9.6 0 1019.2 0v-31.94l6.4 3.12zm137.28-58.43l-118.08 58.31-.13 123.23L256 194.08z"></path></svg>
+				<h4>Product Design</h4>
+				<p class="!mb-2">Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus cras justo.</p>
+				<a href="#" class="more hover !text-[#45c4a0] focus:!text-[#45c4a0] hover:!text-[#45c4a0]">Learn More</a>
+			</div>
+			<!--/.card-body -->
+			</div>
+			<!--/.card -->
+		</div>
+		<!--/column -->
+		</div>
+		<!--/.row -->
+		<div class="flex flex-wrap mx-[-15px]">
+		<div class="md:w-10/12 md:!ml-[8.33333333%] lg:w-8/12 lg:!ml-[16.66666667%] xl:w-8/12 xl:!ml-[16.66666667%] w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto !text-center">
+			<h2 class="!text-[0.8rem] !tracking-[0.02rem] uppercase !text-[#aab0bc] !mb-3 !leading-[1.35]">{{ t('Neden Trunçgil?') }}</h2>
+			<h3 class="xl:!text-[2.1rem] !text-[calc(1.335rem_+_1.02vw)] !leading-[1.2] font-semibold !mb-10 xl:!px-10 xxl:!px-20">{{ t('Müşterilerimizin Trunçgil\'i tercih etmesinin birkaç') }} <span class="!relative z-[2] after:content-[''] after:absolute after:z-[-1] after:block after:bg-no-repeat after:bg-bottom after:bottom-[-0.1em] after:w-[110%] after:h-[0.3em] after:-translate-x-2/4 after:left-2/4  style-2 yellow">{{ t('nedeni') }}</span> {{ t('burada.') }}</h3>
+		</div>
+		<!-- /column -->
+		</div>
+		<!-- /.row -->        
+		<ul class="nav nav-tabs nav-tabs-bg flex justify-between nav-justified xl:!flex-row lg:!flex-row flex-col" role="tablist">
+		<li class="nav-item !mb-[20px]" role="presentation"> <a class="nav-link !flex flex-row active" data-bs-toggle="tab" href="#tab2-1" aria-selected="true" role="tab">
+			<div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 255.98" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/bulb.svg" class="svg-inject icon-svg icon-svg-md !w-[2.2rem] !h-[2.2rem] solid-mono text-[#fab758] text-fuchsia !mr-4"><circle class="fill-primary" cx="58.67" cy="149.31" r="32"></circle><path class="fill-primary" d="M88 202.65H29.33A29.36 29.36 0 000 232v16a8 8 0 008 8h101.33a8 8 0 008-8v-16A29.36 29.36 0 0088 202.65z"></path><circle class="fill-primary" cx="197.33" cy="149.31" r="32"></circle><path class="fill-primary" d="M226.67 202.65H168A29.36 29.36 0 00138.67 232v16a8 8 0 008 8H248a8 8 0 008-8v-16a29.36 29.36 0 00-29.33-29.35z"></path><path class="fill-secondary" d="M149.76 108.48v7.68A11.9 11.9 0 01137.81 128h-19.63c-5.76 0-12-4.27-12-13.76v-5.76zM176 47.68a47.26 47.26 0 01-17.6 36.91 22.89 22.89 0 00-8.32 13.23H106a20 20 0 00-7.79-12.69A47.13 47.13 0 0180 46.73C80.53 21.34 101.76.33 127.25 0a47.34 47.34 0 0134.56 13.88A46.82 46.82 0 01176 47.68z"></path></svg></div>
+			<div>
+				<h4>{{ t('Fikir Toplama') }}</h4>
+				<p>{{ t('Fikirlerinizi toplar ve organize ederiz, süreçleri yönetiriz.') }}</p>
+			</div>
+			</a> </li>
+		<li class="nav-item !mb-[20px]" role="presentation"> <a class="nav-link !flex flex-row" data-bs-toggle="tab" href="#tab2-2" aria-selected="false" tabindex="-1" role="tab">
+			<div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/compare.svg" class="svg-inject icon-svg icon-svg-md !w-[2.2rem] !h-[2.2rem] solid-mono text-[#45c4a0] text-violet !mr-4"><path class="fill-primary" d="M123.22 148.5A8 8 0 00116 144H19.36a8 8 0 00-8 8c0 57.34 46.94 104 104.66 104a104.67 104.67 0 0045.45-10.29 8 8 0 003.76-10.71z"></path><path class="fill-secondary" d="M152 19a8 8 0 00-8 8v95.39a7.93 7.93 0 00.8 3.49l41.73 85.95a8 8 0 0010.65 3.73c36.29-17.48 58.82-53.19 58.82-93.19C256 65.36 209.34 19 152 19z"></path><path class="fill-primary" d="M112 104V8a8 8 0 00-8-8A104.13 104.13 0 000 104a8 8 0 008 8h96a8 8 0 008-8z"></path></svg></div>
+			<div>
+				<h4>{{ t('Veri Analizi') }}</h4>
+				<p>{{ t('Verilerinizi analiz eder ve anlamlı sonuçlar çıkarırız.') }}</p>
+			</div>
+			</a> </li>
+		<li class="nav-item !mb-[20px]" role="presentation"> <a class="nav-link !flex flex-row" data-bs-toggle="tab" href="#tab2-3" aria-selected="false" tabindex="-1" role="tab">
+			<div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" data-inject-url="https://Trunçgil-tailwind-template.netlify.app/assets/img/icons/solid/delivery-box.svg" class="svg-inject icon-svg icon-svg-md !w-[2.2rem] !h-[2.2rem] solid-mono text-[#e2626b] text-green !mr-4"><path class="fill-secondary" d="M172 20.57L55.79 80 9.6 57.32 123.71 1A9.43 9.43 0 01132 1zm74.27 36.75l-118.21 58.56-44.27-21.8-6.38-3.25L193.7 31.36l6.4 3.24z"></path><path class="fill-primary" d="M118.59 132.76L118.46 256 5.23 196.91A9.89 9.89 0 010 188.22V74.2l48 23.64v41.55a9.6 9.6 0 1019.2 0v-31.94l6.4 3.12zm137.28-58.43l-118.08 58.31-.13 123.23L256 194.08z"></path></svg></div>
+			<div>
+				<h4>{{ t('Ürünü Tamamla') }}</h4>
+				<p>{{ t('Ürününüzü son haline getirir ve teslim ederiz.') }}</p>
+			</div>
+			</a> </li>
+		</ul>
+		<!-- /.nav-tabs -->
+		<div class="tab-content !mt-6 xl:!mt-8 lg:!mt-8">
+		<div class="tab-pane fade show active" id="tab2-1" role="tabpanel">
+			<div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] !mt-[-50px] items-center">
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] !px-[15px] xl:!px-[35px] lg:!px-[20px] !mt-[50px] max-w-full">
+				<figure class="!rounded-[.4rem] !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]"><img class="!rounded-[.4rem]" src="assets/img/photos/se5.jpg" alt="image"></figure>
+			</div>
+			<!--/column -->
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] !px-[15px] xl:!px-[35px] lg:!px-[20px] !mt-[50px] max-w-full">
+				<h2 class="!mb-3 !leading-[1.35]">{{ t('Fikir Toplama') }}</h2>
+				<p>{{ t('Projeleriniz için en yaratıcı fikirleri topluyor ve organize ediyoruz. Müşterilerimizle yakın iş birliği içinde çalışarak, ihtiyaçlarınızı anlıyor ve en uygun çözümleri geliştiriyoruz. Deneyimli ekibimiz, her projeye özel yaklaşımlarla süreçleri yönetiyor ve başarılı sonuçlar elde ediyor.') }}</p>
+				<ul class="pl-0 list-none bullet-bg bullet-soft-fuchsia">
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#fbe4f1] !text-[#e668b3] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Yaratıcı fikirler toplama ve analiz etme.') }}</li>
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#fbe4f1] !text-[#e668b3] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Müşteri ihtiyaçlarını anlama ve çözüm geliştirme.') }}</li>
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#fbe4f1] !text-[#e668b3] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Profesyonel ekip ile süreç yönetimi ve takip.') }}</li>
+				</ul>
+				<a href="#" class="btn btn-fuchsia !text-white !bg-[#e668b3] border-[#e668b3] hover:text-white hover:bg-[#e668b3] hover:!border-[#e668b3]   active:text-white active:bg-[#e668b3] active:border-[#e668b3] disabled:text-white disabled:bg-[#e668b3] disabled:border-[#e668b3] !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
+			</div>
+			<!--/column -->
+			</div>
+			<!--/.row -->
+		</div>
+		<!--/.tab-pane -->
+		<div class="tab-pane fade" id="tab2-2" role="tabpanel">
+			<div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] !mt-[-50px] items-center">
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] !px-[15px] xl:!px-[35px] lg:!px-[20px] !mt-[50px] max-w-full xl:!order-2 lg:!order-2">
+				<figure class="!rounded-[.4rem] !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]"><img class="!rounded-[.4rem]" src="assets/img/photos/se6.jpg" alt="image"></figure>
+			</div>
+			<!--/column -->
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] !px-[15px] xl:!px-[35px] lg:!px-[20px] !mt-[50px] max-w-full">
+				<h2 class="!mb-3 !leading-[1.35]">{{ t('Veri Analizi') }}</h2>
+				<p>{{ t('Kurumsal verilerinizi derinlemesine analiz ediyor ve anlamlı içgörüler çıkarıyoruz. Modern analitik araçlarımız ve uzman ekibimiz sayesinde, iş süreçlerinizi optimize edebilir ve karar verme süreçlerinizi güçlendirebilirsiniz. Verilerinizden maksimum değeri elde etmenizi sağlıyoruz.') }}</p>
+				<ul class="pl-0 list-none bullet-bg bullet-soft-violet">
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#eee7f5] !text-[#a07cc5] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Derinlemesine veri analizi ve raporlama.') }}</li>
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#eee7f5] !text-[#a07cc5] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('İş süreçlerini optimize etme ve iyileştirme.') }}</li>
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#eee7f5] !text-[#a07cc5] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Stratejik karar verme için içgörü sağlama.') }}</li>
+				</ul>
+				<a href="#" class="btn btn-violet !text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:!border-[#a07cc5]   active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5]  !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
+			</div>
+			<!--/column -->
+			</div>
+			<!--/.row -->
+		</div>
+		<!--/.tab-pane -->
+		<div class="tab-pane fade" id="tab2-3" role="tabpanel">
+			<div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] !mt-[-50px] items-center">
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] !px-[15px] xl:!px-[35px] lg:!px-[20px] !mt-[50px] max-w-full">
+				<figure class="!rounded-[.4rem] !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]"><img class="!rounded-[.4rem]" src="assets/img/photos/se7.jpg" alt="image"></figure>
+			</div>
+			<!--/column -->
+			<div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] !px-[15px] xl:!px-[35px] lg:!px-[20px] !mt-[50px] max-w-full">
+				<h2 class="!mb-3 !leading-[1.35]">{{ t('Ürünü Tamamla') }}</h2>
+				<p>{{ t('Geliştirme sürecinin son aşamasında, ürününüzü mükemmel hale getiriyor ve teslim ediyoruz. Kalite kontrolünden kullanıcı testlerine, dokümantasyondan eğitime kadar tüm detayları eksiksiz bir şekilde tamamlıyoruz. Müşterilerimizin memnuniyeti bizim önceliğimizdir.') }}</p>
+				<ul class="pl-0 list-none bullet-bg bullet-soft-green">
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#def4ee] !text-[#45c4a0] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Kapsamlı kalite kontrolü ve test süreçleri.') }}</li>
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#def4ee] !text-[#45c4a0] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Detaylı dokümantasyon ve kullanıcı eğitimi.') }}</li>
+				<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#def4ee] !text-[#45c4a0] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Zamanında teslimat ve sürekli destek hizmeti.') }}</li>
+				</ul>
+				<a href="#" class="btn btn-green !text-white !bg-[#45c4a0] border-[#45c4a0] hover:text-white hover:bg-[#45c4a0] hover:!border-[#45c4a0]   active:text-white active:bg-[#45c4a0] active:border-[#45c4a0] disabled:text-white disabled:bg-[#45c4a0] disabled:border-[#45c4a0]  !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
+			</div>
+			<!--/column -->
+			</div>
+			<!--/.row -->
+		</div>
+		<!--/.tab-pane -->
+		</div>
+		<!-- /.tab-content -->
+	</div>
+	<!-- /.container -->
+	</section>
 	<section class="wrapper !bg-[#f0f0f8]">
 		<div class="container pt-10 lg:pt-14 xl:!pt-14 xxl:!pt-10 lg:pb-10 xl:pb-10 xxl:pb-0">
 			<div class="flex flex-wrap mx-[-15px] md:mx-[-20px] lg:mx-[-20px] xl:mx-[-35px] !mt-[-50px] items-center text-center lg:text-left xl:text-left">
 			<div class="lg:w-6/12 xl:w-6/12 w-full flex-[0_0_auto] !px-[15px] max-w-full md:!px-[20px] lg:!px-[20px] xl:!px-[35px] !mt-[50px]" data-cues="slideInDown" data-group="page-title" data-delay="900" data-disabled="true">
 				<h1 class="xl:!text-[2.5rem] !text-[calc(1.375rem_+_1.5vw)] !leading-[1.15] font-semibold !mb-4 xl:!mr-5 xl:!mt-[-2.5rem] lg:!mt-[-2.5rem]" data-cue="slideInDown" data-group="page-title" data-delay="900" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 900ms; animation-direction: normal; animation-fill-mode: both;">{!! t('İnsan odaklı <br class="hidden md:block xl:!hidden lg:!hidden"><span class="!text-[#e31e24] ">akılcı ve sade</span>') !!}</h1>
 				<p class="lead !text-[1.2rem] !leading-[1.5] !mb-7 xxl:!pr-20" data-cue="slideInDown" data-group="page-title" data-delay="900" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 1200ms; animation-direction: normal; animation-fill-mode: both;">{!! t('Hayatı kolaylaştırabilecek uygulamaları insan odaklı, akılcı, sade ve estetik  <br class="hidden md:block xl:!hidden lg:!hidden"> bir biçimde gerçekleştirmek için var gücümüzle çalışıyoruz.') !!}</p>
-				<div class="inline-flex !mr-2" data-cue="slideInDown" data-group="page-title" data-delay="900" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 1500ms; animation-direction: normal; animation-fill-mode: both;"><a href="#" class="btn btn-lg btn-grape !text-white !bg-[#e31e24] border-[#e31e24] hover:text-white hover:bg-[#e31e24] hover:!border-[#e31e24]   active:text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:text-white disabled:bg-[#e31e24] disabled:border-[#e31e24] rounded">{!! t('Ürün ve Hizmetlerimiz') !!}</a></div>
-				<div class="inline-flex" data-cue="slideInDown" data-group="page-title" data-delay="900" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 1800ms; animation-direction: normal; animation-fill-mode: both;"><a href="#" class="btn btn-lg btn-outline-grape !text-[#e31e24] bg-[#e31e24] !border-[#e31e24] !border-[2px] hover:!text-white hover:!bg-[#e31e24] hover:!border-[#e31e24] focus:shadow-[rgba(96,93,186,1)] active:!text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:!text-white disabled:bg-transparent disabled:border-[#e31e24] rounded">{!! t('Neler Yapıyoruz?') !!}</a></div>
+				<div class="inline-flex !mr-2" data-cue="slideInDown" data-group="page-title" data-delay="900" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 1500ms; animation-direction: normal; animation-fill-mode: both;"><a href="#" class="btn btn-lg btn-grape !text-white !bg-[#e31e24] border-[#e31e24] hover:text-white hover:bg-[#e31e24] hover:!border-[#e31e24]   active:text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:text-white disabled:bg-[#e31e24] disabled:border-[#e31e24] !rounded-[50rem]">{!! t('Ürün ve Hizmetlerimiz') !!}</a></div>
+				<div class="inline-flex" data-cue="slideInDown" data-group="page-title" data-delay="900" data-show="true" style="animation-name: slideInDown; animation-duration: 700ms; animation-timing-function: ease; animation-delay: 1800ms; animation-direction: normal; animation-fill-mode: both;"><a href="#" class="btn btn-lg btn-outline-grape !text-[#e31e24] bg-[#e31e24] !border-[#e31e24] !border-[2px] hover:!text-white hover:!bg-[#e31e24] hover:!border-[#e31e24] focus:shadow-[rgba(96,93,186,1)] active:!text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:!text-white disabled:bg-transparent disabled:border-[#e31e24] !rounded-[50rem]">{!! t('Neler Yapıyoruz?') !!}</a></div>
 			</div>
 			<!--/column -->
 			<div class="w-10/12 md:w-7/12 lg:w-6/12 xl:w-5/12 !mx-auto flex-[0_0_auto] !px-[15px] max-w-full xl:!ml-5 md:!px-[20px] lg:!px-[20px] xl:!px-[35px] !mt-[50px]">

@@ -43,10 +43,11 @@ class PageController extends Controller
 
                 // Header Render
                 $headerTemplate = $page->headerTemplate;
+                /*
                 if (!$headerTemplate) {
                     $headerTemplate = HeaderTemplate::where('is_active', true)->latest('updated_at')->first();
                 }
-                
+                */
                 if ($headerTemplate) {
                     $templateDefaults = $headerTemplate->default_data ?? [];
                     $pageData = $page->header_data ?? [];

@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
-@section('title', $product->title ?? 'Ürün Detayı')
-@section('meta_description', Str::limit(strip_tags($product->content), 160))
+@section('title', $product->translate('title') ?? 'Ürün Detayı')
+@section('meta_description', Str::limit(strip_tags($product->translate('content')), 160))
 
 @section('content')
 <section class="wrapper !bg-[#ffffff]">
@@ -12,22 +12,22 @@
                     <div class="post-category text-line text-[#aab0bc] !mb-3">
                         <span class="hover:!text-[#3f78e0]">{{ $product->type == 'product' ? 'Ürün' : 'Hizmet' }}</span>
                         @if($product->category)
-                             / <span class="hover:!text-[#3f78e0]">{{ $product->category->title }}</span>
+                             / <span class="hover:!text-[#3f78e0]">{{ $product->category->translate('title') }}</span>
                         @endif
                     </div>
                     <!-- /.post-category -->
-                    <h1 class="!text-[2.5rem] !leading-[1.2] !mb-4">{{ $product->title }}</h1>
+                    <h1 class="!text-[2.5rem] !leading-[1.2] !mb-4">{{ $product->translate('title') }}</h1>
                 </div>
                 <!-- /.post-header -->
                 
                 @if($product->hero_image)
                 <figure class="!mb-[2rem] !rounded-[.4rem]">
-                    <img class="!rounded-[.4rem] w-full" src="{{ Storage::url($product->hero_image) }}" alt="{{ $product->title }}">
+                    <img class="!rounded-[.4rem] w-full" src="{{ Storage::url($product->hero_image) }}" alt="{{ $product->translate('title') }}">
                 </figure>
                 @endif
                 
                 <div class="post-content">
-                    {!! $product->content !!}
+                    {!! $product->translate('content') !!}
                 </div>
                 <!-- /.post-content -->
             </div>

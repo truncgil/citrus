@@ -57,7 +57,21 @@ trait HasTranslations
         }
 
         // Fallback to original field value
-        return $this->{$fieldName} ?? null;
+        $originalValue = $this->{$fieldName} ?? null;
+
+        // If the original value is an array (e.g. JSON cast), try to find translation inside it
+        if (is_array($originalValue)) {
+            if (isset($originalValue[$languageCode])) {
+                return $originalValue[$languageCode];
+            }
+            if ($fallback && isset($originalValue[$this->getDefaultLanguageCode()])) {
+                return $originalValue[$this->getDefaultLanguageCode()];
+            }
+            // Return first value if available, or empty string
+            return reset($originalValue) ?: '';
+        }
+
+        return $originalValue;
     }
 
     /**

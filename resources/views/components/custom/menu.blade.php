@@ -29,7 +29,7 @@ $menuItems = \App\Models\Page::with(['children' => function ($query) {
 
             @if($isMegaMenu)
                 <li class="nav-item dropdown dropdown-mega">
-                    <a class="nav-link dropdown-toggle font-bold !tracking-[-0.01rem] hover:!text-[#e31e24] after:!text-[#e31e24]" href="{{ route('page.show', $item->slug) }}" data-bs-toggle="dropdown">{{ $item->translate('title') ?: $item->title }}</a>
+                    <a class="nav-link dropdown-toggle font-bold !tracking-[-0.01rem] hover:!text-[#e31e24] after:!text-[#e31e24]" href="{{ route('page.show', $item->slug) }}" data-bs-toggle="dropdown">{{ $item->translate('title') }}</a>
                     <ul class="dropdown-menu mega-menu">
                         <li class="mega-menu-content">
                             <div class="flex flex-wrap mx-0 xl:mx-[-7.5px] lg:mx-[-7.5px]">
@@ -78,7 +78,7 @@ $menuItems = \App\Models\Page::with(['children' => function ($query) {
                         <a class="nav-link dropdown-toggle font-bold !tracking-[-0.01rem] hover:!text-[#e31e24] after:!text-[#e31e24]" 
                            href="{{ route('page.show', $item->slug) }}" 
                            data-bs-toggle="dropdown">
-                            {{ $item->translate('title') ?: $item->title }}
+                            {{ $item->translate('title') }}
                         </a>
                         <ul class="dropdown-menu">
                             @foreach($item->children as $child)
@@ -90,14 +90,14 @@ $menuItems = \App\Models\Page::with(['children' => function ($query) {
                                         <a class="dropdown-item hover:!text-[#e31e24] dropdown-toggle" 
                                            href="{{ route('page.show', $child->slug) }}" 
                                            data-bs-toggle="dropdown">
-                                            {{ $child->translate('title') ?: $child->title }}
+                                            {{ $child->translate('title') }}
                                         </a>
                                         <ul class="dropdown-menu">
                                             @foreach($child->children as $grandChild)
                                                 <li class="nav-item">
                                                     <a class="dropdown-item hover:!text-[#e31e24]" 
                                                        href="{{ route('page.show', $grandChild->slug) }}">
-                                                        {{ $grandChild->translate('title') ?: $grandChild->title }}
+                                                        {{ $grandChild->translate('title') }}
                                                     </a>
                                                 </li>
                                             @endforeach
@@ -107,7 +107,7 @@ $menuItems = \App\Models\Page::with(['children' => function ($query) {
                                     <li class="nav-item">
                                         <a class="dropdown-item hover:!text-[#e31e24]" 
                                            href="{{ route('page.show', $child->slug) }}">
-                                            {{ $child->translate('title') ?: $child->title }}
+                                            {{ $child->translate('title') }}
                                         </a>
                                     </li>
                                 @endif
@@ -116,7 +116,7 @@ $menuItems = \App\Models\Page::with(['children' => function ($query) {
                     @else
                         <a class="nav-link font-bold !tracking-[-0.01rem] hover:!text-[#e31e24] after:!text-[#e31e24]" 
                            href="{{ route('page.show', $item->slug) }}">
-                            {{ $item->translate('title') ?: $item->title }}
+                            {{ $item->translate('title') }}
                         </a>
                     @endif
                 </li>

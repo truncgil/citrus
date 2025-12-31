@@ -27,7 +27,7 @@ $favicon_path = setting('site_favicon');
 	@if(isset($renderedHeader) && $renderedHeader)
 		{!! $renderedHeader !!}
 	@else
-		@include('partials.navbar')
+		@include('partials.header')
 	@endif
 
 	{{-- Main Content --}}
