@@ -18,6 +18,25 @@ class EditSetting extends EditRecord
         return __('settings.edit');
     }
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $record = $this->getRecord();
+        
+        if (isset($data['type'])) {
+            $type = $data['type'];
+            $virtualField = 'value_' . $type;
+            
+            try {
+                // Model accessor'ını kullanarak değeri al
+                $data[$virtualField] = $record->{$virtualField};
+            } catch (\Exception $e) {
+                // Accessor bulunamazsa devam et
+            }
+        }
+        
+        return $data;
+    }
+
     protected function getHeaderActions(): array
     {
         return [
