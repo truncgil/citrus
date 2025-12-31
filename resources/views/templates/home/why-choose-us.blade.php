@@ -47,7 +47,7 @@
 			<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#fbe4f1] !text-[#e668b3] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Müşteri ihtiyaçlarını anlama ve çözüm geliştirme.') }}</li>
 			<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#fbe4f1] !text-[#e668b3] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Profesyonel ekip ile süreç yönetimi ve takip.') }}</li>
 			</ul>
-			<a href="#" class="btn btn-fuchsia !text-white !bg-[#e668b3] border-[#e668b3] hover:text-white hover:bg-[#e668b3] hover:!border-[#e668b3]   active:text-white active:bg-[#e668b3] active:border-[#e668b3] disabled:text-white disabled:bg-[#e668b3] disabled:border-[#e668b3] !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
+			<a href="#" class="btn btn-fuchsia !text-white !bg-[#e668b3] border-[#e668b3] hover:text-white hover:bg-[#e668b3] hover:!border-[#e668b3]   active:text-white active:bg-[#e668b3] active:border-[#e668b3] disabled:text-white disabled:bg-[#e668b3] disabled:border-[#e668b3] !rounded-[50rem] disabled:border-[#e668b3]  !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
 		</div>
 		<!--/column -->
 		</div>
@@ -68,7 +68,7 @@
 			<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#eee7f5] !text-[#a07cc5] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('İş süreçlerini optimize etme ve iyileştirme.') }}</li>
 			<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#eee7f5] !text-[#a07cc5] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Stratejik karar verme için içgörü sağlama.') }}</li>
 			</ul>
-			<a href="#" class="btn btn-violet !text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:!border-[#a07cc5]   active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5]  !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
+			<a href="#" class="btn btn-violet !text-white !bg-[#a07cc5] border-[#a07cc5] hover:text-white hover:bg-[#a07cc5] hover:!border-[#a07cc5]   active:text-white active:bg-[#a07cc5] active:border-[#a07cc5] disabled:text-white disabled:bg-[#a07cc5] disabled:border-[#a07cc5] !rounded-[50rem] disabled:border-[#a07cc5]  !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
 		</div>
 		<!--/column -->
 		</div>
@@ -89,7 +89,7 @@
 			<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#def4ee] !text-[#45c4a0] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Detaylı dokümantasyon ve kullanıcı eğitimi.') }}</li>
 			<li class="relative !pl-6 !mt-[0.35rem]"><i class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none !tracking-[normal] !text-center flex items-center justify-center bg-[#def4ee] !text-[#45c4a0] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>{{ t('Zamanında teslimat ve sürekli destek hizmeti.') }}</li>
 			</ul>
-			<a href="#" class="btn btn-green !text-white !bg-[#45c4a0] border-[#45c4a0] hover:text-white hover:bg-[#45c4a0] hover:!border-[#45c4a0]   active:text-white active:bg-[#45c4a0] active:border-[#45c4a0] disabled:text-white disabled:bg-[#45c4a0] disabled:border-[#45c4a0]  !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
+			<a href="#" class="btn btn-green !text-white !bg-[#45c4a0] border-[#45c4a0] hover:text-white hover:bg-[#45c4a0] hover:!border-[#45c4a0]   active:text-white active:bg-[#45c4a0] active:border-[#45c4a0] disabled:text-white disabled:bg-[#45c4a0] !rounded-[50rem] disabled:border-[#45c4a0]  !mt-2">{{ t('Daha Fazla Bilgi') }}</a>
 		</div>
 		<!--/column -->
 		</div>
