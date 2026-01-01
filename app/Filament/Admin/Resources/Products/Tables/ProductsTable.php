@@ -18,12 +18,18 @@ class ProductsTable
         return $table
             ->columns([
                 ImageColumn::make('hero_image')
-                    ->label(__('products.hero_image')),
+                    ->label(__('products.hero_image'))
+                    ->disk('public'),
                 TextColumn::make('title')
                     ->label(__('products.title'))
-                    ->formatStateUsing(fn ($state, $record) => $record->translate('title'))
-                    ->searchable()
-                    ->sortable(),
+                    ->getStateUsing(fn ($record) => $record->translate('title'))
+                    ->searchable(query: function ($query, $search) {
+                        return $query->whereHas('translations', function ($q) use ($search) {
+                            $q->where('field_name', 'title')
+                              ->where('field_value', 'like', "%{$search}%")
+                              ->where('language_code', app()->getLocale());
+                        });
+                    }),
                 TextColumn::make('type')
                     ->label(__('products.type'))
                     ->badge()
@@ -38,7 +44,7 @@ class ProductsTable
                         default => $state,
                     }),
                 TextColumn::make('category.title')
-                    ->formatStateUsing(fn ($state, $record) => $record->category?->translate('title'))
+                    ->getStateUsing(fn ($record) => $record->category?->translate('title'))
                     ->label(__('products.category')),
                 ToggleColumn::make('is_active')
                     ->label(__('products.is_active')),

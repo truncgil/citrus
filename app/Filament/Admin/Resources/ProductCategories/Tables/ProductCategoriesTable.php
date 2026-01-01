@@ -18,14 +18,19 @@ class ProductCategoriesTable
             ->columns([
                 TextColumn::make('title')
                     ->label(__('product_categories.title'))
-                    ->formatStateUsing(fn ($state, $record) => $record->translate('title'))
-                    ->searchable()
-                    ->sortable(),
+                    ->getStateUsing(fn ($record) => $record->translate('title'))
+                    ->searchable(query: function ($query, $search) {
+                        return $query->whereHas('translations', function ($q) use ($search) {
+                            $q->where('field_name', 'title')
+                              ->where('field_value', 'like', "%{$search}%")
+                              ->where('language_code', app()->getLocale());
+                        });
+                    }),
                 TextColumn::make('slug')
                     ->label(__('product_categories.slug'))
                     ->searchable(),
                 TextColumn::make('parent.title')
-                    ->formatStateUsing(fn ($state, $record) => $record->parent?->translate('title'))
+                    ->getStateUsing(fn ($record) => $record->parent?->translate('title'))
                     ->label(__('product_categories.parent')),
                 TextColumn::make('sort_order')
                     ->label(__('product_categories.sort_order'))
