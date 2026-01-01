@@ -19,3 +19,5 @@
 	<figure class="m-0 p-0"><img class="w-full max-w-full !h-auto" src="{{ asset('assets/img/photos/clouds.png') }}" alt="image"></figure>
 </section>
 
+
+

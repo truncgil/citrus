@@ -1,0 +1,92 @@
+---
+description: Frontend blok ve section mimarisi kuralları. Yeni blok eklerken veya sayfa yapısı kurarken bu kuralları uygula.
+globs: resources/views/components/blocks/**/*.blade.php, app/Filament/**/*.php, resources/views/templates/**/*.blade.php
+---
+
+# Frontend Architecture Rules
+
+Bu kurallar, projenin Blok (Block) ve Bölüm (Section) tabanlı mimarisini tanımlar. Sayfa oluştururken bu standartlara uyulmalıdır.
+
+## 1. Blok (Block) Yapısı
+
+Sistem, `resources/views/components/blocks/` altında bulunan hazır Blade bileşenleri üzerine kuruludur.
+
+### Mevcut Bloklar ve Kullanımları
+- **Hero:** Ana başlık, büyük görsel ve CTA butonları.
+- **Features:** İkonlu özellik kutuları grid yapısı.
+- **Stats:** Sayısal istatistikler ve sayaçlar.
+- **Testimonials:** Müşteri yorumları ve referanslar.
+- **Pricing:** Fiyatlandırma tabloları.
+- **CTA:** Aksiyon çağrısı bantları.
+- **Gallery:** Proje veya görsel galerisi.
+- **Team:** Ekip üyeleri listesi.
+- **Contact:** İletişim bilgileri ve formu.
+
+### Blok Geliştirme Kuralları
+1. **Component Yapısı:** Her blok `resources/views/components/blocks/{type}.blade.php` konumunda olmalıdır.
+2. **Veri Alımı:** Bloklar veriyi sadece `$data` prop'u üzerinden almalıdır:
+   ```blade
+   @props(['data' => []])
+   {{-- Erişim: $data['title'] --}}
+   ```
+3. **Null Check:** Tüm veri alanları için `isset` veya `??` kontrolü yapılmalıdır.
+   ```blade
+   {{ $data['title'] ?? '' }}
+   @if(isset($data['image'])) ... @endif
+   ```
+
+## 2. Section Builder ve Veri Yapısı
+
+Admin panelinde "Section Builder" kullanılarak veriler JSON formatında tutulur.
+
+### Veri Formatı (JSON)
+Veriler `sections` sütununda veya `parsed_sections` attribute'unda şu formatta işlenir:
+
+```json
+[
+  {
+    "type": "hero",
+    "data": {
+      "title": "Başlık",
+      "subtitle": "Alt Başlık",
+      "background_image": "assets/img/bg.jpg"
+    }
+  }
+]
+```
+
+### Key İsimlendirme Kuralları (ÖNEMLİ)
+Veri anahtarları (keys) her zaman **İngilizce** ve **snake_case** olmalıdır:
+- ✅ `title`, `sub_title`, `button_text`, `image_url`
+- ❌ `baslik`, `altBaslik`, `butonYazisi`, `resim`
+
+### Önerilen Value Tipleri
+Admin panelinde alan tanımlarken doğru tipleri seçin:
+- **Kısa Metinler:** `Text` (title, badge)
+- **Uzun Metinler:** `Textarea` (description)
+- **Formatlı İçerik:** `Rich Text` veya `HTML` (content)
+- **Görseller:** `Image` (background_image, icon)
+- **Linkler:** `URL` (button_url)
+
+## 3. Blade Entegrasyonu
+
+Sayfa şablonlarında (örneğin `home.blade.php`) blokları render ederken dinamik yapı kullanılmalıdır:
+
+```blade
+@foreach($page->parsed_sections as $section)
+    @if(view()->exists("components.blocks.{$section['type']}"))
+        <x-dynamic-component 
+            :component="'blocks.'.$section['type']" 
+            :data="$section['data']" 
+        />
+    @endif
+@endforeach
+```
+
+## 4. Stil Özelleştirme
+Bloklar, dışarıdan gelen stil parametrelerini desteklemelidir:
+- `bg_class`: Arka plan rengi (örn: `!bg-[#f0f0f8]`)
+- `column_class`: Grid yapısı (örn: `md:w-4/12`)
+- `padding_class`: Boşluklar (örn: `py-14`)
+
+Bu sınıflar Blade içinde ana kapsayıcıya (wrapper) eklenmelidir.

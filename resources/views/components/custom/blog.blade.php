@@ -38,13 +38,13 @@
                     </figure>
                     <div class="post-header">
                       @if($categoryName)
-                        <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
+                        <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#e31e24]">
                           <a href="{{ route('blog.index', ['category' => $blog->category->slug ?? '']) }}" class="hover" rel="category">{{ $categoryName }}</a>
                         </div>
                       @endif
                       <!-- /.post-category -->
                       <h2 class="post-title h3 !mt-1 !mb-3">
-                        <a class="!text-[#343f52] hover:!text-[#3f78e0]" href="{{ $blogUrl }}">{{ $title }}</a>
+                        <a class="!text-[#343f52] hover:!text-[#e31e24]" href="{{ $blogUrl }}">{{ $title }}</a>
                       </h2>
                     </div>
                     <!-- /.post-header -->
@@ -58,7 +58,7 @@
                         @endif
                         @if($blog->allow_comments)
                           <li class="post-comments inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-                            <a class="!text-[#aab0bc] hover:!text-[#3f78e0] hover:!border-[#3f78e0]" href="{{ $blogUrl }}#comments">
+                            <a class="!text-[#aab0bc] hover:!text-[#e31e24] hover:!border-[#e31e24]" href="{{ $blogUrl }}#comments">
                               <i class="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>{{ $commentCount }}
                             </a>
                           </li>

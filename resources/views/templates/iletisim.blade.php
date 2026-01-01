@@ -42,7 +42,7 @@
                   <div class="p-10 xl:!p-[4.5rem] lg:!p-[4.5rem] md:!p-12">
                     <div class="flex flex-row">
                       <div>
-                        <div class="icon !text-[#3f78e0] xl:!text-[1.4rem] !text-[calc(1.265rem_+_0.18vw)] !mr-4 !mt-[-0.25rem]"> <i class="uil uil-location-pin-alt before:content-['\ebd8']"></i> </div>
+                        <div class="icon !text-[#e31e24] xl:!text-[1.4rem] !text-[calc(1.265rem_+_0.18vw)] !mr-4 !mt-[-0.25rem]"> <i class="uil uil-location-pin-alt before:content-['\ebd8']"></i> </div>
                       </div>
                       <div class="!self-start !justify-start">
                         <h5 class="!mb-1">{{ t('Adres') }}</h5>
@@ -52,7 +52,7 @@
                     <!--/div -->
                     <div class="flex flex-row">
                       <div>
-                        <div class="icon !text-[#3f78e0] xl:!text-[1.4rem] !text-[calc(1.265rem_+_0.18vw)] !mr-4 !mt-[-0.25rem]"> <i class="uil uil-phone-volume before:content-['\ec50']"></i> </div>
+                        <div class="icon !text-[#e31e24] xl:!text-[1.4rem] !text-[calc(1.265rem_+_0.18vw)] !mr-4 !mt-[-0.25rem]"> <i class="uil uil-phone-volume before:content-['\ec50']"></i> </div>
                       </div>
                       <div>
                         <h5 class="!mb-1">{{ t('Telefon') }}</h5>
@@ -62,7 +62,7 @@
                     <!--/div -->
                     <div class="flex flex-row">
                       <div>
-                        <div class="icon !text-[#3f78e0] xl:!text-[1.4rem] !text-[calc(1.265rem_+_0.18vw)] !mr-4 !mt-[-0.25rem]"> <i class="uil uil-envelope before:content-['\eac8']"></i> </div>
+                        <div class="icon !text-[#e31e24] xl:!text-[1.4rem] !text-[calc(1.265rem_+_0.18vw)] !mr-4 !mt-[-0.25rem]"> <i class="uil uil-envelope before:content-['\eac8']"></i> </div>
                       </div>
                       <div>
                         <h5 class="!mb-1">{{ t('E-posta') }}</h5>
@@ -139,7 +139,7 @@
                 </div>
                 <!-- /column -->
                 <div class="w-full flex-[0_0_auto] !px-[15px] max-w-full !text-center">
-                  <input type="submit" class="btn btn-primary !text-white !bg-[#3f78e0] border-[#3f78e0] hover:text-white hover:bg-[#3f78e0] hover:!border-[#3f78e0]   active:text-white active:bg-[#3f78e0] active:border-[#3f78e0] disabled:text-white disabled:bg-[#3f78e0] disabled:border-[#3f78e0] !rounded-[50rem] btn-send !mb-3 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]" value="{{ t('Mesaj Gönder') }}">
+                  <input type="submit" class="btn btn-primary !text-white !bg-[#e31e24] border-[#e31e24] hover:text-white hover:bg-[#e31e24] hover:!border-[#e31e24]   active:text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:text-white disabled:bg-[#e31e24] disabled:border-[#e31e24] !rounded-[50rem] btn-send !mb-3 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]" value="{{ t('Mesaj Gönder') }}">
                   <p class="!text-[#aab0bc]"><strong>*</strong> {{ t('Bu alanlar zorunludur.') }}</p>
                 </div>
                 <!-- /column -->
@@ -168,17 +168,17 @@
           <div class="md:w-10/12 lg:w-9/12 xl:w-7/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto">
             <div class="flex flex-wrap mx-[-15px] items-center counter-wrapper !mt-[-20px] xl:!mt-0 lg:!mt-0 md:!mt-0">
               <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !text-center !mt-[20px] xl:!mt-0 lg:!mt-0 md:!mt-0">
-                <h3 class="counter counter-lg !text-[calc(1.345rem_+_1.14vw)] !tracking-[normal] !leading-none !mb-2 xl:!text-[2.2rem]  !text-[#3f78e0]" style="visibility: visible;">126</h3>
+                <h3 class="counter counter-lg !text-[calc(1.345rem_+_1.14vw)] !tracking-[normal] !leading-none !mb-2 xl:!text-[2.2rem]  !text-[#e31e24]" style="visibility: visible;">126</h3>
                 <p class=" text-[0.8rem] font-medium !mb-0">{{ t('Tamamlanan Projeler') }}</p>
               </div>
               <!--/column -->
               <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !text-center !mt-[20px] xl:!mt-0 lg:!mt-0 md:!mt-0">
-                <h3 class="counter counter-lg !text-[calc(1.345rem_+_1.14vw)] !tracking-[normal] !leading-none !mb-2 xl:!text-[2.2rem]  !text-[#3f78e0]" style="visibility: visible;">600+</h3>
+                <h3 class="counter counter-lg !text-[calc(1.345rem_+_1.14vw)] !tracking-[normal] !leading-none !mb-2 xl:!text-[2.2rem]  !text-[#e31e24]" style="visibility: visible;">600+</h3>
                 <p class=" text-[0.8rem] font-medium !mb-0">{{ t('Memnuniyetli Müşteriler') }}</p>
               </div>
               <!--/column -->
               <div class="xl:w-4/12 lg:w-4/12 md:w-4/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !text-center !mt-[20px] xl:!mt-0 lg:!mt-0 md:!mt-0">
-                <h3 class="counter counter-lg !text-[calc(1.345rem_+_1.14vw)] !tracking-[normal] !leading-none !mb-2 xl:!text-[2.2rem]  !text-[#3f78e0]" style="visibility: visible;">10+</h3>
+                <h3 class="counter counter-lg !text-[calc(1.345rem_+_1.14vw)] !tracking-[normal] !leading-none !mb-2 xl:!text-[2.2rem]  !text-[#e31e24]" style="visibility: visible;">10+</h3>
                 <p class=" text-[0.8rem] font-medium !mb-0">{{ t('Uzman Çalışanlar') }}</p>
               </div>
               <!--/column -->

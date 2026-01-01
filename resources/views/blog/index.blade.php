@@ -40,7 +40,7 @@
                 <div class="card">
                   @if($post->featured_image_url)
                     <figure class="card-img-top overlay overlay-1 hover-scale group">
-                      <a class="!text-[#343f52] hover:!text-[#3f78e0]" href="{{ $blogUrl }}">
+                      <a class="!text-[#343f52] hover:!text-[#e31e24]" href="{{ $blogUrl }}">
                         <img class="!transition-all !duration-[0.35s] !ease-in-out group-hover:scale-105" src="{{ $imageUrl }}" alt="{{ $title }}">
                       </a>
                       <figcaption class="group-hover:opacity-100 absolute w-full h-full opacity-0 text-center px-4 py-3 inset-0 z-[5] pointer-events-none p-2">
@@ -51,13 +51,13 @@
                   <div class="card-body flex-[1_1_auto] p-[40px] xl:!p-[2rem_2.5rem_1.25rem] lg:!p-[2rem_2.5rem_1.25rem] md:!p-[2rem_2.5rem_1.25rem] max-md:pb-4">
                     <div class="post-header !mb-[.9rem]">
                       @if($categoryName)
-                        <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
+                        <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#e31e24]">
                           <a href="{{ route('blog.index', ['category' => $categorySlug]) }}" class="hover" rel="category">{{ $categoryName }}</a>
                         </div>
                       @endif
                       <!-- /.post-category -->
                       <h2 class="post-title !mt-1 !leading-[1.35] !mb-0">
-                        <a class="!text-[#343f52] hover:!text-[#3f78e0]" href="{{ $blogUrl }}">{{ $title }}</a>
+                        <a class="!text-[#343f52] hover:!text-[#e31e24]" href="{{ $blogUrl }}">{{ $title }}</a>
                       </h2>
                     </div>
                     <!-- /.post-header -->
@@ -75,7 +75,7 @@
                       </li>
                       @if($authorName)
                         <li class="post-author inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-                          <a class="!text-[#aab0bc] hover:!text-[#3f78e0] hover:!border-[#3f78e0]" href="{{ route('blog.index', ['author' => $post->author_id]) }}">
+                          <a class="!text-[#aab0bc] hover:!text-[#e31e24] hover:!border-[#e31e24]" href="{{ route('blog.index', ['author' => $post->author_id]) }}">
                             <i class="uil uil-user pr-[0.2rem] align-[-.05rem] before:content-['\ed6f']"></i>
                             <span>{{ __('blog.by') }} {{ $authorName }}</span>
                           </a>
@@ -83,7 +83,7 @@
                       @endif
                       @if($post->allow_comments)
                         <li class="post-comments inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-                          <a class="!text-[#aab0bc] hover:!text-[#3f78e0] hover:!border-[#3f78e0]" href="{{ $blogUrl }}#comments">
+                          <a class="!text-[#aab0bc] hover:!text-[#e31e24] hover:!border-[#e31e24]" href="{{ $blogUrl }}#comments">
                             <i class="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>
                             <span>{{ $commentCount }} {{ __('blog.comments') }}</span>
                           </a>
@@ -135,13 +135,13 @@
                       <div class="card-body flex-[1_1_auto] p-[40px] xl:!p-[1.75rem_1.75rem_1rem_1.75rem] lg:!p-[1.75rem_1.75rem_1rem_1.75rem] md:!p-[1.75rem_1.75rem_1rem_1.75rem] max-md:pb-4">
                         <div class="post-header !mb-[.9rem]">
                           @if($categoryName)
-                            <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
+                            <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#e31e24]">
                               <a href="{{ route('blog.index', ['category' => $categorySlug]) }}" class="hover" rel="category">{{ $categoryName }}</a>
                             </div>
                           @endif
                           <!-- /.post-category -->
                           <h2 class="post-title h3 !mt-1 !mb-3">
-                            <a class="!text-[#343f52] hover:!text-[#3f78e0]" href="{{ $blogUrl }}">{{ $title }}</a>
+                            <a class="!text-[#343f52] hover:!text-[#e31e24]" href="{{ $blogUrl }}">{{ $title }}</a>
                           </h2>
                         </div>
                         <!-- /.post-header -->
@@ -159,7 +159,7 @@
                           </li>
                           @if($post->allow_comments)
                             <li class="post-comments inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-                              <a class="!text-[#aab0bc] hover:!text-[#3f78e0] hover:!border-[#3f78e0]" href="{{ $blogUrl }}#comments">
+                              <a class="!text-[#aab0bc] hover:!text-[#e31e24] hover:!border-[#e31e24]" href="{{ $blogUrl }}#comments">
                                 <i class="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>{{ $commentCount }}
                               </a>
                             </li>

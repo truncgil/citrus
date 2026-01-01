@@ -24,6 +24,26 @@
         color: #ffffff !important;
       }
     }
+    /* Mega Menu Tooltip Kırmızı Renk */
+    .mega-menu .tooltip {
+      background-color: #e31e24 !important;
+    }
+    .mega-menu .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before,
+    .mega-menu .bs-tooltip-top .tooltip-arrow::before {
+      border-top-color: #e31e24 !important;
+    }
+    .mega-menu .bs-tooltip-auto[data-popper-placement^=right] .tooltip-arrow::before,
+    .mega-menu .bs-tooltip-end .tooltip-arrow::before {
+      border-right-color: #e31e24 !important;
+    }
+    .mega-menu .bs-tooltip-auto[data-popper-placement^=bottom] .tooltip-arrow::before,
+    .mega-menu .bs-tooltip-bottom .tooltip-arrow::before {
+      border-bottom-color: #e31e24 !important;
+    }
+    .mega-menu .bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow::before,
+    .mega-menu .bs-tooltip-start .tooltip-arrow::before {
+      border-left-color: #e31e24 !important;
+    }
   </style>
 </head>
 
@@ -49,6 +69,7 @@
   @stack('scripts')
 </body>
 </html>
+
 
 
 

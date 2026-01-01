@@ -10,9 +10,9 @@
             <div class="xl:w-10/12 lg:w-10/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
                 <div class="post-header !mb-[.9rem]">
                     <div class="post-category text-line text-[#aab0bc] !mb-3">
-                        <span class="hover:!text-[#3f78e0]">{{ $product->type == 'product' ? 'Ürün' : 'Hizmet' }}</span>
+                        <span class="hover:!text-[#e31e24]">{{ $product->type == 'product' ? 'Ürün' : 'Hizmet' }}</span>
                         @if($product->category)
-                             / <span class="hover:!text-[#3f78e0]">{{ $product->category->translate('title') }}</span>
+                             / <span class="hover:!text-[#e31e24]">{{ $product->category->translate('title') }}</span>
                         @endif
                     </div>
                     <!-- /.post-category -->

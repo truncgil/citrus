@@ -11,8 +11,8 @@ use Filament\Schemas\Components\Section;
 use App\Filament\Admin\Resources\Components\TranslationTabs;
 use App\Models\ProductCategory;
 use Illuminate\Support\Str;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 
 class ProductForm
 {

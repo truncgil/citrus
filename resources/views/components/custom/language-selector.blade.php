@@ -17,7 +17,7 @@
         <ul class="dropdown-menu group-hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
           @foreach($languages as $language)
             <li class="nav-item">
-              <a class="dropdown-item hover:!text-[#747ed1] {{ $language->code === $currentLang ? 'active font-bold !text-[#3f78e0]' : '' }}" 
+              <a class="dropdown-item hover:!text-[#747ed1] {{ $language->code === $currentLang ? 'active font-bold !text-[#e31e24]' : '' }}" 
                  href="{{ route('language.switch', $language->code) }}">
               {{ strtoupper($language->code) }}
               </a>

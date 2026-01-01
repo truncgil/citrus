@@ -20,41 +20,45 @@
         <ul class="dropdown-menu mega-menu">
             <li class="mega-menu-content">
                 <div class="flex flex-wrap mx-0 xl:mx-[-7.5px] lg:mx-[-7.5px]">
-                    <div class="xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] max-w-full">
-                        <h6 class="dropdown-header !text-[#e31e24]">{{ __('Kategoriler') }}</h6>
-                        <ul class="pl-0 list-none xl:pb-1 lg:pb-1">
+                    <div class="xl:w-3/12 lg:w-3/12 w-full flex-[0_0_auto] max-w-full px-6">
+                        <h6 class="dropdown-header !text-[#e31e24] mb-4 mt-4 !pl-0">{{ __('Kategoriler') }}</h6>
+                        <ul class="pl-0 list-none mb-8">
                             @foreach($categories as $category)
                             <li class="w-full">
-                                <a class='dropdown-item hover:!text-[#e31e24]' href='#'>{{ $category->translate('title') }}</a>
+                                <a class='dropdown-item hover:!text-[#e31e24] !pl-0 !bg-transparent' href='#'>{{ $category->translate('title') }}</a>
                             </li>
                             @endforeach
                         </ul>
 
-                        <h6 class="dropdown-header !text-[#e31e24] mt-5">{{ __('Hizmetler') }}</h6>
-                        <ul class="pl-0 list-none xl:pb-1 lg:pb-1">
+                        <h6 class="dropdown-header !text-[#e31e24] mb-4 mt-4 !pl-0">{{ __('Hizmetler') }}</h6>
+                        <ul class="pl-0 list-none">
                             @foreach($services as $service)
                             <li class="w-full">
-                                <a class='dropdown-item hover:!text-[#e31e24]' href="{{ route('products.show', $service->slug) }}">{{ $service->translate('title') }}</a>
+                                <a class='dropdown-item hover:!text-[#e31e24] !pl-0 !bg-transparent' href="{{ route('products.show', $service->slug) }}">{{ $service->translate('title') }}</a>
                             </li>
                             @endforeach
                         </ul>
                     </div>
                     
-                    <div class="xl:w-9/12 lg:w-9/12 w-full flex-[0_0_auto] max-w-full xl:border-l-[rgba(164,174,198,0.2)] xl:border-l xl:border-solid lg:border-l-[rgba(164,174,198,0.2)] lg:border-l lg:border-solid xl:pl-[15px] lg:pl-[15px]">
-                        <h6 class="dropdown-header !text-[#e31e24] !ml-[10px]">{{ __('Öne Çıkan Ürünler') }}</h6>
-                        <div class="flex flex-wrap p-2 gap-4">
+                    <div class="xl:w-9/12 lg:w-9/12 w-full flex-[0_0_auto] max-w-full xl:border-l-[rgba(164,174,198,0.2)] xl:border-l xl:border-solid lg:border-l-[rgba(164,174,198,0.2)] lg:border-l lg:border-solid xl:p-[50px] lg:pl-[50px] px-6 gradient-2 rounded-[.4rem]">
+                        <h6 class="dropdown-header !text-white mb-6 !p-0">{{ __('Öne Çıkan Ürünler') }}</h6>
+                        <div class="flex flex-wrap gap-4 mx-6">
                             @foreach($featuredProducts as $item)
-                            <div class="flex-none w-[185px]">
-                                <a class="dropdown-item group !bg-transparent !p-0 text-center block" href="{{ route('products.show', $item->slug) }}">
-                                    <figure class="!rounded-[.4rem] overflow-hidden w-[185px] h-[135px] !mb-2 shadow-sm border border-gray-100 mx-auto">
+                            <div class="flex-none" style="width: 183px;">
+                                <a class="group !bg-transparent mt-2 mb-2 !p-0 block transition-transform duration-300  hover:-translate-y-1" 
+                                   href="{{ route('products.show', $item->slug) }}"
+                                   data-bs-toggle="tooltip" 
+                                   data-bs-placement="top" 
+                                   title="{{ $item->translate('title') }}">
+                                    <figure style="width: 183px; height: 103px;"
+                                        class="!rounded-[.4rem] lift overflow-hidden !mb-2 shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.57)] mx-auto block transition-transform duration-300 group-hover:-translate-y-1 hidden xl:block lg:block ">
                                         @if($item->hero_image)
-                                            <img class="!rounded-[.4rem] w-full h-full object-cover transition-all duration-300 group-hover:scale-105" src="{{ \Storage::url($item->hero_image) }}" alt="{{ $item->translate('title') }}" width="185" height="135">
+                                            <img style="width: 183px; height: 103px;" class="!rounded-[.4rem] object-cover block" src="{{ \Storage::url($item->hero_image) }}" alt="{{ $item->translate('title') }}">
                                         @else
-                                            <img class="!rounded-[.4rem] w-full h-full object-cover" src="https://placehold.co/185x135?text={{ urlencode($item->translate('title')) }}" alt="{{ $item->translate('title') }}" width="185" height="135">
+                                            <img style="width: 183px; height: 103px;" class="!rounded-[.4rem] object-cover block" src="https://placehold.co/185x135?text={{ urlencode($item->translate('title')) }}" alt="{{ $item->translate('title') }}">
                                         @endif
                                     </figure>
                                     <span class="xl:!hidden lg:!hidden">{{ $item->translate('title') }}</span>
-                                    <span class="hidden xl:block lg:block text-xs font-bold text-gray-800 group-hover:text-[#e31e24] truncate w-full text-center">{{ $item->translate('title') }}</span>
                                 </a>
                             </div>
                             @endforeach

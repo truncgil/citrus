@@ -7,7 +7,7 @@
       <div class="md:w-10/12 lg:w-10/12 xl:w-8/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto">
         <div class="post-header !mb-[.9rem]">
           @if($post->category)
-            <div class="inline-flex uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] !mb-[0.4rem] text-line relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
+            <div class="inline-flex uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] !mb-[0.4rem] text-line relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#e31e24]">
               <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}" class="hover" rel="category">{{ $post->category->name }}</a>
             </div>
           @endif
@@ -22,14 +22,14 @@
             </li>
             @if($post->author)
               <li class="post-author inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0_.4rem] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-                <a class="!text-[0.8rem] !text-[#aab0bc] hover:!text-[#3f78e0] hover:!border-[#3f78e0]" href="#">
+                <a class="!text-[0.8rem] !text-[#aab0bc] hover:!text-[#e31e24] hover:!border-[#e31e24]" href="#">
                   <i class="uil uil-user pr-[0.2rem] align-[-.05rem] before:content-['\ed6f']"></i>
                   <span>{{ __('blog.by') }} {{ $post->author->name }}</span>
                 </a>
               </li>
             @endif
             <li class="post-comments inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0_.4rem] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-              <a class="!text-[0.8rem] !text-[#aab0bc] hover:!text-[#3f78e0] hover:!border-[#3f78e0]" href="#comments">
+              <a class="!text-[0.8rem] !text-[#aab0bc] hover:!text-[#e31e24] hover:!border-[#e31e24]" href="#comments">
                 <i class="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>
                 <span>{{ $post->comments_count ?? 0 }} {{ __('blog.comments') }}</span>
               </a>
@@ -119,7 +119,7 @@
                     </figure>
                     <div>
                       <h6>
-                        <a href="#" class="!text-[#343f52] hover:!text-[#3f78e0]">{{ $post->author->name }}</a>
+                        <a href="#" class="!text-[#343f52] hover:!text-[#e31e24]">{{ $post->author->name }}</a>
                       </h6>
                       <span class="!text-[0.75rem] !text-[#aab0bc] m-0 p-0 list-none">{{ $post->author->role ?? __('blog.author') }}</span>
                     </div>
@@ -192,13 +192,13 @@
                             </figure>
                             <div class="post-header !mb-[.9rem]">
                               @if($relatedPost->category)
-                                <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#3f78e0]">
+                                <div class="inline-flex !mb-[.4rem] uppercase !tracking-[0.02rem] text-[0.7rem] font-bold !text-[#aab0bc] relative align-top !pl-[1.4rem] before:content-[''] before:absolute before:inline-block before:translate-y-[-60%] before:w-3 before:h-[0.05rem] before:left-0 before:top-2/4 before:bg-[#e31e24]">
                                   <a href="{{ route('blog.index', ['category' => $relatedPost->category->slug]) }}" class="hover" rel="category">{{ $relatedCategoryName }}</a>
                                 </div>
                               @endif
                               <!-- /.post-category -->
                               <h2 class="post-title h3 !mt-1 !mb-3">
-                                <a class="!text-[#343f52] hover:!text-[#3f78e0]" href="{{ $relatedUrl }}">{{ $relatedTitle }}</a>
+                                <a class="!text-[#343f52] hover:!text-[#e31e24]" href="{{ $relatedUrl }}">{{ $relatedTitle }}</a>
                               </h2>
                             </div>
                             <!-- /.post-header -->
@@ -209,7 +209,7 @@
                                   <span>{{ $relatedDate }}</span>
                                 </li>
                                 <li class="post-comments inline-block before:content-[''] before:inline-block before:w-[0.2rem] before:h-[0.2rem] before:opacity-50 before:m-[0_.6rem_0] before:rounded-[100%] before:align-[.15rem] before:bg-[#aab0bc]">
-                                  <a class="!text-[#aab0bc] hover:!text-[#3f78e0] hover:!border-[#3f78e0]" href="{{ $relatedUrl }}#comments">
+                                  <a class="!text-[#aab0bc] hover:!text-[#e31e24] hover:!border-[#e31e24]" href="{{ $relatedUrl }}#comments">
                                     <i class="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>{{ $relatedCommentCount }}
                                   </a>
                                 </li>
@@ -247,7 +247,7 @@
                               </figure>
                               <div>
                                 <h6 class="m-0 !mb-[0.2rem]">
-                                  <a href="#" class="!text-[#343f52] hover:!text-[#3f78e0]">{{ $comment->name }}</a>
+                                  <a href="#" class="!text-[#343f52] hover:!text-[#e31e24]">{{ $comment->name }}</a>
                                 </h6>
                                 <ul class="!text-[0.7rem] !text-[#aab0bc] m-0 p-0 list-none">
                                   <li>
@@ -280,7 +280,7 @@
                                       </figure>
                                       <div>
                                         <h6 class="m-0 !mb-[0.2rem]">
-                                          <a href="#" class="!text-[#343f52] hover:!text-[#3f78e0]">{{ $reply->name }}</a>
+                                          <a href="#" class="!text-[#343f52] hover:!text-[#e31e24]">{{ $reply->name }}</a>
                                         </h6>
                                         <ul class="!text-[0.7rem] !text-[#aab0bc] m-0 p-0 list-none">
                                           <li>
@@ -313,7 +313,7 @@
                                               </figure>
                                               <div>
                                                 <h6 class="m-0 !mb-[0.2rem]">
-                                                  <a href="#" class="!text-[#343f52] hover:!text-[#3f78e0]">{{ $nestedReply->name }}</a>
+                                                  <a href="#" class="!text-[#343f52] hover:!text-[#e31e24]">{{ $nestedReply->name }}</a>
                                                 </h6>
                                                 <ul class="!text-[0.7rem] !text-[#aab0bc] m-0 p-0 list-none">
                                                   <li>
@@ -386,7 +386,7 @@
                       </ul>
                     </div>
                   @endif
-                  <button type="submit" class="btn btn-primary !text-white !bg-[#3f78e0] border-[#3f78e0] hover:text-white hover:bg-[#3f78e0] hover:!border-[#3f78e0] active:text-white active:bg-[#3f78e0] active:border-[#3f78e0] disabled:text-white disabled:bg-[#3f78e0] disabled:border-[#3f78e0] !rounded-[50rem] !mb-0 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
+                  <button type="submit" class="btn btn-primary !text-white !bg-[#e31e24] border-[#e31e24] hover:text-white hover:bg-[#e31e24] hover:!border-[#e31e24] active:text-white active:bg-[#e31e24] active:border-[#e31e24] disabled:text-white disabled:bg-[#e31e24] disabled:border-[#e31e24] !rounded-[50rem] !mb-0 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
                     {{ __('blog.submit') }}
                   </button>
                 </form>
