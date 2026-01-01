@@ -40,28 +40,30 @@
                         </ul>
                     </div>
                     
-                    <div class="xl:w-9/12 lg:w-9/12 w-full flex-[0_0_auto] max-w-full xl:border-l-[rgba(164,174,198,0.2)] xl:border-l xl:border-solid lg:border-l-[rgba(164,174,198,0.2)] lg:border-l lg:border-solid xl:p-[50px] lg:pl-[50px] px-6 gradient-2 rounded-[.4rem]">
-                        <h6 class="dropdown-header !text-white mb-6 !p-0">{{ __('Öne Çıkan Ürünler') }}</h6>
-                        <div class="flex flex-wrap gap-4 mx-6">
-                            @foreach($featuredProducts as $item)
-                            <div class="flex-none" style="width: 183px;">
-                                <a class="group !bg-transparent mt-2 mb-2 !p-0 block transition-transform duration-300  hover:-translate-y-1" 
-                                   href="{{ route('products.show', $item->slug) }}"
-                                   data-bs-toggle="tooltip" 
-                                   data-bs-placement="top" 
-                                   title="{{ $item->translate('title') }}">
-                                    <figure style="width: 183px; height: 103px;"
-                                        class="!rounded-[.4rem] lift overflow-hidden !mb-2 shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.57)] mx-auto block transition-transform duration-300 group-hover:-translate-y-1 hidden xl:block lg:block ">
-                                        @if($item->hero_image)
-                                            <img style="width: 183px; height: 103px;" class="!rounded-[.4rem] object-cover block" src="{{ \Storage::url($item->hero_image) }}" alt="{{ $item->translate('title') }}">
-                                        @else
-                                            <img style="width: 183px; height: 103px;" class="!rounded-[.4rem] object-cover block" src="https://placehold.co/185x135?text={{ urlencode($item->translate('title')) }}" alt="{{ $item->translate('title') }}">
-                                        @endif
-                                    </figure>
-                                    <span class="xl:!hidden lg:!hidden">{{ $item->translate('title') }}</span>
-                                </a>
+                    <div class="xl:w-9/12 lg:w-9/12 w-full flex-[0_0_auto] max-w-full px-6 xl:!pl-8 lg:!pl-8">
+                        <div class="h-full xl:p-[50px] lg:pl-[50px] px-6 pt-2 gradient-5 rounded-[.4rem]">
+                            <h6 class="dropdown-header !text-white mb-6 mt-6 !p-0">{{ __('Öne Çıkan Ürünler') }}</h6>
+                            <div class="flex flex-wrap gap-4 mx-5 pt-5">
+                                @foreach($featuredProducts as $item)
+                                <div class="flex-none " style="width: 183px;">
+                                    <a class="group !bg-transparent !p-0 block transition-transform duration-300  hover:-translate-y-1" 
+                                       href="{{ route('products.show', $item->slug) }}"
+                                       data-bs-toggle="tooltip" 
+                                       data-bs-placement="top" 
+                                       title="{{ $item->translate('title') }}">
+                                        <figure style="width: 183px; height: 103px;"
+                                            class="!rounded-[.4rem] lift overflow-hidden shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.57)] mx-auto block transition-transform duration-300 group-hover:-translate-y-1 hidden xl:block lg:block ">
+                                            @if($item->hero_image)
+                                                <img style="width: 183px; height: 103px;" class="!rounded-[.4rem] object-cover block" src="{{ \Storage::url($item->hero_image) }}" alt="{{ $item->translate('title') }}">
+                                            @else
+                                                <img style="width: 183px; height: 103px;" class="!rounded-[.4rem] object-cover block" src="https://placehold.co/185x135?text={{ urlencode($item->translate('title')) }}" alt="{{ $item->translate('title') }}">
+                                            @endif
+                                        </figure>
+                                        <span class="xl:!hidden lg:!hidden">{{ $item->translate('title') }}</span>
+                                    </a>
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
                     </div>
                     <!--/column -->
