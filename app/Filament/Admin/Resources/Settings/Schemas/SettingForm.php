@@ -42,6 +42,7 @@ class SettingForm
                             ->regex('/^[a-z0-9_-]+$/')
                             ->maxLength(255)
                             ->disabled(fn ($record) => $record !== null)
+                            ->live(onBlur: true)
                             ->columnSpanFull(),
 
                         TextInput::make('label')
@@ -114,8 +115,26 @@ class SettingForm
                             ->label(__('settings.value'))
                             ->helperText(__('settings.value_helper'))
                             ->required()
-                            ->visible(fn (Get $get) => in_array($get('type'), ['string', 'text', 'json']))
+                            ->visible(fn (Get $get) => in_array($get('type'), ['string', 'text', 'json']) && !in_array($get('key'), ['default_header', 'default_footer']))
                             ->rows(fn (Get $get) => $get('type') === 'text' ? 5 : 3)
+                            ->columnSpanFull(),
+
+                        Select::make('value_header_template')
+                            ->label('Default Header Template')
+                            ->options(\App\Models\HeaderTemplate::where('is_active', true)->pluck('title', 'id'))
+                            ->visible(fn (Get $get) => $get('key') === 'default_header')
+                            ->statePath('value')
+                            ->searchable()
+                            ->preload()
+                            ->columnSpanFull(),
+
+                        Select::make('value_footer_template')
+                            ->label('Default Footer Template')
+                            ->options(\App\Models\FooterTemplate::where('is_active', true)->pluck('title', 'id'))
+                            ->visible(fn (Get $get) => $get('key') === 'default_footer')
+                            ->statePath('value')
+                            ->searchable()
+                            ->preload()
                             ->columnSpanFull(),
 
                         Toggle::make('value_boolean')

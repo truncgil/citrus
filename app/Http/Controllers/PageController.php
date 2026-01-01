@@ -24,7 +24,7 @@ class PageController extends Controller
                 ->latest('updated_at')
                 ->first();
 
-            $settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
+            $settings = class_exists(Setting::class) ? (object) Setting::where('is_active', true)->pluck('value', 'key')->toArray() : null;
 
             $renderedHeader = null;
             $renderedFooter = null;
@@ -43,11 +43,14 @@ class PageController extends Controller
 
                 // Header Render
                 $headerTemplate = $page->headerTemplate;
-                /*
+                
                 if (!$headerTemplate) {
-                    $headerTemplate = HeaderTemplate::where('is_active', true)->latest('updated_at')->first();
+                     $defaultHeaderId = $settings->default_header ?? null;
+                     if ($defaultHeaderId) {
+                         $headerTemplate = HeaderTemplate::find($defaultHeaderId);
+                     }
                 }
-                */
+                
                 if ($headerTemplate) {
                     $templateDefaults = $headerTemplate->default_data ?? [];
                     $pageData = $page->header_data ?? [];
@@ -57,11 +60,13 @@ class PageController extends Controller
 
                 // Footer Render
                 $footerTemplate = $page->footerTemplate;
-                /*
+                
                 if (!$footerTemplate) {
-                    $footerTemplate = FooterTemplate::where('is_active', true)->latest('updated_at')->first();
+                     $defaultFooterId = $settings->default_footer ?? null;
+                     if ($defaultFooterId) {
+                         $footerTemplate = FooterTemplate::find($defaultFooterId);
+                     }
                 }
-                */
                 
                 if ($footerTemplate) {
                     $templateDefaults = $footerTemplate->default_data ?? [];
@@ -96,7 +101,7 @@ class PageController extends Controller
 
        
 
-        $settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
+        $settings = class_exists(Setting::class) ? (object) Setting::where('is_active', true)->pluck('value', 'key')->toArray() : null;
 
         // Hiç sayfa yoksa: direkt home template'inin statik fallback'i ile render et
         if (!$page) {
@@ -142,9 +147,10 @@ class PageController extends Controller
         
         // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
         if (!$headerTemplate) {
-            $headerTemplate = HeaderTemplate::where('is_active', true)
-                ->latest('updated_at')
-                ->first();
+             $defaultHeaderId = $settings->default_header ?? null;
+             if ($defaultHeaderId) {
+                 $headerTemplate = HeaderTemplate::find($defaultHeaderId);
+             }
         }
         
         if ($headerTemplate) {
@@ -165,13 +171,12 @@ class PageController extends Controller
         $footerTemplate = $page->footerTemplate;
         
         // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
-        /*
         if (!$footerTemplate) {
-            $footerTemplate = FooterTemplate::where('is_active', true)
-                ->latest('updated_at')
-                ->first();
+             $defaultFooterId = $settings->default_footer ?? null;
+             if ($defaultFooterId) {
+                 $footerTemplate = FooterTemplate::find($defaultFooterId);
+             }
         }
-        */
         
         if ($footerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)
@@ -214,7 +219,7 @@ class PageController extends Controller
                 ->where('status', 'published')
                 ->first();
 
-            $settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
+            $settings = class_exists(Setting::class) ? (object) Setting::where('is_active', true)->pluck('value', 'key')->toArray() : null;
 
             // Meta verilerini hazırla
             $metaTitle = null;
@@ -238,7 +243,10 @@ class PageController extends Controller
                 // Render Header Template
                 $headerTemplate = $page->headerTemplate;
                 if (!$headerTemplate) {
-                    $headerTemplate = HeaderTemplate::where('is_active', true)->latest('updated_at')->first();
+                     $defaultHeaderId = $settings->default_header ?? null;
+                     if ($defaultHeaderId) {
+                         $headerTemplate = HeaderTemplate::find($defaultHeaderId);
+                     }
                 }
                 
                 if ($headerTemplate) {
@@ -250,11 +258,13 @@ class PageController extends Controller
 
                 // Render Footer Template
                 $footerTemplate = $page->footerTemplate;
-                /*
+                
                 if (!$footerTemplate) {
-                    $footerTemplate = FooterTemplate::where('is_active', true)->latest('updated_at')->first();
+                     $defaultFooterId = $settings->default_footer ?? null;
+                     if ($defaultFooterId) {
+                         $footerTemplate = FooterTemplate::find($defaultFooterId);
+                     }
                 }
-                */
                 
                 if ($footerTemplate) {
                     $templateDefaults = $footerTemplate->default_data ?? [];
@@ -285,7 +295,7 @@ class PageController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
-        $settings = class_exists(Setting::class) ? (Setting::query()->first()) : null;
+        $settings = class_exists(Setting::class) ? (object) Setting::where('is_active', true)->pluck('value', 'key')->toArray() : null;
 
         $metaTitle = method_exists($page, 'translate')
             ? ($page->translate('meta_title') ?: $page->translate('title'))
@@ -318,9 +328,10 @@ class PageController extends Controller
         
         // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
         if (!$headerTemplate) {
-            $headerTemplate = HeaderTemplate::where('is_active', true)
-                ->latest('updated_at')
-                ->first();
+             $defaultHeaderId = $settings->default_header ?? null;
+             if ($defaultHeaderId) {
+                 $headerTemplate = HeaderTemplate::find($defaultHeaderId);
+             }
         }
         
         if ($headerTemplate) {
@@ -341,13 +352,12 @@ class PageController extends Controller
         $footerTemplate = $page->footerTemplate;
         
         // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
-        /*
         if (!$footerTemplate) {
-            $footerTemplate = FooterTemplate::where('is_active', true)
-                ->latest('updated_at')
-                ->first();
+             $defaultFooterId = $settings->default_footer ?? null;
+             if ($defaultFooterId) {
+                 $footerTemplate = FooterTemplate::find($defaultFooterId);
+             }
         }
-        */
         
         if ($footerTemplate) {
             // Merge template defaults with page data (page data overrides defaults)

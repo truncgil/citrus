@@ -26,7 +26,7 @@ $rightMenuItems = $menuItems->slice($midPoint);
   <nav class="navbar navbar-expand-lg center-logo transparent position-absolute navbar-dark">
     <div class="container justify-between items-center">
       <div class="flex flex-row w-full justify-between items-center xl:!hidden lg:!hidden">
-        <div class="navbar-brand"><a href="index.html">
+        <div class="navbar-brand"><a href="./">
             <img class="logo-dark" src="assets/img/truncgil-yatay.svg" alt="image">
             <img class="logo-light" src="assets/img/truncgil-yatay-dark.svg" alt="image">
           </a></div>
