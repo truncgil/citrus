@@ -34,10 +34,7 @@ class ProductForm
                             ->label(__('products.category'))
                             ->options(function () {
                                 return ProductCategory::all()->mapWithKeys(function ($category) {
-                                    $title = is_array($category->title) 
-                                        ? ($category->title[app()->getLocale()] ?? \Illuminate\Support\Arr::first($category->title)) 
-                                        : $category->title;
-                                    return [$category->id => $title ?? ('Category #' . $category->id)];
+                                    return [$category->id => $category->translate('title') ?? ('Category #' . $category->id)];
                                 });
                             })
                             ->searchable(),
