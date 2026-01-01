@@ -10,6 +10,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 
+use Illuminate\Support\Facades\File;
+
 class FooterTemplateSection
 {
     public static function make(): Section
@@ -17,9 +19,35 @@ class FooterTemplateSection
         return Section::make(__('pages.form_section_footer_template'))
             ->description(__('pages.form_section_footer_template_desc'))
             ->schema([
+                Select::make('custom_footer_blade')
+                    ->label('Custom Footer Blade')
+                    ->options(function () {
+                        $files = File::glob(resource_path('views/partials/*.blade.php'));
+                        $options = [];
+                        foreach ($files as $file) {
+                            $name = basename($file, '.blade.php');
+                            $options["partials.{$name}"] = "Partial: {$name}";
+                        }
+
+                         // Add other directories if needed
+                        $componentFiles = File::glob(resource_path('views/components/front/*.blade.php'));
+                        foreach ($componentFiles as $file) {
+                             $name = basename($file, '.blade.php');
+                             $options["components.front.{$name}"] = "Component: {$name}";
+                        }
+                        
+                        return $options;
+                    })
+                    ->searchable()
+                    ->preload()
+                    ->helperText('Select a physical Blade file to use as footer instead of a database template.')
+                    ->live()
+                    ->columnSpanFull(),
+
                 Select::make('footer_template_id')
                     ->label(__('pages.footer_template_field'))
                     ->options(FooterTemplate::where('is_active', true)->pluck('title', 'id'))
+                    ->visible(fn (Get $get) => empty($get('custom_footer_blade')))
                     ->searchable()
                     ->live()
                     ->afterStateUpdated(function ($state, Set $set, Get $get) {

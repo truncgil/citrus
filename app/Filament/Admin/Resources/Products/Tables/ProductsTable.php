@@ -21,7 +21,7 @@ class ProductsTable
                     ->label(__('products.hero_image')),
                 TextColumn::make('title')
                     ->label(__('products.title'))
-                    ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
+                    ->formatStateUsing(fn ($state, $record) => $record->translate('title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
@@ -38,7 +38,7 @@ class ProductsTable
                         default => $state,
                     }),
                 TextColumn::make('category.title')
-                    ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
+                    ->formatStateUsing(fn ($state, $record) => $record->category?->translate('title'))
                     ->label(__('products.category')),
                 ToggleColumn::make('is_active')
                     ->label(__('products.is_active')),

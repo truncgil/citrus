@@ -69,13 +69,14 @@ class PageSettingsSection
                         'landing' => __('pages.template_landing'),
                         'blog' => __('pages.template_blog'),
                         'contact' => __('pages.template_contact'),
+                        'home' => 'Home',
                     ])
                     ->default('default')
                     ->columnSpanFull(),
                 
-                TextInput::make('sort_order')
-                    ->label(__('pages.sort_order_field'))
-                    ->numeric()
+                        TextInput::make('sort_order')
+                            ->label(__('pages.sort_order_field'))
+                            ->numeric()
                     ->default(0)
                     ->helperText(__('pages.sort_order_helper_text'))
                     ->columnSpanFull(),

@@ -24,17 +24,20 @@ $favicon_path = setting('site_favicon');
 </head>
 <body>
 	{{-- Dynamic Header Template or Static Navbar --}}
-	@if(isset($renderedHeader) && $renderedHeader)
+	@if(isset($header) && $header)
+		@include($header)
+	@elseif(isset($renderedHeader) && $renderedHeader)
 		{!! $renderedHeader !!}
 	@else
 		@include('partials.header')
 	@endif
-
 	{{-- Main Content --}}
 	@yield('content')
 
 	{{-- Dynamic Footer Template or Static Footer --}}
-	@if(isset($renderedFooter) && !empty(trim($renderedFooter)))
+	@if(isset($footer) && $footer)
+		@include($footer)
+	@elseif(isset($renderedFooter) && !empty(trim($renderedFooter)))
 		{!! $renderedFooter !!}
 	@else
 		@include('partials.footer')

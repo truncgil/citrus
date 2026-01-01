@@ -34,8 +34,10 @@ class Page extends Model
         // Template System
         'header_template_id',
         'header_data',
+        'custom_header_blade',
         'footer_template_id',
         'footer_data',
+        'custom_footer_blade',
         'sections_data',
     ];
 

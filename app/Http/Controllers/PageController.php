@@ -143,52 +143,66 @@ class PageController extends Controller
         
         // Render Header Template
         $renderedHeader = null;
-        $headerTemplate = $page->headerTemplate;
-        
-        // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
-        if (!$headerTemplate) {
-             $defaultHeaderId = $settings->default_header ?? null;
-             if ($defaultHeaderId) {
-                 $headerTemplate = HeaderTemplate::find($defaultHeaderId);
-             }
-        }
-        
-        if ($headerTemplate) {
-            // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $headerTemplate->default_data ?? [];
-            $pageData = $page->header_data ?? [];
-            $mergedHeaderData = array_merge($templateDefaults, $pageData);
+
+        // 1. Önce özel blade dosyası var mı kontrol et
+        if (!empty($page->custom_header_blade) && view()->exists($page->custom_header_blade)) {
+            $renderedHeader = view($page->custom_header_blade, ['page' => $page])->render();
+        } else {
+            // 2. Yoksa Header Template sistemini kullan
+            $headerTemplate = $page->headerTemplate;
             
-            $renderedHeader = TemplateService::replacePlaceholders(
-                $headerTemplate->html_content,
-                $mergedHeaderData,
-                $page
-            );
+            // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
+            if (!$headerTemplate) {
+                 $defaultHeaderId = $settings->default_header ?? null;
+                 if ($defaultHeaderId) {
+                     $headerTemplate = HeaderTemplate::find($defaultHeaderId);
+                 }
+            }
+            
+            if ($headerTemplate) {
+                // Merge template defaults with page data (page data overrides defaults)
+                $templateDefaults = $headerTemplate->default_data ?? [];
+                $pageData = $page->header_data ?? [];
+                $mergedHeaderData = array_merge($templateDefaults, $pageData);
+                
+                $renderedHeader = TemplateService::replacePlaceholders(
+                    $headerTemplate->html_content,
+                    $mergedHeaderData,
+                    $page
+                );
+            }
         }
 
         // Render Footer Template
         $renderedFooter = null;
-        $footerTemplate = $page->footerTemplate;
-        
-        // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
-        if (!$footerTemplate) {
-             $defaultFooterId = $settings->default_footer ?? null;
-             if ($defaultFooterId) {
-                 $footerTemplate = FooterTemplate::find($defaultFooterId);
-             }
-        }
-        
-        if ($footerTemplate) {
-            // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $footerTemplate->default_data ?? [];
-            $pageData = $page->footer_data ?? [];
-            $mergedFooterData = array_merge($templateDefaults, $pageData);
+
+        // 1. Önce özel blade dosyası var mı kontrol et
+        if (!empty($page->custom_footer_blade) && view()->exists($page->custom_footer_blade)) {
+            $renderedFooter = view($page->custom_footer_blade, ['page' => $page])->render();
+        } else {
+            // 2. Yoksa Footer Template sistemini kullan
+            $footerTemplate = $page->footerTemplate;
             
-            $renderedFooter = TemplateService::replacePlaceholders(
-                $footerTemplate->html_content,
-                $mergedFooterData,
-                $page
-            );
+            // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
+            if (!$footerTemplate) {
+                 $defaultFooterId = $settings->default_footer ?? null;
+                 if ($defaultFooterId) {
+                     $footerTemplate = FooterTemplate::find($defaultFooterId);
+                 }
+            }
+            
+            if ($footerTemplate) {
+                // Merge template defaults with page data (page data overrides defaults)
+                $templateDefaults = $footerTemplate->default_data ?? [];
+                $pageData = $page->footer_data ?? [];
+                $mergedFooterData = array_merge($templateDefaults, $pageData);
+                
+                $renderedFooter = TemplateService::replacePlaceholders(
+                    $footerTemplate->html_content,
+                    $mergedFooterData,
+                    $page
+                );
+            }
         }
 
         return view($view, [
@@ -240,37 +254,48 @@ class PageController extends Controller
             $renderedFooter = null;
 
             if ($page) {
-                // Render Header Template
-                $headerTemplate = $page->headerTemplate;
-                if (!$headerTemplate) {
-                     $defaultHeaderId = $settings->default_header ?? null;
-                     if ($defaultHeaderId) {
-                         $headerTemplate = HeaderTemplate::find($defaultHeaderId);
-                     }
-                }
-                
-                if ($headerTemplate) {
-                    $templateDefaults = $headerTemplate->default_data ?? [];
-                    $pageData = $page->header_data ?? [];
-                    $mergedHeaderData = array_merge($templateDefaults, $pageData);
-                    $renderedHeader = TemplateService::replacePlaceholders($headerTemplate->html_content, $mergedHeaderData, $page);
+                // 1. Önce özel blade dosyası var mı kontrol et
+                if (!empty($page->custom_header_blade) && view()->exists($page->custom_header_blade)) {
+                    $renderedHeader = view($page->custom_header_blade, ['page' => $page])->render();
+                } else {
+                    // 2. Yoksa Header Template sistemini kullan
+                    $headerTemplate = $page->headerTemplate;
+                    if (!$headerTemplate) {
+                         $defaultHeaderId = $settings->default_header ?? null;
+                         if ($defaultHeaderId) {
+                             $headerTemplate = HeaderTemplate::find($defaultHeaderId);
+                         }
+                    }
+                    
+                    if ($headerTemplate) {
+                        $templateDefaults = $headerTemplate->default_data ?? [];
+                        $pageData = $page->header_data ?? [];
+                        $mergedHeaderData = array_merge($templateDefaults, $pageData);
+                        $renderedHeader = TemplateService::replacePlaceholders($headerTemplate->html_content, $mergedHeaderData, $page);
+                    }
                 }
 
-                // Render Footer Template
-                $footerTemplate = $page->footerTemplate;
-                
-                if (!$footerTemplate) {
-                     $defaultFooterId = $settings->default_footer ?? null;
-                     if ($defaultFooterId) {
-                         $footerTemplate = FooterTemplate::find($defaultFooterId);
-                     }
-                }
-                
-                if ($footerTemplate) {
-                    $templateDefaults = $footerTemplate->default_data ?? [];
-                    $pageData = $page->footer_data ?? [];
-                    $mergedFooterData = array_merge($templateDefaults, $pageData);
-                    $renderedFooter = TemplateService::replacePlaceholders($footerTemplate->html_content, $mergedFooterData, $page);
+                // Footer Render
+                // 1. Önce özel blade dosyası var mı kontrol et
+                if (!empty($page->custom_footer_blade) && view()->exists($page->custom_footer_blade)) {
+                    $renderedFooter = view($page->custom_footer_blade, ['page' => $page])->render();
+                } else {
+                    // 2. Yoksa Footer Template sistemini kullan
+                    $footerTemplate = $page->footerTemplate;
+                    
+                    if (!$footerTemplate) {
+                         $defaultFooterId = $settings->default_footer ?? null;
+                         if ($defaultFooterId) {
+                             $footerTemplate = FooterTemplate::find($defaultFooterId);
+                         }
+                    }
+                    
+                    if ($footerTemplate) {
+                        $templateDefaults = $footerTemplate->default_data ?? [];
+                        $pageData = $page->footer_data ?? [];
+                        $mergedFooterData = array_merge($templateDefaults, $pageData);
+                        $renderedFooter = TemplateService::replacePlaceholders($footerTemplate->html_content, $mergedFooterData, $page);
+                    }
                 }
             }
 
@@ -324,52 +349,66 @@ class PageController extends Controller
 
         // Render Header Template
         $renderedHeader = null;
-        $headerTemplate = $page->headerTemplate;
-        
-        // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
-        if (!$headerTemplate) {
-             $defaultHeaderId = $settings->default_header ?? null;
-             if ($defaultHeaderId) {
-                 $headerTemplate = HeaderTemplate::find($defaultHeaderId);
-             }
-        }
-        
-        if ($headerTemplate) {
-            // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $headerTemplate->default_data ?? [];
-            $pageData = $page->header_data ?? [];
-            $mergedHeaderData = array_merge($templateDefaults, $pageData);
+
+        // 1. Önce özel blade dosyası var mı kontrol et
+        if (!empty($page->custom_header_blade) && view()->exists($page->custom_header_blade)) {
+            $renderedHeader = view($page->custom_header_blade, ['page' => $page])->render();
+        } else {
+            // 2. Yoksa Header Template sistemini kullan
+            $headerTemplate = $page->headerTemplate;
             
-            $renderedHeader = TemplateService::replacePlaceholders(
-                $headerTemplate->html_content,
-                $mergedHeaderData,
-                $page
-            );
+            // Eğer sayfa için header seçilmemişse, en son aktif header template'i kullan
+            if (!$headerTemplate) {
+                 $defaultHeaderId = $settings->default_header ?? null;
+                 if ($defaultHeaderId) {
+                     $headerTemplate = HeaderTemplate::find($defaultHeaderId);
+                 }
+            }
+            
+            if ($headerTemplate) {
+                // Merge template defaults with page data (page data overrides defaults)
+                $templateDefaults = $headerTemplate->default_data ?? [];
+                $pageData = $page->header_data ?? [];
+                $mergedHeaderData = array_merge($templateDefaults, $pageData);
+                
+                $renderedHeader = TemplateService::replacePlaceholders(
+                    $headerTemplate->html_content,
+                    $mergedHeaderData,
+                    $page
+                );
+            }
         }
 
         // Render Footer Template
         $renderedFooter = null;
-        $footerTemplate = $page->footerTemplate;
-        
-        // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
-        if (!$footerTemplate) {
-             $defaultFooterId = $settings->default_footer ?? null;
-             if ($defaultFooterId) {
-                 $footerTemplate = FooterTemplate::find($defaultFooterId);
-             }
-        }
-        
-        if ($footerTemplate) {
-            // Merge template defaults with page data (page data overrides defaults)
-            $templateDefaults = $footerTemplate->default_data ?? [];
-            $pageData = $page->footer_data ?? [];
-            $mergedFooterData = array_merge($templateDefaults, $pageData);
+
+        // 1. Önce özel blade dosyası var mı kontrol et
+        if (!empty($page->custom_footer_blade) && view()->exists($page->custom_footer_blade)) {
+            $renderedFooter = view($page->custom_footer_blade, ['page' => $page])->render();
+        } else {
+            // 2. Yoksa Footer Template sistemini kullan
+            $footerTemplate = $page->footerTemplate;
             
-            $renderedFooter = TemplateService::replacePlaceholders(
-                $footerTemplate->html_content,
-                $mergedFooterData,
-                $page
-            );
+            // Eğer sayfa için footer seçilmemişse, en son aktif footer template'i kullan
+            if (!$footerTemplate) {
+                 $defaultFooterId = $settings->default_footer ?? null;
+                 if ($defaultFooterId) {
+                     $footerTemplate = FooterTemplate::find($defaultFooterId);
+                 }
+            }
+            
+            if ($footerTemplate) {
+                // Merge template defaults with page data (page data overrides defaults)
+                $templateDefaults = $footerTemplate->default_data ?? [];
+                $pageData = $page->footer_data ?? [];
+                $mergedFooterData = array_merge($templateDefaults, $pageData);
+                
+                $renderedFooter = TemplateService::replacePlaceholders(
+                    $footerTemplate->html_content,
+                    $mergedFooterData,
+                    $page
+                );
+            }
         }
 
         return view($view, [

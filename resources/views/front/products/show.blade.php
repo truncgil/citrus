@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.site')
 
 @section('title', $product->translate('title') ?? 'Ürün Detayı')
 @section('meta_description', Str::limit(strip_tags($product->translate('content')), 160))

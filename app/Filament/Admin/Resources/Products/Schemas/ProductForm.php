@@ -10,6 +10,9 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 use App\Filament\Admin\Resources\Components\TranslationTabs;
 use App\Models\ProductCategory;
+use Illuminate\Support\Str;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 
 class ProductForm
 {
@@ -19,6 +22,16 @@ class ProductForm
             ->schema([
                 Section::make(__('products.general_section'))
                     ->schema([
+                        TextInput::make('title')
+                            ->label(__('products.title'))
+                            ->required()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
+                                $set('slug', Str::slug($state));
+                                $set('translations.' . app()->getLocale() . '.title', $state);
+                            })
+                            ->formatStateUsing(fn ($record) => $record?->translate('title'))
+                            ->dehydrated(false),
                         TextInput::make('slug')
                             ->label(__('products.slug'))
                             ->required()
@@ -41,6 +54,7 @@ class ProductForm
                         FileUpload::make('hero_image')
                             ->label(__('products.hero_image'))
                             ->image()
+                            ->disk('public')
                             ->directory('products'),
                         TextInput::make('view_template')
                             ->label(__('products.view_template'))

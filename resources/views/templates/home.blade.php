@@ -1,3 +1,7 @@
+@php
+	$header = "partials.header";
+	$footer = "partials.footer";
+@endphp
 @extends('layouts.site')
 
 @section('title', 'Anasayfa')
@@ -6,6 +10,7 @@
 	@include('templates.home.hero')
 	@include('templates.home.services-cards')
 	@include('templates.home.why-choose-us')
+	@include('templates.home.carousel')
 	
 	@include('templates.home.solutions')
 	@include('templates.home.services-grid')

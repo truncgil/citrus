@@ -18,14 +18,14 @@ class ProductCategoriesTable
             ->columns([
                 TextColumn::make('title')
                     ->label(__('product_categories.title'))
-                    ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
+                    ->formatStateUsing(fn ($state, $record) => $record->translate('title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('slug')
                     ->label(__('product_categories.slug'))
                     ->searchable(),
-                TextColumn::make('parent.title') // This might fail if parent title is JSON
-                    ->formatStateUsing(fn ($state) => is_array($state) ? ($state[app()->getLocale()] ?? reset($state)) : $state)
+                TextColumn::make('parent.title')
+                    ->formatStateUsing(fn ($state, $record) => $record->parent?->translate('title'))
                     ->label(__('product_categories.parent')),
                 TextColumn::make('sort_order')
                     ->label(__('product_categories.sort_order'))
