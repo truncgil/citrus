@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Storage;
     <section class="wrapper image-wrapper bg-full bg-image bg-overlay bg-overlay-light-600 [background-size:100%] bg-[center_center] bg-no-repeat bg-scroll relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(255,255,255,.6)]" data-image-src="{{ !empty($hero['background_image']) ? asset($hero['background_image']) : asset('assets/img/photos/bg23.png') }}">
         <div class="container pt-24 xl:pt-32 lg:pt-32 md:pt-32 pb-9">
             <div class="flex flex-wrap mx-0 !mt-[-50px] items-center text-center lg:text-left xl:text-left">
-                <div class="xl:w-6/12 lg:w-6/12 xxl:w-5/12 w-full flex-[0_0_auto] max-w-full !relative !mt-[50px]" data-cues="slideInDown" data-group="page-title" data-delay="700">
+                <div class="xl:w-5/12 lg:w-5/12 xxl:w-4/12 w-full flex-[0_0_auto] max-w-full !relative !mt-[50px]" data-cues="slideInDown" data-group="page-title" data-delay="700">
                     @if(!empty($hero['slogan']))
                     <h1 class="xl:!text-[2.5rem] !text-[calc(1.375rem_+_1.5vw)] font-semibold !leading-[1.15] !mb-4">
                         {!! nl2br(e($hero['slogan'])) !!}
@@ -57,9 +57,14 @@ use Illuminate\Support\Facades\Storage;
                 </div>
                 <!-- /column -->
                 @if(!empty($hero['featured_image']))
-                <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] max-w-full !ml-auto !mb-[-10rem] xxl:!mb-[-15rem] !mt-[50px]" data-cues="slideInDown" data-delay="600">
-                    <figure class="m-0 p-0">
-                        <img class="w-full max-w-full !h-auto" src="{{ Storage::url($hero['featured_image']) }}" alt="{{ $product->translate('title') }}">
+                <div class="xl:w-7/12 lg:w-7/12 w-full flex-[0_0_auto] max-w-full !ml-auto !mb-[-10rem] xxl:!mb-[-15rem] !mt-[50px] flex justify-center items-center" data-cues="slideInDown" data-delay="600" style="z-index:2;">
+                    <figure class="m-0 p-0 w-full flex justify-center items-center">
+                        <img 
+                            class="w-[95%] max-w-[850px] !h-auto xl:!max-h-[540px] lg:!max-h-[440px] object-contain drop-shadow-2xl rounded-xl"
+                            src="{{ Storage::url($hero['featured_image']) }}" 
+                            alt="{{ $product->translate('title') }}"
+                            
+                        >
                     </figure>
                 </div>
                 <!-- /column -->
@@ -142,7 +147,6 @@ use Illuminate\Support\Facades\Storage;
         <div class="container pt-32 xl:pt-40 lg:pt-40 md:pt-40 pb-[4.5rem] xl:pb-24 lg:pb-24 md:pb-24">
             <div class="flex flex-wrap mx-[-15px] !text-center">
                 <div class="md:w-10/12 lg:w-7/12 xl:w-7/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto !relative">
-                    <h2 class="!text-[0.8rem] !tracking-[0.02rem] uppercase !text-[#aab0bc] !mb-3 !leading-[1.35]">How It Works</h2>
                     @if(!empty($howItWorks['download_form_label']))
                     <h3 class="!text-[calc(1.325rem_+_0.9vw)] font-bold !leading-[1.2] xl:!text-[2rem] !mb-8 xl:!px-6">
                         {{ $howItWorks['download_form_label'] }}
@@ -238,14 +242,23 @@ use Illuminate\Support\Facades\Storage;
 
     {{-- FAQ Section --}}
     @if(!empty($faqs))
-    <section class="wrapper image-wrapper bg-full bg-image bg-overlay bg-overlay-light-600 bg-content [background-size:100%] bg-[center_center] bg-no-repeat bg-scroll relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(255,255,255,.6)]" data-image-src="{{ !empty($hero['background_image']) ? asset($hero['background_image']) : asset('assets/img/photos/bg23.png') }}">
+    <section class="wrapper image-wrapper bg-full bg-image bg-overlay bg-overlay-light-600 bg-content [background-size:100%] bg-[center_center] bg-no-repeat bg-scroll relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(255,255,255,.6)]" data-image-src="{{ !empty($hero['background_image']) ? asset($hero['background_image']) : asset('assets/img/photos/bg21.png') }}">
+        <div class="overflow-hidden" style="z-index:1;">
+            <div class="divider divider-alt !text-[#fefefe] mx-[-0.5rem]">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                <g fill="currentColor">
+                  <polygon points="1440 100 0 15 0 0 1440 0 1440 100"></polygon>
+                </g>
+              </svg>
+            </div>
+          </div>
         <div class="container py-[4.5rem] md:pt-24 lg:pt-0 xl:pt-0 xl:pb-[7rem] lg:pb-[7rem] md:pb-[7rem] !relative" style="z-index: 2;">
             <div class="flex flex-wrap mx-[-15px]">
                 <div class="xl:w-11/12 xxl:w-10/12 w-full flex-[0_0_auto] !px-[15px] max-w-full !mx-auto">
                     <div class="!relative">
-                        <h2 class="!text-[0.8rem] uppercase !text-[#aab0bc] !mb-3 !text-center !leading-[1.35]">FAQ</h2>
+                        
                         <h3 class="!text-[calc(1.325rem_+_0.9vw)] font-bold !leading-[1.2] xl:!text-[2rem] !mb-12 lg:!px-8 xl:!px-12 !text-center">
-                            If you don't see an <span class="text-gradient gradient-7">answer</span> to your question, you can send us an email from our contact form.
+                            {{ t('Sık Sorulan Sorular')}}
                         </h3>
                     </div>
                     <div class="flex flex-wrap mx-[-15px]">
@@ -291,5 +304,6 @@ use Illuminate\Support\Facades\Storage;
     </section>
     <!-- /section -->
     @endif
+  
 @endsection
 
