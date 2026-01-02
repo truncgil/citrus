@@ -1,5 +1,5 @@
 
-@extends('layouts.site', ['headerTemplate' => 'Demo29 Header'])
+@extends('layouts.site', ['headerTemplate' => 'Demo27 Header'])
 
 @php
 use Illuminate\Support\Facades\Storage;
