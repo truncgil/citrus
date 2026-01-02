@@ -68,10 +68,17 @@ class ProductController extends Controller
             'description' => \Str::limit(strip_tags($product->translate('content')), 160),
         ];
 
+        // Use custom view template if specified
         if ($product->view_template && view()->exists($product->view_template)) {
             return view($product->view_template, compact('product', 'settings', 'renderedHeader', 'renderedFooter', 'meta'));
         }
 
+        // Use landing page template if landing_page_data exists and product type is 'product'
+        if ($product->type === 'product' && !empty($product->landing_page_data)) {
+            return view('front.products.landing', compact('product', 'settings', 'renderedHeader', 'renderedFooter', 'meta'));
+        }
+
+        // Default view
         return view('front.products.show', compact('product', 'settings', 'renderedHeader', 'renderedFooter', 'meta'));
     }
 }

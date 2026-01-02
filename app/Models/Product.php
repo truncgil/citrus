@@ -21,6 +21,7 @@ class Product extends Model
         'view_template',
         'sort_order',
         'is_active',
+        'landing_page_data',
     ];
 
     protected $translatable = [
@@ -32,6 +33,7 @@ class Product extends Model
         'is_active' => 'boolean',
         'title' => 'array',
         'content' => 'array',
+        'landing_page_data' => 'array',
     ];
 
     public static function boot()

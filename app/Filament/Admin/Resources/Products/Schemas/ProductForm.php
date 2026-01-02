@@ -9,6 +9,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 use App\Filament\Admin\Resources\Components\TranslationTabs;
+use App\Filament\Admin\Resources\Products\Schemas\LandingPageSection;
 use App\Models\ProductCategory;
 use Illuminate\Support\Str;
 use Filament\Schemas\Components\Utilities\Get;
@@ -83,6 +84,9 @@ class ProductForm
                             ],
                         ]),
                     ]),
+
+                // Landing Page Section (only for products)
+                LandingPageSection::make(),
             ]);
     }
 }

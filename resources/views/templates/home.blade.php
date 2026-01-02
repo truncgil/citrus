@@ -1,8 +1,4 @@
-@php
-	$header = "partials.header";
-	$footer = "partials.footer";
-@endphp
-@extends('layouts.site')
+@extends('layouts.site', ['header' => 'partials.header', 'footer' => 'partials.footer'])
 
 @section('title', 'Anasayfa')
 
