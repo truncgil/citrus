@@ -29,7 +29,10 @@ $rightMenuItems = $menuItems->slice($midPoint);
         <div class="navbar-brand"><a href="{{url("./")}}">
             <img class="logo-dark" src="{{url("assets/img/truncgil-yatay.svg")}}" alt="image">
             <img class="logo-light" src="{{url("assets/img/truncgil-yatay-dark.svg")}}" alt="image">
-          </a></div>
+          </a>
+        
+          
+        </div>
         <div class="navbar-other !ml-auto">
           <ul class="navbar-nav flex-row items-center">
             <li class="nav-item xl:!hidden lg:!hidden">
@@ -39,6 +42,7 @@ $rightMenuItems = $menuItems->slice($midPoint);
           <!-- /.navbar-nav -->
         </div>
         <!-- /.navbar-other -->
+       
       </div>
       <!-- /.flex -->
       <div class="navbar-collapse-wrapper flex flex-row items-center w-full">
@@ -46,8 +50,9 @@ $rightMenuItems = $menuItems->slice($midPoint);
           <div class="offcanvas-header lg:mx-auto xl:mx-auto order-0 lg:!order-1 lg:!px-[5rem] xl:!order-1 xl:!px-[5rem] p-[1.5rem] !flex items-center justify-between flex-row">
             <a class="transition-none hidden lg:!flex xl:!flex" href="./"><img class="logo-dark" src="assets/img/truncgil-yatay.svg" alt="image">
               <img class="logo-light" src="assets/img/truncgil-yatay-dark.svg" alt="image"></a>
-              
-              
+              <div class="" style="position: relative; left:5px">
+                @include("components.custom.language-selector")
+              </div>
           </div>
           <div class="w-full order-1 lg:!order-none lg:!flex xl:!order-none xl:!flex offcanvas-body">
             <ul class="navbar-nav lg:!ml-auto xl:!ml-auto">                  

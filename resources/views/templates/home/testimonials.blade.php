@@ -5,7 +5,7 @@
 		<div class="flex flex-wrap mx-[-15px] !text-center">
 		<div class="lg:w-8/12 xl:w-8/12 w-full flex-[0_0_auto] !px-[15px] max-w-full xl:!ml-[16.66666667%] lg:!ml-[16.66666667%]">
 			<h2 class="!text-[0.8rem] uppercase !text-[#e31e24] !mb-3 !leading-[1.35] !tracking-[0.02rem]">{!! t('Mutlu Müşteriler') !!}</h2>
-			<h3 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-semibold !mb-10 xxl:!px-10">{!! t('Sadece bizim sözümüze güvenmeyin, müşterilerimizin hakkımızda söylediklerini görün.') !!}</h3>
+			<h3 class="xl:!text-[1.9rem] !text-[calc(1.315rem_+_0.78vw)] !leading-[1.25] font-semibold !mb-10 xxl:!px-10">{!! t('Bizi müşterilerimizden dinleyin.') !!}</h3>
 		</div>
 		<!-- /column -->
 		</div>
